@@ -1,0 +1,36 @@
+﻿namespace Microsoft.AspNetCore.Mvc
+{
+    public enum JasnyDefaultImage
+    {
+        NoAvatar1,
+        NoAvatar2,
+        NoAvatar3,
+        NoAvatar4,
+        NoAvatar5,
+        NoAvatar6,
+        NoAvatar7,
+        NoAvatar8,
+        NoAvatar9,
+        NoAvatar10,
+        NoAvatar11,
+        NoAvatar12,
+        NoAvatar13,
+        NoAvatar14,
+        NoAvatar15,
+        NoAvatar16,
+        NoAvatar17,
+        NoAvatar18,
+        NoAvatar19,
+        NoAvatar20,
+        NoAvatar21,
+        NoAvatar22,
+        NoAvatar23,
+        NoAvatar24,
+        NoAvatar25,
+        NoAvatar26,
+        NoAvatar27,
+        NoAvatar28,
+        NoImage1,
+        NoImage2
+    }
+}

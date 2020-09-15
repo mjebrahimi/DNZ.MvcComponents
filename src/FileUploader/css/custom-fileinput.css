@@ -1,0 +1,74 @@
+﻿.file-drop-zone {
+    max-height: 200px !important;
+    overflow-y: auto !important;
+}
+
+.file-preview-frame {
+    /*height: initial !important;*/
+    /*width: 30% !important;*/
+    direction: ltr;
+    position: relative !important;
+    /*min-width: 250px;*/
+    /*min-height: 82px;*/
+}
+
+.file-preview-image {
+    /*height: 65px !important;
+    width: 35% !important;*/
+    /*width: 100% !important;*/
+}
+
+.file-thumbnail-footer {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: initial !important;
+    position: absolute !important;
+    bottom: 6px;
+    left: 6px;
+    right: 6px;
+    padding: 6px;
+    background-color: rgba(255,255,255,0.8);
+    text-align: left;
+}
+
+.file-footer-caption {
+    width: initial !important;
+}
+
+.kv-file-upload {
+    display: none !important;
+}
+
+.file-preview {
+}
+
+.file-thumb-progress {
+    position: initial !important;
+    margin-bottom: 5px !important;
+}
+
+    .file-thumb-progress .progress {
+        margin-bottom: 0 !important;
+    }
+
+.glyphicon.glyphicon-ok-sign.text-success {
+    font-size: 16px !important;
+}
+
+.file-upload-indicator {
+    opacity: 1 !important;
+    display: inline-block !important;
+    width: initial !important;
+}
+
+.file-actions {
+    margin-top: 3px !important;
+}
+
+.kv-upload-progress {
+    display: none !important;
+}
+
+.file-caption-name {
+    display: block !important;
+}

@@ -1,0 +1,52 @@
+﻿.wizard.rtl {
+  direction: rtl;
+}
+.wizard.rtl > .steps {
+  right: 0;
+  left: auto;
+  float: right;
+}
+.wizard.rtl > .steps.previous-disabled li.complete:hover .chevron:before {
+  border-right-color: #f3f4f5;
+}
+.wizard.rtl > .steps li {
+  float: right;
+}
+.wizard.rtl > .steps li .chevron {
+  right: auto;
+  left: -14px;
+  border-right: 14px solid #d4d4d4;
+  border-left: 0;
+}
+.wizard.rtl > .steps li .chevron:before {
+  right: auto;
+  left: 1px;
+  border-right: 14px solid #ededed;
+  border-left: 0;
+}
+.wizard.rtl > .steps li.active .chevron:before {
+  border-right: 14px solid #f1f6fc;
+}
+.wizard.rtl > .steps li.complete .chevron:before {
+  border-right: 14px solid #f3f4f5;
+}
+.wizard.rtl > .steps li.complete:hover .chevron:before {
+  border-right: 14px solid #e7eff8;
+  border-left: none;
+}
+.wizard.rtl > .steps li .badge {
+  margin-left: 8px;
+}
+.wizard.rtl > .actions {
+  right: auto;
+  left: 0;
+  float: left;
+}
+.wizard.rtl > .actions .btn-prev span {
+  margin-left: 5px;
+  margin-right: 0;
+}
+.wizard.rtl > .actions .btn-next span {
+  margin-left: 0;
+  margin-right: 5px;
+}

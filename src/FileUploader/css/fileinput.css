@@ -1,0 +1,253 @@
+/*!
+ * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2014 - 2015
+ * @package bootstrap-fileinput
+ * @version 4.2.9
+ *
+ * File input styling for Bootstrap 3.0
+ * Built for Yii Framework 2.0
+ * Author: Kartik Visweswaran
+ * Year: 2015
+ * For more Yii related demos visit http://demos.krajee.com
+ */
+.file-loading {
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    font-size: 999px;
+    text-align: right;
+    color: #fff;
+    background: transparent url('data:image/gif;base64,R0lGODlhEAAQAPQAAP///1VVVfr6+np6eqysrFhYWG5ubuPj48TExGNjY6Ojo5iYmOzs7Lq6utjY2ISEhI6OjgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFUCAgjmRpnqUwFGwhKoRgqq2YFMaRGjWA8AbZiIBbjQQ8AmmFUJEQhQGJhaKOrCksgEla+KIkYvC6SJKQOISoNSYdeIk1ayA8ExTyeR3F749CACH5BAkKAAAALAAAAAAQABAAAAVoICCKR9KMaCoaxeCoqEAkRX3AwMHWxQIIjJSAZWgUEgzBwCBAEQpMwIDwY1FHgwJCtOW2UDWYIDyqNVVkUbYr6CK+o2eUMKgWrqKhj0FrEM8jQQALPFA3MAc8CQSAMA5ZBjgqDQmHIyEAIfkECQoAAAAsAAAAABAAEAAABWAgII4j85Ao2hRIKgrEUBQJLaSHMe8zgQo6Q8sxS7RIhILhBkgumCTZsXkACBC+0cwF2GoLLoFXREDcDlkAojBICRaFLDCOQtQKjmsQSubtDFU/NXcDBHwkaw1cKQ8MiyEAIfkECQoAAAAsAAAAABAAEAAABVIgII5kaZ6AIJQCMRTFQKiDQx4GrBfGa4uCnAEhQuRgPwCBtwK+kCNFgjh6QlFYgGO7baJ2CxIioSDpwqNggWCGDVVGphly3BkOpXDrKfNm/4AhACH5BAkKAAAALAAAAAAQABAAAAVgICCOZGmeqEAMRTEQwskYbV0Yx7kYSIzQhtgoBxCKBDQCIOcoLBimRiFhSABYU5gIgW01pLUBYkRItAYAqrlhYiwKjiWAcDMWY8QjsCf4DewiBzQ2N1AmKlgvgCiMjSQhACH5BAkKAAAALAAAAAAQABAAAAVfICCOZGmeqEgUxUAIpkA0AMKyxkEiSZEIsJqhYAg+boUFSTAkiBiNHks3sg1ILAfBiS10gyqCg0UaFBCkwy3RYKiIYMAC+RAxiQgYsJdAjw5DN2gILzEEZgVcKYuMJiEAOwAAAAAAAAAAAA==') top left no-repeat;
+    border: none;
+}
+
+.file-object {
+    margin: 0 0 -5px 0;
+    padding: 0;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none repeat scroll 0 0 transparent;
+    cursor: inherit;
+    display: block;
+}
+
+.file-caption-name {
+    display: inline-block;
+    overflow: hidden;
+    height: 20px;
+    word-break: break-all;
+}
+
+.input-group-lg .file-caption-name {
+    height: 25px;
+}
+
+.file-preview-detail-modal {
+    text-align: left;
+}
+
+.file-error-message {
+    color: #a94442;
+    background-color: #f2dede;
+    margin: 5px;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.file-error-message pre, .file-error-message ul {
+    margin: 0;
+    text-align: left;
+}
+
+.file-error-message pre {
+    margin: 5px 0;
+}
+
+.file-caption-disabled {
+    background-color: #EEEEEE;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.file-preview {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.file-preview-frame {
+    display: table;
+    margin: 8px;
+    height: 160px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 5px 0 #a2958a;
+    padding: 6px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.file-preview-frame:not(.file-preview-error):hover {
+    box-shadow: 3px 3px 5px 0 #333;
+}
+
+.file-preview-image {
+    height: 160px;
+    vertical-align: middle;
+}
+
+.file-preview-text {
+    text-align: left;
+    width: 160px;
+    margin-bottom: 2px;
+    color: #428bca;
+    background: #fff;
+    overflow-x: hidden;
+}
+
+.file-preview-other {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 160px;
+    height: 160px;
+    border: 2px solid #999;
+    border-radius: 30px;
+}
+
+.file-preview-other:hover {
+    opacity: 0.8;
+}
+
+.file-actions, .file-other-error {
+    text-align: left;
+}
+
+.file-icon-lg {
+    font-size: 1.2em;
+}
+
+.file-icon-2x {
+    font-size: 2.4em;
+}
+
+.file-icon-4x {
+    font-size: 4.8em;
+}
+
+.file-input-new .file-preview, .file-input-new .close, .file-input-new .glyphicon-file,
+.file-input-new .fileinput-remove-button, .file-input-new .fileinput-upload-button,
+.file-input-ajax-new .fileinput-remove-button, .file-input-ajax-new .fileinput-upload-button {
+    display: none;
+}
+
+.file-thumb-loading {
+    background: transparent url('data:image/gif;base64,R0lGODlhEAAQAPQAAP///1VVVfr6+np6eqysrFhYWG5ubuPj48TExGNjY6Ojo5iYmOzs7Lq6utjY2ISEhI6OjgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFUCAgjmRpnqUwFGwhKoRgqq2YFMaRGjWA8AbZiIBbjQQ8AmmFUJEQhQGJhaKOrCksgEla+KIkYvC6SJKQOISoNSYdeIk1ayA8ExTyeR3F749CACH5BAkKAAAALAAAAAAQABAAAAVoICCKR9KMaCoaxeCoqEAkRX3AwMHWxQIIjJSAZWgUEgzBwCBAEQpMwIDwY1FHgwJCtOW2UDWYIDyqNVVkUbYr6CK+o2eUMKgWrqKhj0FrEM8jQQALPFA3MAc8CQSAMA5ZBjgqDQmHIyEAIfkECQoAAAAsAAAAABAAEAAABWAgII4j85Ao2hRIKgrEUBQJLaSHMe8zgQo6Q8sxS7RIhILhBkgumCTZsXkACBC+0cwF2GoLLoFXREDcDlkAojBICRaFLDCOQtQKjmsQSubtDFU/NXcDBHwkaw1cKQ8MiyEAIfkECQoAAAAsAAAAABAAEAAABVIgII5kaZ6AIJQCMRTFQKiDQx4GrBfGa4uCnAEhQuRgPwCBtwK+kCNFgjh6QlFYgGO7baJ2CxIioSDpwqNggWCGDVVGphly3BkOpXDrKfNm/4AhACH5BAkKAAAALAAAAAAQABAAAAVgICCOZGmeqEAMRTEQwskYbV0Yx7kYSIzQhtgoBxCKBDQCIOcoLBimRiFhSABYU5gIgW01pLUBYkRItAYAqrlhYiwKjiWAcDMWY8QjsCf4DewiBzQ2N1AmKlgvgCiMjSQhACH5BAkKAAAALAAAAAAQABAAAAVfICCOZGmeqEgUxUAIpkA0AMKyxkEiSZEIsJqhYAg+boUFSTAkiBiNHks3sg1ILAfBiS10gyqCg0UaFBCkwy3RYKiIYMAC+RAxiQgYsJdAjw5DN2gILzEEZgVcKYuMJiEAOwAAAAAAAAAAAA==') no-repeat scroll center center content-box !important;
+}
+
+.file-actions {
+    margin-top: 15px;
+}
+
+.file-footer-buttons {
+    float: right;
+}
+
+.file-upload-indicator {
+    padding-top: 2px;
+    cursor: default;
+    opacity: 0.8;
+    width: 60%;
+}
+
+.file-upload-indicator:hover {
+    font-weight: bold;
+    opacity: 1;
+}
+
+.file-footer-caption {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 160px;
+    text-align: center;
+    padding-top: 4px;
+    font-size: 11px;
+    color: #777;
+    margin: 5px auto 10px auto;
+}
+
+.file-preview-error {
+    opacity: 0.65;
+    box-shadow: none;
+}
+
+.file-preview-frame:not(.file-preview-error) .file-footer-caption:hover {
+    color: #000;
+}
+
+.file-drop-zone {
+    border: 1px dashed #aaa;
+    border-radius: 4px;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    margin: 12px 15px 12px 12px;
+    padding: 5px;
+}
+
+.file-drop-zone-title {
+    color: #aaa;
+    font-size: 40px;
+    padding: 85px 10px;
+}
+
+.file-highlighted {
+    border: 2px dashed #999 !important;
+    background-color: #f0f0f0;
+}
+
+.file-uploading {
+    background: url('data:image/gif;base64,R0lGODlhDAAMAIQAADQyNKSipNTS1Ozq7Ly6vHR2dKyurNze3PT29ISGhIyOjKyqrNza3PTy9MzOzLS2tOTm5Pz+/ERGRKSmpNTW1Ozu7Ly+vISChLSytOTi5Pz6/IyKjJSSlP///wAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJCQAdACwAAAAADAAMAAAFXGDXaUOHYV0WieJQINPUSJAYVV2wLIaSpJrKBgMRiCyHAuDQQRAorA7h0ugIHMZoJ3HhXLNRLmdEqbEGAk3zIWiYBxXBAxFBWCmMg8BIFzUIGnhOVSwRVQdMfR0hACH5BAkJAB8ALAAAAAAMAAwAhBwaHIyOjNTS1KyurOzq7FxeXLy+vNze3PT29JyanHR2dLS2tNza3PTy9MTGxOTm5Pz+/KSipISGhERGRJSWlNTW1LSytOzu7GRmZMTCxOTi5Pz6/JyenLy6vIyKjP///wVh4PdB19cZ3wOJ4uUhltUUhAg1n9UtXUKlm0YkQ6iIHBrJ5PFBOA6sjyGAOzCg0U8iwLEysh9KIPHZVJgsiwKHWAgaaIIGA2BAEB9B5SoQfBh4Hw0dZoAdOCw3HwdQCCsfIQAh+QQJCQAgACwAAAAADAAMAIUcGhyUlpTU0tS0srTs6uxcXlzEwsSkoqTc3tz09vR0cnS8urycnpzc2tz08vTMysysqqzk5uT8/vyEgoQ0MjScmpzU1tS0trTs7uxsamzExsSkpqTk4uT8+vx0dnS8vrz///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGYUAQSOIAaR4ggkQodBwSho/DQxASQQZNFnIARSSJhQDDET4igUK1Y4kwjZUiwoJ4Cw+VDaJRt+M3IGxuTBcTRWEPCYMDFgoUCFcCFnwKGSAIHUIJF2wNGAB9VgmXdQ2ZIEEAIfkECQkAHwAsAAAAAAwADACELC4spKKk1NLU7OrsdHZ0vLq8hIaErK6s3N7c9Pb0fH58jI6MrKqs3Nrc9PL0zM7MtLa05Obk/P78REZEpKak1NbU7O7sfHp8vL68jIqMtLK05OLk/Pr8hIKElJKU////BV/g90nJJwifJYmiU3DPk2SWSH5P9QgQ9A0Sl8ARETUGAcLgwxEUWQ9GCVFBsFgHigbRsF4/DIaGWXmKMB7HJ1F4EEWFhmESCZoqmYzi8tms1hAcCh0OABtXNx4LfRwiIQAh+QQJCQAdACwAAAAADAAMAIQcGhyMjozU0tTs6uy0srRcXlzc3tz09vScmpy8vrx0dnTc2tz08vTk5uT8/vykoqTExsSEhoRERkSUlpTU1tTs7uy8urxkZmTk4uT8+vycnpzEwsSMioz///8AAAAAAAAFYGDXOUdnGB3jiCJjZdRyPIxIdkJsQFtXOS5BpSHCDAicSicjILIolpKBgmKJLISEYVG1YhNLilME0ZQOFgGGIEpgJoUBsHNRTCaBSGeQERkAFRwBDBIYVhkoCBodGCsdIQAh+QQJCQAfACwAAAAADAAMAIQcGhyUlpTMzszs6uy0srRcXlzc3tz09vTEwsSkoqR0cnTU1tT08vS8urzk5uT8/vzMysysqqyEgoQ0MjScmpzU0tTs7uxsamzk4uT8+vzExsSkpqR0dnTc2ty8vrz///8FXuD3PcdnGN/xiCLTZEuXNYxIfkJsVMLHPK4KwyEaWBCJWqZCZBkgJcMCxRIhPBBDh1rVYD8WBaEqiEQBl0VDpMEkOINM58ORUBKUwCcuMkwYFBQHBU0iGSgbG3sZIiEAIfkECQkAGwAsAAAAAAwADACENDI0pKak1NbU7O7sdHZ0xMLE5OLkhIaEtLK0/Pr8jI6MrK6s3N7c9Pb0zM7M7OrsREZErKqs3Nrc9PL0hIKE5ObkjIqMvLq8/P78lJKU1NLU////AAAAAAAAAAAAAAAABV/gtmHNxjBbg4nidCWClFyTSG5OzGhOirmaSUX0mDgupYRmyKoIEpsM5cBi8TSKg6Uqcjg0mwHlUhUgNwYAQVLoVhCKQQJ1UEQWkcDmsdpUIA0BERMED1UJBhsICHt9IQAh+QQJCQAfACwAAAAADAAMAIQcGhyMjozMyszk5uS0srRcXlz09vTc2ty8vrycmpyEhoTs7uzU0tS8urxsamz8/vzk4uTExsSkoqRERkSUlpTs6uy0trT8+vzc3tzEwsScnpyMioz08vTU1tR0cnT///8FYeD3PcaHYZ/xiCLXXN1xNZx4oUyMMczHPRiAAzMQDTgMS2nhIbA+A8blkwhQnqLDAVNNYD+HDooTyDwxkSlkooBERJ1FRrK4FCkaS6Ph/BkLHAQEBhsLTxcVHw0IHwsrHyEAIfkECQkAHQAsAAAAAAwADACEHBoclJaU1NLUtLK07OrsXF5cpKKk3N7cxMLE9Pb0dHZ0nJ6c3NrcvLq8rKqs5ObkzMrM/P78LC4snJqc1NbU9PL0ZGZkpKak5OLkxMbE/Pr8hIKEvL68////AAAAAAAABVxg12lHd5RJJIoHQDCM1lSihnWWwhyC0FWRg0Q3ED0qgtlvU1w9BInOZWJYrQ6Ug4NqFcFQE4j1QYk+CgGMz4RsJDSPjsGByGQQP1WHoEhwOBoGNCsaBB0ZYkAiIQAh+QQJCQAcACwAAAAADAAMAIQ0MjSkpqTU1tTs7ux0dnS8vryEhoTk4uS0srT8+vyMjoysrqzc3tz09vR8fnzMzszs6uxERkSsqqzc2tz08vSMiozk5uS8urz8/vyUkpSEgoTU0tT///8AAAAAAAAAAAAFXSDHJQyXZVyDiSIDUI6WXJSYWByhGcr2pJhDxDC5iCyUx6XBoSgKLI5FkOAgAoioaDJhXBdazkRQakg20WkVQghYJkfKhpaAWC+PxwZNWXEGFQ15M0wsGAMce01+IQAh+QQJCQAeACwAAAAADAAMAIQcGhyMjozMyszk5uS0srRcXlz09vTc2tycmpy8vryEhoTs7uzU0tRsamz8/vzk4uSkoqTExsRERkSUlpTs6uy8urz8+vzc3tycnpzEwsSMioz08vTU1tR0cnT///8AAAAFXqDnWY+HYN5lieIgbUGwAJdoDZ4STEjXeBvHoDB5ZESEh6BiAGIELM+As0oQCFHR5XCpECpZz4FTM1Q40elqoSFQStINoxJceDIRLoMBdIg2EBYcBxZMUQ52FzVBIiEAIfkECQkAHgAsAAAAAAwADACEHBoclJaU1NLUvLq87OrsXF5cpKak3N7cxMbE9Pb0dHZ0nJ6c3NrcxMLErK6s5Obk/P78hIKELC4snJqc1NbUvL689PL0ZGZkrKqs5OLkzMrM/Pr8fHp8pKKk////AAAABV+g522EZ2DesYniU1jTZEmZSHrBsnSckpIKQ0YjGlAugIMngSGyHByLB9FosFgMxgFRQVxFDIpyg6ixHpSVpdMglDwPi2Bg2UgFFK1A4LFARBYDCWEbdFcQUgdKCX8eIQA7') no-repeat center bottom 10px;
+    opacity: 0.65;
+}
+
+.file-thumb-progress .progress, .file-thumb-progress .progress-bar {
+    height: 10px;
+    font-size: 9px;
+    line-height: 10px;
+}
+
+.file-thumbnail-footer {
+    position: relative;
+}
+
+.file-thumb-progress {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    right: 0;
+}
+
+/* IE 10 fix */
+.btn-file ::-ms-browse {
+    width:100%;
+    height:100%;
+}
