@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +18,7 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
@@ -29,7 +29,6 @@ namespace DNZ.MvcComponents
     {
         private const string path = "/DNZ.MvcComponents";
         internal static IServiceProvider ApplicationServiceProvider { get; private set; }
-
 
         public static IServiceCollection AddMvcComponents(this IServiceCollection services)
         {
@@ -59,7 +58,7 @@ namespace DNZ.MvcComponents
                         else
                         {
                             context.Response.ContentLength = Encoding.UTF8.GetByteCount(content);
-                            await context.Response.WriteAsync(content, Encoding.UTF8);
+                            await context.Response.WriteAsync(content, Encoding.UTF8).ConfigureAwait(false);
                         }
                     });
                 });
@@ -94,7 +93,7 @@ namespace DNZ.MvcComponents
         /// <summary>
         /// Determines whether the specified HTTP request is an AJAX request.
         /// </summary>
-        /// 
+        ///
         /// <returns>
         /// true if the specified HTTP request is an AJAX request; otherwise, false.
         /// </returns>
@@ -103,31 +102,34 @@ namespace DNZ.MvcComponents
         {
             request.NotNull(nameof(request));
 
-            if (request.Headers != null)
-            {
-                return request.Headers["X-Requested-With"] == "XMLHttpRequest";
-            }
+            if (request.Headers == null)
+                return false;
 
-            return false;
+            return request.Headers["X-Requested-With"] == "XMLHttpRequest";
         }
 
-        public static string GetFullHtmlFieldId(this TemplateInfo templateInfo, string name)
+        public static ModelExplorer GetModelExplorer<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return templateInfo.GetFullHtmlFieldName(name).Replace(".", "_");
+            ModelExpressionProvider expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
+            return expresionProvider.CreateModelExpression(html.ViewData, expression).ModelExplorer;
+        }
+
+        public static ModelExplorer GetModelExplorerForString(this IHtmlHelper html, string expression)
+        {
+            //IHtmlGenerator
+            return html.MetadataProvider.GetModelExplorerForType(typeof(string), expression);
         }
 
         public static string FieldNameFor<T, TResult>(this IHtmlHelper<T> html, Expression<Func<T, TResult>> expression)
         {
-            return html.ViewData.TemplateInfo.GetFullHtmlFieldName(ExpressionHelper.GetExpressionText(expression));
+            ModelExpressionProvider expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
+            return html.ViewData.TemplateInfo.GetFullHtmlFieldName(expresionProvider.GetExpressionText(expression));
         }
 
         public static string FieldIdFor<T, TResult>(this IHtmlHelper<T> html, Expression<Func<T, TResult>> expression)
         {
-            string name = ExpressionHelper.GetExpressionText(expression);
-            //var id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(name);
-            // because "[" and "]" aren't replaced with "_" in GetFullHtmlFieldId
-
-            return html.ViewData.TemplateInfo.GetFullHtmlFieldName(name).Replace('[', '_').Replace(']', '_').Replace('.', '_');
+            string name = html.FieldNameFor(expression);
+            return html.GenerateIdFromName(name); //.Id(name);
         }
 
         public static string ToLowerFirst(this string str)
@@ -145,8 +147,7 @@ namespace DNZ.MvcComponents
 
         public static string ToDescription(this Enum value)
         {
-            DisplayNameAttribute[] attributes = (DisplayNameAttribute[])value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DisplayNameAttribute), false);
-            return attributes.Length > 0 ? attributes[0].DisplayName : value.ToString();
+            return value.GetType().GetField(value.ToString()).GetCustomAttribute<DescriptionAttribute>(false).Description;
         }
 
         public static object ToAnonymousObject<TKey, TValue>(this IDictionary<TKey, TValue> dic)
@@ -184,14 +185,10 @@ namespace DNZ.MvcComponents
             using (Stream stream = type.Assembly.GetManifestResourceStream(resourceId))
             {
                 if (stream == null)
-                {
                     return null;
-                }
 
-                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
+                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                return reader.ReadToEnd();
             }
         }
 
@@ -201,14 +198,10 @@ namespace DNZ.MvcComponents
             using (Stream stream = type.Assembly.GetManifestResourceStream(type, resourceId))
             {
                 if (stream == null)
-                {
                     return null;
-                }
 
-                using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
+                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                return reader.ReadToEnd();
             }
         }
 
@@ -216,12 +209,12 @@ namespace DNZ.MvcComponents
         {
             JsonSerializer serializer = new JsonSerializer();
             StringWriter stringWriter = new StringWriter();
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(stringWriter))
+            using JsonTextWriter jsonWriter = new JsonTextWriter(stringWriter)
             {
-                jsonWriter.QuoteName = false;
-                serializer.Serialize(jsonWriter, value);
-                return stringWriter.ToString();
-            }
+                QuoteName = false
+            };
+            serializer.Serialize(jsonWriter, value);
+            return stringWriter.ToString();
         }
 
         public static string ToJsonString(object value)
@@ -342,11 +335,9 @@ namespace DNZ.MvcComponents
 
         public static string ToHtmlString(this IHtmlContent tag)
         {
-            using (StringWriter writer = new StringWriter())
-            {
-                tag.WriteTo(writer, HtmlEncoder.Default);
-                return writer.ToString();
-            }
+            using StringWriter writer = new StringWriter();
+            tag.WriteTo(writer, HtmlEncoder.Default);
+            return writer.ToString();
         }
     }
 }

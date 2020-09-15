@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
@@ -61,9 +60,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadMasterFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TypeaheadMasterOption option, object htmlAttributes = null)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ViewFeatures.ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             Dictionary<string, object> mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "form-control", placeholder = displayName, autocomplete = "off" });
             IHtmlContent editor = html.TextBoxFor(expression, mergAttr);

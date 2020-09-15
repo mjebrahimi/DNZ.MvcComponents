@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -64,9 +64,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TypeaheadOption option, object htmlAttributes = null)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
             string value = metadata.Model?.ToString() ?? "";
             option.Dictionary.TryGetValue(value, out string txtValue);

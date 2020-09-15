@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNetCore.Routing;
 using DNZ.MvcComponents;
 using System;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -213,11 +213,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public string ToHtmlString()
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(Expression, HtmlHelper.ViewData, HtmlHelper.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(Expression);
+            ModelExplorer metadata = HtmlHelper.GetModelExplorer(Expression);
             IHtmlContent label = HtmlHelper.LabelFor(Expression, new { @class = "control-label", style = "padding: 0 0 10px 0;" });
             string id = HtmlHelper.FieldIdFor(Expression); //.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
-            string name = HtmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
+            //string htmlFieldName = ExpressionHelper.GetExpressionText(Expression);
+            //string name = HtmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
+            string name = HtmlHelper.FieldNameFor(Expression);
             string value = metadata.Model?.ToString() ?? "";
 
             string script = "";

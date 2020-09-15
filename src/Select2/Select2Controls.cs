@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -18,9 +18,9 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent Select2DropDownFor<TModel, TValue, T1, T2>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
             option = option ?? new Select2Option();
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             object value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
             SelectList selectList = new SelectList(source, "Key", "Value", value);
@@ -54,9 +54,9 @@ namespace Microsoft.AspNetCore.Mvc
             object htmlAttribute = null, Select2Option option = null, bool isLtr = false)
         {
             option = option ?? new Select2Option(isLtr);
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             object value = metadata.Model;
             List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
@@ -87,9 +87,9 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent Select2DropDownFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, List<SelectListItem> selectList, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
             option = option ?? new Select2Option();
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             object value = metadata.Model;
             List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
@@ -120,7 +120,7 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent Select2DropDown<T1, T2>(this IHtmlHelper html, string name, T1 value, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
             option = option ?? new Select2Option();
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(name);
+            string id = html.GenerateIdFromName(name);
             SelectList selectList = new SelectList(source, "Key", "Value", value);
             List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
             //if (defaultValue.HasValue())
@@ -147,9 +147,9 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent Select2ListBoxFor<TModel, TValue, T1, T2>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
             option = option ?? new Select2Option();
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             object value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
             SelectList selectList = new SelectList(source, "Key", "Value", value);
@@ -178,9 +178,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Select2MultipleFor<TModel, TValue, T1, T2, T3, T4>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source1, Dictionary<T3, T4> source2, bool unique = true, string width = "100%", string col1Style = "", string col2Style = "", DropDownType type1 = DropDownType.Selec2DropDown, DropDownType type2 = DropDownType.Selec2DropDown)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
             string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var value = metadata.Model == null ? new List<KeyValuePair<string,string>>() : (IEnumerable<KeyValuePair<string, string>>)metadata.Model ;

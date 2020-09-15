@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -17,10 +17,10 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TarikhFarsiFor<TModel, TValue>(this IHtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, object htmlAttributes = null, bool enableTimePicker = false)
         {
-            ViewFeatures.ModelExplorer data = ExpressionMetadataProvider.FromLambdaExpression(expression, helper.ViewData, helper.MetadataProvider);
+            ModelExplorer metadata = helper.GetModelExplorer(expression);
 
             string value = "";
-            DateTime? castedValue = data.Model as DateTime?;
+            DateTime? castedValue = metadata.Model as DateTime?;
             if (castedValue?.Equals(default) == false)
             {
                 value = helper.DisplayFor(expression).ToHtmlString();
@@ -28,7 +28,7 @@ namespace Microsoft.AspNetCore.Mvc
 
             Dictionary<string, object> attributes = new Dictionary<string, object>() {
                 { "Value", value },
-                { "data-targetselector", "#" + helper.ViewData.TemplateInfo.GetFullHtmlFieldId(ExpressionHelper.GetExpressionText(expression)) },
+                { "data-targetselector", "#" + helper.FieldIdFor(expression) },
                 { "data-mdpersiandatetimepickershowing", "false" },
                 { "data-mdpersiandatetimepicker", "true" },
                 { "style", "cursor: pointer;" },
@@ -80,11 +80,10 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent DatePicker3Part<TModel, TValue>(this IHtmlHelper<TModel> helper, Expression<Func<TModel, TValue>> expression, int lowYear = -5, int highYear = +5)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, helper.ViewData, helper.MetadataProvider);
-            string property = ExpressionHelper.GetExpressionText(expression);
+            ModelExplorer metadata = helper.GetModelExplorer(expression);
             object value = metadata.Model;
-            string id = helper.ViewData.TemplateInfo.GetFullHtmlFieldId(property);
-            string name = helper.ViewData.TemplateInfo.GetFullHtmlFieldName(property);
+            string id = helper.FieldIdFor(expression);
+            string name = helper.FieldNameFor(expression);
             DateTime? datetime = null;
             PersianCalendar pc = new PersianCalendar();
             if (value != null && value.ToString() != "")

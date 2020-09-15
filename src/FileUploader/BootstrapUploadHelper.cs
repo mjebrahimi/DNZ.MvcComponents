@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
@@ -20,12 +19,12 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent BsUploadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string action = null, string controller = null, object routeValues = null, string urlImages = null)
         {
             BsUploadSetting setting = new BsUploadSetting(html);
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string property = ExpressionHelper.GetExpressionText(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? property.Split('.').Last();
+            ViewFeatures.ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             object value = metadata.Model;
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(property);
-            string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(property);
+            string id = html.GenerateIdFromName(htmlFieldName);
+            string name = html.FieldNameFor(expression);
             IHtmlContent label = html.LabelFor(expression, new { @class = "control-label" });
             TagBuilder input = new TagBuilder("input");
             input.Attributes.Add("type", "file");

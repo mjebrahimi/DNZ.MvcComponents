@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
@@ -15,17 +14,17 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static InputMaskOption<TModel, TValue> InputMaskRegexFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string regex, object htmlAttributes = null)
         {
-            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.ObjectToDictionary(htmlAttributes)).Regex(regex);
+            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes)).Regex(regex);
         }
 
         public static InputMaskOption<TModel, TValue> InputMaskFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string mask, object htmlAttributes = null)
         {
-            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.ObjectToDictionary(htmlAttributes)).Mask(mask);
+            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes)).Mask(mask);
         }
 
         public static InputMaskOption<TModel, TValue> InputMaskFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, InputMaskType type, object htmlAttributes = null)
         {
-            InputMaskOption<TModel, TValue> mask = new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.ObjectToDictionary(htmlAttributes));
+            InputMaskOption<TModel, TValue> mask = new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             switch (type)
             {
                 //case InputMaskType.Pelak:
@@ -52,12 +51,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static InputMaskOption<TModel, TValue> InputMaskFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributes = null)
         {
-            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.ObjectToDictionary(htmlAttributes));
+            return new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         public static InputMaskOption<TModel, string> InputMask<TModel>(this IHtmlHelper<TModel> html, string name, string value = null, object htmlAttributes = null)
         {
-            return new InputMaskOption<TModel, string>(html, name, value, HtmlHelper.ObjectToDictionary(htmlAttributes));
+            return new InputMaskOption<TModel, string>(html, name, value, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         public static InputMaskOption<TModel, string> InputMask<TModel>(this IHtmlHelper<TModel> html, string name, string value = null, Dictionary<string, object> htmlAttributes = null)
@@ -67,10 +66,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent PelakFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributeTextBox1 = null, object htmlAttributeTextBox2 = null)
         {
-            ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
-            string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string name = html.FieldNameFor(expression);
+            string id = html.FieldNameFor(expression);
             string value = metadata.Model?.ToString() ?? "";
             string id1 = id + "_pelak1";
             string id2 = id + "_pelak2";

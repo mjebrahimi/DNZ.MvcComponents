@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 //[assembly: WebResource("DNZ.MvcComponents.iCheck.all.css", "text/css", PerformSubstitution = true)]
 namespace Microsoft.AspNetCore.Mvc
@@ -17,11 +17,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ICheckRadioButtonFor<TModel>(this IHtmlHelper<TModel> html, Expression<Func<TModel, bool>> expression, string label = null, object value = null, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+            //string htmlFieldName = html.FieldNameFor(expression);
+            //ModelExplorer metadata = html.GetModelExplorer(expression);
             //var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var name = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
-            string id = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+
+            string id = html.FieldIdFor(expression);
             string cssClass = " " + style.ToString().ToLower().Replace('_', '-');
             if (value == null)
             {
@@ -56,11 +57,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ICheckCheckBoxFor<TModel>(this IHtmlHelper<TModel> html, Expression<Func<TModel, bool>> expression, string label = null, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null, object htmlAttributes = null)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
+            //string htmlFieldName = html.FieldNameFor(expression);
+            //ModelExplorer metadata = html.GetModelExplorer(expression);
             //var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var name = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
-            string id = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+
+            string id = html.FieldIdFor(expression);
             string cssClass = " " + style.ToString().ToLower().Replace('_', '-');
             Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() });
 
@@ -78,7 +80,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ICheckCheckBox<TModel>(this IHtmlHelper<TModel> html, string name, string label = null, bool value = false, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null, object htmlAttributes = null)
         {
-            string id = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(name);
+            string id = html.GenerateIdFromName(name);
             string cssClass = style.ToString().ToLower().Replace('_', '-');
 
             html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />");

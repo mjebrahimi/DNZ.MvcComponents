@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using Microsoft.AspNetCore.Routing;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -39,9 +39,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TagAutocompleteFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TagAutocompleteOption option, object htmlAttributes = null)
         {
-            ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(expression, html.ViewData, html.MetadataProvider);
-            string htmlFieldName = ExpressionHelper.GetExpressionText(expression);
-            string id = html.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            ModelExplorer metadata = html.GetModelExplorer(expression);
+            string htmlFieldName = html.FieldNameFor(expression);
+            string id = html.FieldIdFor(expression);
             string divId = id + "_autotag";
             object value = metadata.Model ?? "";
             TagBuilder tag = new TagBuilder("div");

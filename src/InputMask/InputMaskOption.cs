@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -211,19 +211,13 @@ namespace Microsoft.AspNetCore.Mvc
             IHtmlContent editor = null;
             if (_expression == null)
             {
-                //var dic = new RouteValueDictionary(_htmlAttributes);
-                //if (dic.ContainsKey("id"))
-                //    id = dic["id"].ToString();
-                //else
-                //    id = Guid.NewGuid().ToString();
-                id = _htmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldId(_name);
+                id = _htmlHelper.GenerateIdFromName(_name);
                 editor = _htmlHelper.TextBox(_name, _value, _htmlAttributes);
             }
             else
             {
-                ViewFeatures.ModelExplorer metadata = ExpressionMetadataProvider.FromLambdaExpression(_expression, _htmlHelper.ViewData, _htmlHelper.MetadataProvider);
-                string htmlFieldName = ExpressionHelper.GetExpressionText(_expression);
-                id = _htmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+                ModelExplorer metadata = _htmlHelper.GetModelExplorer(_expression);
+                id = _htmlHelper.FieldIdFor(_expression);
                 editor = _htmlHelper.TextBoxFor(_expression, _htmlAttributes);
             }
             _htmlHelper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(inputmask_js) + @"""></script>");

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
@@ -98,10 +97,10 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            ModelExplorer metadata = ExpressionMetadataProvider.FromStringExpression(name, htmlHelper.ViewContext.ViewData, htmlHelper.MetadataProvider);
+            ModelExplorer metadata = htmlHelper.GetModelExplorerForString(name);
             if (value != null)
             {
-                metadata.GetExplorerForModel(value); //metadata.Model = value;
+                metadata.GetExplorerForModel(value);
             }
 
             return CKEditorHelper(htmlHelper, metadata, name, uploadUrl, implicitRowsAndColumns, htmlAttributesDict, ckEditorConfig);
@@ -166,10 +165,10 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, int rows, int columns, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            ModelExplorer metadata = ExpressionMetadataProvider.FromStringExpression(name, htmlHelper.ViewData, htmlHelper.MetadataProvider);
+            ModelExplorer metadata = htmlHelper.GetModelExplorerForString(name); ;
             if (value != null)
             {
-                metadata.GetExplorerForModel(value); //metadata.Model = value;
+                metadata.GetExplorerForModel(value);
             }
 
             return CKEditorHelper(htmlHelper, metadata, name, uploadUrl, GetRowsAndColumnsDictionary(rows, columns), htmlAttributesDict, ckEditorConfig);
@@ -239,13 +238,13 @@ namespace Microsoft.AspNetCore.Mvc
             expression.NotNull(nameof(expression));
 
             return CKEditorHelper(htmlHelper,
-                                                        ExpressionMetadataProvider.FromLambdaExpression(expression, htmlHelper.ViewData, htmlHelper.MetadataProvider),
-                                                        ExpressionHelper.GetExpressionText(expression),
-                                                        uploadUrl,
-                                                        implicitRowsAndColumns,
-                                                        htmlAttributesDict,
-                                                        ckEditorConfig
-                                                        );
+                htmlHelper.GetModelExplorer(expression),
+                htmlHelper.FieldNameFor(expression),
+                uploadUrl,
+                implicitRowsAndColumns,
+                htmlAttributesDict,
+                ckEditorConfig
+                );
         }
 
         /// <summary>
@@ -313,13 +312,13 @@ namespace Microsoft.AspNetCore.Mvc
         {
             expression.NotNull(nameof(expression));
             return CKEditorHelper(htmlHelper,
-                                                        ExpressionMetadataProvider.FromLambdaExpression(expression, htmlHelper.ViewData, htmlHelper.MetadataProvider),
-                                                        ExpressionHelper.GetExpressionText(expression),
-                                                        uploadUrl,
-                                                        GetRowsAndColumnsDictionary(rows, columns),
-                                                        htmlAttributesDict,
-                                                        ckEditorConfig
-                                                        );
+                htmlHelper.GetModelExplorer(expression),
+                htmlHelper.FieldNameFor(expression),
+                uploadUrl,
+                GetRowsAndColumnsDictionary(rows, columns),
+                htmlAttributesDict,
+                ckEditorConfig
+                );
         }
 
         #endregion
@@ -357,7 +356,7 @@ namespace Microsoft.AspNetCore.Mvc
         private static IHtmlContent CKEditorHelper(IHtmlHelper htmlHelper, ModelExplorer modelMetadata, string name, string uploadUrl, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes, string ckEditorConfigOptions)
         {
             string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            string id = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldId(name);
+            string id = htmlHelper.GenerateIdFromName(name);
 
             TagBuilder textAreaBuilder = new TagBuilder("textarea");
             textAreaBuilder.GenerateId(fullName, "");
