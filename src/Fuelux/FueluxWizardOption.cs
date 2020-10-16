@@ -100,8 +100,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public string ToHtmlString()
         {
-            string id = Guid.NewGuid().ToString();
-            string options = "{\n" + string.Join(", \n", Attributes.Where(p => !p.Key.StartsWith("step_") && !p.Key.StartsWith("defin_") && p.Key != "validateOnStep" && p.Key != "badgeNumber").Select(p => p.Key + ": " + p.Value)) + "\n}";
+            var id = Guid.NewGuid().ToString();
+            var options = "{\n" + string.Join(", \n", Attributes.Where(p => !p.Key.StartsWith("step_") && !p.Key.StartsWith("defin_") && p.Key != "validateOnStep" && p.Key != "badgeNumber").Select(p => p.Key + ": " + p.Value)) + "\n}";
             htmlHelper.Script(@"
             <script>
                 $(function(){
@@ -126,22 +126,22 @@ namespace Microsoft.AspNetCore.Mvc
                 });
             </script>");
 
-            string html = @"<div class=""fuelux"" id=""" + id + @""" >
+            var html = @"<div class=""fuelux"" id=""" + id + @""" >
                         <div class=""thin-box"">
                             <div class=""wizard rtl "" data-initialize=""wizard"" style=""border-bottom-right-radius: 0; border-bottom-left-radius: 0;"">
                                 <ul class=""steps"">";
-            foreach (KeyValuePair<string, object> item in Attributes.Where(p => p.Key.StartsWith("step_")))
+            foreach (var item in Attributes.Where(p => p.Key.StartsWith("step_")))
             {
-                Tuple<int, string, string> tuple = item.Value as Tuple<int, string, string>;
-                int stepNumber = tuple.Item1;
-                Attributes.TryGetValue("selectedItem", out object selectedItem);
-                int currentStep = 1;
+                var tuple = item.Value as Tuple<int, string, string>;
+                var stepNumber = tuple.Item1;
+                Attributes.TryGetValue("selectedItem", out var selectedItem);
+                var currentStep = 1;
                 if (selectedItem != null)
                 {
                     currentStep = Convert.ToInt32(selectedItem.ToString().Replace("{ step: ", "").Replace(" }", ""));
                 }
 
-                html += @"<li " + (stepNumber == currentStep ? @"class=""active""" : "") + @" data-step=""" + stepNumber + @""">
+                html += "<li " + (stepNumber == currentStep ? @"class=""active""" : "") + @" data-step=""" + stepNumber + @""">
                           <span class=""chevron""></span>
                           " + (Convert.ToBoolean(Attributes["badgeNumber"]) ? (@" <span class=""badge"">" + stepNumber + "</span>") : "") + @"
                           " + tuple.Item2 + @"
@@ -149,12 +149,12 @@ namespace Microsoft.AspNetCore.Mvc
             }
             html += @"</ul>
                   <div class=""step-content"">";
-            foreach (KeyValuePair<string, object> item in Attributes.Where(p => p.Key.StartsWith("step_")))
+            foreach (var item in Attributes.Where(p => p.Key.StartsWith("step_")))
             {
-                Tuple<int, string, string> tuple = item.Value as Tuple<int, string, string>;
-                int stepNumber = tuple.Item1;
-                Attributes.TryGetValue("selectedItem", out object selectedItem);
-                int currentStep = 1;
+                var tuple = item.Value as Tuple<int, string, string>;
+                var stepNumber = tuple.Item1;
+                Attributes.TryGetValue("selectedItem", out var selectedItem);
+                var currentStep = 1;
                 if (selectedItem != null)
                 {
                     currentStep = Convert.ToInt32(selectedItem.ToString().Replace("{ step: ", "").Replace(" }", ""));

@@ -5,7 +5,6 @@ using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -18,7 +17,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TagAutocompleteFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable<string> source, object htmlAttributes = null)
         {
-            TagAutocompleteOption option = new TagAutocompleteOption();
+            var option = new TagAutocompleteOption();
             if (source != null)
             {
                 option.Source(source);
@@ -39,18 +38,18 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TagAutocompleteFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TagAutocompleteOption option, object htmlAttributes = null)
         {
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string divId = id + "_autotag";
-            object value = metadata.Model ?? "";
-            TagBuilder tag = new TagBuilder("div");
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var divId = id + "_autotag";
+            var value = metadata.Model ?? "";
+            var tag = new TagBuilder("div");
             tag.AddCssClass("form-control");
             tag.Attributes.Add("contenteditable", "true");
             tag.Attributes.Add("id", id + "_autotag");
             tag.MergeAttributes(new RouteValueDictionary(htmlAttributes));
             tag.InnerHtml.SetContent(value.ToString());
-            IHtmlContent editor = html.HiddenFor(expression);
+            var editor = html.HiddenFor(expression);
 
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Bootstrap_Typeahead_js) + @"""></script>");
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Rangy_Core_js) + @"""></script>");

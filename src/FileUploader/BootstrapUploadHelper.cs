@@ -18,25 +18,25 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent BsUploadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string action = null, string controller = null, object routeValues = null, string urlImages = null)
         {
-            BsUploadSetting setting = new BsUploadSetting(html);
-            ViewFeatures.ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            object value = metadata.Model;
-            string id = html.GenerateIdFromName(htmlFieldName);
-            string name = html.FieldNameFor(expression);
-            IHtmlContent label = html.LabelFor(expression, new { @class = "control-label" });
-            TagBuilder input = new TagBuilder("input");
+            var setting = new BsUploadSetting(html);
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var value = metadata.Model;
+            var id = html.GenerateIdFromName(htmlFieldName);
+            var name = html.FieldNameFor(expression);
+            var label = html.LabelFor(expression, new { @class = "control-label" });
+            var input = new TagBuilder("input");
             input.Attributes.Add("type", "file");
             input.Attributes.Add("id", id);
             input.Attributes.Add("name", "file");
             input.Attributes.Add("multiple", "");
             input.Attributes.Add("class", "file-loading");
-            HtmlString file = new HtmlString(input.ToHtmlString());
-            IUrlHelper urlHelper = html.GetUrlHelper();
+            var file = new HtmlString(input.ToHtmlString());
+            var urlHelper = html.GetUrlHelper();
             if (action != null && controller != null)
             {
-                string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+                var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
                 setting.UploadUrl(url);
                 if (urlImages.HasValue())
                 {
@@ -46,11 +46,11 @@ namespace Microsoft.AspNetCore.Mvc
                         urlImages = urlImages.Contains("?") ? urlImages : urlImages.TrimEnd('/') + '/';
                     }
 
-                    BsUploadInitialPreview initialPreview = new BsUploadInitialPreview();
-                    BsUploadInitialPreviewConfig initialPreviewConfig = new BsUploadInitialPreviewConfig();
-                    foreach (int item in (value as IEnumerable<int>))
+                    var initialPreview = new BsUploadInitialPreview();
+                    var initialPreviewConfig = new BsUploadInitialPreviewConfig();
+                    foreach (var item in (value as IEnumerable<int>))
                     {
-                        string imgSrc = urlImages.Contains("{0}") ? string.Format(urlImages, item) : (urlImages + item);
+                        var imgSrc = urlImages.Contains("{0}") ? string.Format(urlImages, item) : (urlImages + item);
                         initialPreview.Add(imgSrc, new { key = item });
                         initialPreviewConfig.Add("", url, item);
                     }
@@ -59,7 +59,7 @@ namespace Microsoft.AspNetCore.Mvc
                 }
             }
 
-            string result = @"
+            var result = @"
 <div id=""" + id + @"_fileuploader_container"">
     " + label.ToHtmlString() + @"
     " + file.ToHtmlString() + @"

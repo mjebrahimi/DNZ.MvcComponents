@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Html;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using DNZ.MvcComponents;
@@ -82,7 +81,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string ckEditorConfig, object htmlAttributesObj)
         {
-            return CKEditor(htmlHelper, name, value, ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
+            return CKEditor(htmlHelper, name, value, "", ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
         }
 
         /// <summary>
@@ -97,7 +96,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            ModelExplorer metadata = htmlHelper.GetModelExplorerForString(name);
+            var metadata = htmlHelper.GetModelExplorerForString(name);
             if (value != null)
             {
                 metadata.GetExplorerForModel(value);
@@ -148,7 +147,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, int rows, int columns, string ckEditorConfig, object htmlAttributesObj)
         {
-            return CKEditor(htmlHelper, name, value, rows, columns, ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
+            return CKEditor(htmlHelper, name, value, "", rows, columns, ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
         }
 
         /// <summary>
@@ -165,7 +164,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, int rows, int columns, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            ModelExplorer metadata = htmlHelper.GetModelExplorerForString(name); ;
+            var metadata = htmlHelper.GetModelExplorerForString(name);
             if (value != null)
             {
                 metadata.GetExplorerForModel(value);
@@ -292,7 +291,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditorFor<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, int rows, int columns, string ckEditorConfig, object htmlAttributesObj)
         {
-            return CKEditorFor(htmlHelper, expression, rows, columns, ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
+            return CKEditorFor(htmlHelper, expression, "", rows, columns, ckEditorConfig, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributesObj));
         }
 
         /// <summary>
@@ -355,14 +354,14 @@ namespace Microsoft.AspNetCore.Mvc
 
         private static IHtmlContent CKEditorHelper(IHtmlHelper htmlHelper, ModelExplorer modelMetadata, string name, string uploadUrl, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes, string ckEditorConfigOptions)
         {
-            string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-            string id = htmlHelper.GenerateIdFromName(name);
+            var fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+            var id = htmlHelper.GenerateIdFromName(name);
 
-            TagBuilder textAreaBuilder = new TagBuilder("textarea");
+            var textAreaBuilder = new TagBuilder("textarea");
             textAreaBuilder.GenerateId(fullName, "");
             textAreaBuilder.MergeAttributes(htmlAttributes, true);
             textAreaBuilder.MergeAttribute("name", fullName, true);
-            string style = "";
+            var style = "";
             if (textAreaBuilder.Attributes.ContainsKey("style"))
             {
                 style = textAreaBuilder.Attributes["style"];
@@ -371,11 +370,11 @@ namespace Microsoft.AspNetCore.Mvc
             {
                 style = "";
             }
-            //style += string.Format("height:{0}em; width:{1}em; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
-            style += string.Format("height:{0}em; width:100%; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
+            style += string.Format("height:{0}em; width:{1}em; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
+            //style += string.Format("height:{0}em; width:100%; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
             textAreaBuilder.MergeAttribute("style", style, true);
             // If there are any errors for a named field, we add the CSS attribute.
-            if (htmlHelper.ViewData.ModelState.TryGetValue(fullName, out ModelStateEntry modelState) && modelState.Errors.Count > 0)
+            if (htmlHelper.ViewData.ModelState.TryGetValue(fullName, out var modelState) && modelState.Errors.Count > 0)
             {
                 textAreaBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
             }
@@ -403,7 +402,7 @@ namespace Microsoft.AspNetCore.Mvc
             // in case the value being rendered is something like "\r\nHello".
             textAreaBuilder.InnerHtml.SetContent(Environment.NewLine + value);
 
-            TagBuilder scriptBuilder = new TagBuilder("script");
+            var scriptBuilder = new TagBuilder("script");
             scriptBuilder.MergeAttribute("type", "text/javascript");
             if (string.IsNullOrEmpty(ckEditorConfigOptions))
             {
@@ -429,7 +428,7 @@ namespace Microsoft.AspNetCore.Mvc
             return new HtmlString(@"
 <div class=""form-group"">
     <div class=""col-sm-12"">
-    " + textAreaBuilder + @"
+    " + textAreaBuilder.ToHtmlString() + @"
     </div>
 </div>");
         }
@@ -451,7 +450,7 @@ namespace Microsoft.AspNetCore.Mvc
                 throw new ArgumentOutOfRangeException(nameof(columns), "A text area parameter is out of range");
             }
 
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            var result = new Dictionary<string, object>();
             if (rows > 0)
             {
                 result.Add("rows", rows.ToString(CultureInfo.InvariantCulture));

@@ -34,7 +34,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public SweetAlert Title(Func<object, HelperResult> template)
         {
-            string html = template(null).ToHtmlString().ToJavaScriptString();
+            var html = template(null).ToHtmlString().ToJavaScriptString();
             Attributes["title"] = string.Format("{0}", html);
             return Html(true);
         }
@@ -55,7 +55,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public SweetAlert Text(Func<object, HelperResult> template)
         {
-            string html = template(null).ToHtmlString().ToJavaScriptString();
+            var html = template(null).ToHtmlString().ToJavaScriptString();
             Attributes["text"] = string.Format("{0}", html);
             return Html(true);
         }

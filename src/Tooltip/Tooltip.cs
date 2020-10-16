@@ -147,7 +147,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Tooltip Trigger(Trigger value)
         {
-            List<string> list = new List<string>();
+            var list = new List<string>();
             if (value.HasFlag(Mvc.Trigger.Click))
             {
                 list.Add("click");
@@ -182,7 +182,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         protected void SetScript()
         {
-            string script = "";
+            var script = "";
             if (Options.Count > 0)
             {
                 script += ".tooltip(" + Options.RenderOptions() + ")";

@@ -48,8 +48,8 @@ namespace DNZ.MvcComponents
                 {
                     app.Run(async context =>
                     {
-                        string fileName = Path.GetFileName(context.Request.Path.ToString());
-                        string content = GetWebResource(fileName);
+                        var fileName = Path.GetFileName(context.Request.Path.ToString());
+                        var content = GetWebResource(fileName);
                         context.Response.ContentType = GetMimeType(fileName);
                         if (content == null)
                         {
@@ -67,7 +67,7 @@ namespace DNZ.MvcComponents
 
         public static string GetMimeType(string fileName)
         {
-            new FileExtensionContentTypeProvider().TryGetContentType(fileName, out string contentType);
+            new FileExtensionContentTypeProvider().TryGetContentType(fileName, out var contentType);
             return contentType ?? "application/octet-stream";
         }
 
@@ -78,15 +78,15 @@ namespace DNZ.MvcComponents
 
         public static IUrlHelper GetUrlHelper(this IHtmlHelper htmlHelper)
         {
-            IUrlHelperFactory urlFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
-            IActionContextAccessor actionAccessor = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IActionContextAccessor>();
+            var urlFactory = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+            var actionAccessor = htmlHelper.ViewContext.HttpContext.RequestServices.GetRequiredService<IActionContextAccessor>();
             return urlFactory.GetUrlHelper(actionAccessor.ActionContext);
         }
 
         public static IUrlHelper GetUrlHelper(this HttpContext httpContext)
         {
-            IUrlHelperFactory urlFactory = httpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
-            IActionContextAccessor actionAccessor = httpContext.RequestServices.GetRequiredService<IActionContextAccessor>();
+            var urlFactory = httpContext.RequestServices.GetRequiredService<IUrlHelperFactory>();
+            var actionAccessor = httpContext.RequestServices.GetRequiredService<IActionContextAccessor>();
             return urlFactory.GetUrlHelper(actionAccessor.ActionContext);
         }
 
@@ -110,7 +110,7 @@ namespace DNZ.MvcComponents
 
         public static ModelExplorer GetModelExplorer<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            ModelExpressionProvider expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
+            var expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
             return expresionProvider.CreateModelExpression(html.ViewData, expression).ModelExplorer;
         }
 
@@ -122,19 +122,21 @@ namespace DNZ.MvcComponents
 
         public static string FieldNameFor<T, TResult>(this IHtmlHelper<T> html, Expression<Func<T, TResult>> expression)
         {
-            ModelExpressionProvider expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
+            //return html.NameFor(expression); //html.Name();
+            var expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
             return html.ViewData.TemplateInfo.GetFullHtmlFieldName(expresionProvider.GetExpressionText(expression));
         }
 
         public static string FieldIdFor<T, TResult>(this IHtmlHelper<T> html, Expression<Func<T, TResult>> expression)
         {
-            string name = html.FieldNameFor(expression);
-            return html.GenerateIdFromName(name); //.Id(name);
+            //return html.IdFor(expression); //html.Id();
+            var name = html.FieldNameFor(expression);
+            return html.GenerateIdFromName(name);
         }
 
         public static string ToLowerFirst(this string str)
         {
-            char[] a = str.ToCharArray();
+            var a = str.ToCharArray();
             a[0] = char.ToLower(a[0]);
             return new string(a);
             //return str.Substring(0, 1).ToLower() + str.Substring(1);
@@ -152,10 +154,10 @@ namespace DNZ.MvcComponents
 
         public static object ToAnonymousObject<TKey, TValue>(this IDictionary<TKey, TValue> dic)
         {
-            ExpandoObject expandoObject = new ExpandoObject();
+            var expandoObject = new ExpandoObject();
             IDictionary<string, object> expandoDictionary = expandoObject;
 
-            foreach (KeyValuePair<TKey, TValue> keyValuePair in dic)
+            foreach (var keyValuePair in dic)
             {
                 expandoDictionary.Add(keyValuePair.Key.ConvertTo<string>(), keyValuePair.Value.ConvertTo<string>());
             }
@@ -181,35 +183,22 @@ namespace DNZ.MvcComponents
 
         public static string GetWebResource(string resourceId)
         {
-            Type type = typeof(ComponentUtility);
-            using (Stream stream = type.Assembly.GetManifestResourceStream(resourceId))
+            var type = typeof(ComponentUtility);
+            using (var stream = type.Assembly.GetManifestResourceStream(resourceId))
             {
                 if (stream == null)
                     return null;
 
-                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
-                return reader.ReadToEnd();
-            }
-        }
-
-        public static string GetWebResource(Type type, string resourceId)
-        {
-            type.NotNull(nameof(type));
-            using (Stream stream = type.Assembly.GetManifestResourceStream(type, resourceId))
-            {
-                if (stream == null)
-                    return null;
-
-                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                using var reader = new StreamReader(stream, Encoding.UTF8);
                 return reader.ReadToEnd();
             }
         }
 
         public static string ToJsonStringWithoutQuotes(object value)
         {
-            JsonSerializer serializer = new JsonSerializer();
-            StringWriter stringWriter = new StringWriter();
-            using JsonTextWriter jsonWriter = new JsonTextWriter(stringWriter)
+            var serializer = new JsonSerializer();
+            var stringWriter = new StringWriter();
+            using var jsonWriter = new JsonTextWriter(stringWriter)
             {
                 QuoteName = false
             };
@@ -245,8 +234,8 @@ namespace DNZ.MvcComponents
 
         public static Dictionary<string, object> MergeAttributes(object primaryAttributes, object secondaryAttributes, bool appendCssClass = true) //not replace css class
         {
-            Dictionary<string, object> primary = primaryAttributes as Dictionary<string, object>;
-            Dictionary<string, object> secondary = secondaryAttributes as Dictionary<string, object>;
+            var primary = primaryAttributes as Dictionary<string, object>;
+            var secondary = secondaryAttributes as Dictionary<string, object>;
 
             if (primary != null && secondary != null)
             {
@@ -263,7 +252,7 @@ namespace DNZ.MvcComponents
                 return MergeAttributes(primaryAttributes, secondary, appendCssClass);
             }
 
-            Dictionary<string, object> attributes = new RouteValueDictionary(primaryAttributes).Concat(new RouteValueDictionary(secondaryAttributes)).GroupBy(d => d.Key)
+            var attributes = new RouteValueDictionary(primaryAttributes).Concat(new RouteValueDictionary(secondaryAttributes)).GroupBy(d => d.Key)
                 .ToDictionary(d => d.Key.Replace('_', '-'), d => GetValue(d, appendCssClass));
             return attributes;
         }
@@ -290,13 +279,13 @@ namespace DNZ.MvcComponents
 
         public static string RenderOptions(this IOptionBuilder options)
         {
-            string result = string.Join(", \n", options.Attributes.Select(p => p.Key + ": " + p.Value));
+            var result = string.Join(", \n", options.Attributes.Select(p => p.Key + ": " + p.Value));
             return "{\n" + result + "\n}";
         }
 
         public static string RenderOptions(this Dictionary<string, object> attributes)
         {
-            string result = string.Join(", \n", attributes.Select(p => p.Key + ": " + p.Value));
+            var result = string.Join(", \n", attributes.Select(p => p.Key + ": " + p.Value));
             return "{\n" + result + "\n}";
         }
 
@@ -310,7 +299,7 @@ namespace DNZ.MvcComponents
                 do
                 {
                     original = lastTimeStamp;
-                    long now = DateTime.UtcNow.Ticks;
+                    var now = DateTime.UtcNow.Ticks;
                     newValue = Math.Max(now, original + 1);
                 } while (Interlocked.CompareExchange(ref lastTimeStamp, newValue, original) != original);
 
@@ -320,22 +309,22 @@ namespace DNZ.MvcComponents
 
         public static string ToJavaScriptString(this string template)
         {
-            string safeText = template.Replace('\'', '"');
-            string[] lines = safeText.Split('\n');
-            IEnumerable<string> linesWithQuotes = lines.Select(p => string.Format("'{0}'", p.Trim('\n', '\r', ' ')));
-            string result = string.Join("+\n", linesWithQuotes);
+            var safeText = template.Replace('\'', '"');
+            var lines = safeText.Split('\n');
+            var linesWithQuotes = lines.Select(p => string.Format("'{0}'", p.Trim('\n', '\r', ' ')));
+            var result = string.Join("+\n", linesWithQuotes);
             return result;
         }
 
         public static T GetPropValue<T>(object src, string propName)
         {
-            object value = src.GetType().GetProperty(propName).GetValue(src, null);
+            var value = src.GetType().GetProperty(propName).GetValue(src, null);
             return (T)value;
         }
 
         public static string ToHtmlString(this IHtmlContent tag)
         {
-            using StringWriter writer = new StringWriter();
+            using var writer = new StringWriter();
             tag.WriteTo(writer, HtmlEncoder.Default);
             return writer.ToString();
         }

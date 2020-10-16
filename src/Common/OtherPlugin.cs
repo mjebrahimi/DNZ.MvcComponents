@@ -10,7 +10,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent AddMaxLenghtPlugin(this IHtmlHelper helper)
         {
-            string result = helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(bootstrap_maxlength_js) + @"""></script>").ToHtmlString() +
+            var result = helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(bootstrap_maxlength_js) + @"""></script>").ToHtmlString() +
     helper.ScriptSingle("MaxLenghtPlugin", @"
 <script>
     $(function(){

@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static InputMaskOption<TModel, TValue> InputMaskFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, InputMaskType type, object htmlAttributes = null)
         {
-            InputMaskOption<TModel, TValue> mask = new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+            var mask = new InputMaskOption<TModel, TValue>(html, expression, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
             switch (type)
             {
                 //case InputMaskType.Pelak:
@@ -66,18 +66,18 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent PelakFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributeTextBox1 = null, object htmlAttributeTextBox2 = null)
         {
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string name = html.FieldNameFor(expression);
-            string id = html.FieldNameFor(expression);
-            string value = metadata.Model?.ToString() ?? "";
-            string id1 = id + "_pelak1";
-            string id2 = id + "_pelak2";
-            Dictionary<string, object> mergAttr1 = ComponentUtility.MergeAttributes(htmlAttributeTextBox1, new { id = id1, @class = "pelak pelak1" });
-            Dictionary<string, object> mergAttr2 = ComponentUtility.MergeAttributes(htmlAttributeTextBox2, new { id = id2, @class = "pelak pelak2" });
+            var metadata = html.GetModelExplorer(expression);
+            var name = html.FieldNameFor(expression);
+            var id = html.FieldNameFor(expression);
+            var value = metadata.Model?.ToString() ?? "";
+            var id1 = id + "_pelak1";
+            var id2 = id + "_pelak2";
+            var mergAttr1 = ComponentUtility.MergeAttributes(htmlAttributeTextBox1, new { id = id1, @class = "pelak pelak1" });
+            var mergAttr2 = ComponentUtility.MergeAttributes(htmlAttributeTextBox2, new { id = id2, @class = "pelak pelak2" });
             //ایران|13|123|ش|22
             //iran|13|123|a|22
-            string value1 = "";
-            string value2 = "";
+            var value1 = "";
+            var value2 = "";
             try
             {
                 if (value.HasValue())
@@ -86,13 +86,11 @@ namespace Microsoft.AspNetCore.Mvc
                     value2 = value.Substring(8);
                 }
             }
-#pragma warning disable CA1031 // Do not catch general exception types
             catch { }
-#pragma warning restore CA1031 // Do not catch general exception types
-            InputMaskOption<TModel, string> mask1 = html.InputMask(id1, value1, mergAttr1).Mask("99").Placeholder("--");
-            InputMaskOption<TModel, string> mask2 = html.InputMask(id2, value2, mergAttr2).Mask("999آ99").Placeholder("---*--");
+            var mask1 = html.InputMask(id1, value1, mergAttr1).Mask("99").Placeholder("--");
+            var mask2 = html.InputMask(id2, value2, mergAttr2).Mask("999آ99").Placeholder("---*--");
             //var mask2 = html.InputMask(id2, value2, mergAttr2).Mask("999 آ99").Placeholder("--- *--");
-            string result = @"<div class=""pelak-container"">
+            var result = @"<div class=""pelak-container"">
                            " + mask1.ToHtmlString() + @"
                            " + mask2.ToHtmlString() + @" 
                            " + html.HiddenFor(expression).ToHtmlString() + @"
@@ -101,7 +99,7 @@ namespace Microsoft.AspNetCore.Mvc
             html.Script(@"
             <script>
                 $(function(){
-                    $(""#" + id + @"_pelak1, #" + id + @"_pelak2"").keyup(function () {
+                    $(""#" + id + "_pelak1, #" + id + @"_pelak2"").keyup(function () {
                         var hidden = $(""#" + id + @""");
                         hidden.val('').trigger('change');
                         var pelak1 = $(""#" + id + @"_pelak1"").val();

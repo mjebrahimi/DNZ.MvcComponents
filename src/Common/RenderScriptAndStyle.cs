@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            string result = _func();
+            var result = _func();
             writer.WriteLine(result);
         }
     }
@@ -53,7 +53,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ScriptFileSingle(this IHtmlHelper htmlHelper, string template, bool overWrite = false)
         {
-            string fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            var fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
             return ScriptSingle(htmlHelper, fileName, template, overWrite);
         }
 
@@ -85,7 +85,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent StyleFileSingle(this IHtmlHelper htmlHelper, string template, bool overWrite = false)
         {
-            string fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            var fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
             return StyleSingle(htmlHelper, fileName, template, overWrite);
         }
 
@@ -105,10 +105,10 @@ namespace Microsoft.AspNetCore.Mvc
         {
             return new HtmlContent(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Cast<object>().Select(p => p.ToString()).Where(p => p.StartsWith("_script_")).OrderBy(p => p))
+                var stringBuilder = new StringBuilder();
+                foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_script_")).OrderBy(p => p))
                 {
-                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
                     if (template.Value != null)
                     {
                         stringBuilder.AppendLine(template.Value);
@@ -122,10 +122,10 @@ namespace Microsoft.AspNetCore.Mvc
         {
             return new HtmlContent(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Cast<object>().Select(p => p.ToString()).Where(p => p.StartsWith("_style_")).OrderBy(p => p))
+                var stringBuilder = new StringBuilder();
+                foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_style_")).OrderBy(p => p))
                 {
-                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
                     if (template.Value != null)
                     {
                         stringBuilder.AppendLine(template.Value);
@@ -142,10 +142,10 @@ namespace Microsoft.AspNetCore.Mvc
 
         private static void SetItem(this HttpContext context, KeyValuePair<string, string> item, bool isScript, bool overWrite)
         {
-            bool isUnique = true;
-            foreach (object key in context.Items.Keys.Cast<object>().Select(p => p.ToString()).Where(p => isScript ? p.StartsWith("_script_") : p.StartsWith("_style_")))
+            var isUnique = true;
+            foreach (object key in context.Items.Keys.Select(p => p.ToString()).Where(p => isScript ? p.StartsWith("_script_") : p.StartsWith("_style_")))
             {
-                KeyValuePair<string, string> value = (KeyValuePair<string, string>)context.Items[key];
+                var value = (KeyValuePair<string, string>)context.Items[key];
                 if (value.Key != "" && value.Key == item.Key)
                 {
                     isUnique = false;
@@ -190,7 +190,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ScriptFileSingle(string template, bool overWrite = false)
         {
-            string fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            var fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
             return ScriptSingle(fileName, template, overWrite);
         }
 
@@ -222,7 +222,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent StyleFileSingle(string template, bool overWrite = false)
         {
-            string fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            var fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
             return StyleSingle(fileName, template, overWrite);
         }
 

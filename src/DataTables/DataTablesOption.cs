@@ -40,7 +40,7 @@ namespace Microsoft.AspNetCore.Mvc
             Searching(false);
             Info(false);
             Paging(false);
-            Order(0, DataTabledOrder.Desc);
+            Order(0, DataTabledOrder.Asc);
             //Attributes["language"] = "{ 'sUrl': '" + ComponentUtility.GetWebResourceUrl(persian_json) + "' }";
         }
 
@@ -118,8 +118,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            string id = Guid.NewGuid().ToString();
-            string classes = "";
+            var id = Guid.NewGuid().ToString();
+            var classes = "";
             id = Guid.NewGuid().ToString();
             classes += bordered ? " table-bordered" : "";
             classes += striped ? " table-striped" : "";
@@ -135,9 +135,9 @@ namespace Microsoft.AspNetCore.Mvc
                 id = _htmlAttributes["id"].ToString();
             }
 
-            string attr = string.Concat(_htmlAttributes.Where(p => p.Key != "class" && p.Key != "id").Select(p => p.Key + "=\"" + p.Value + "\" "));
-            string tfoot = "<tfoot" + _thead.Substring(6, _thead.Length - 6) + "tfoot>";
-            string html = @"
+            var attr = string.Concat(_htmlAttributes.Where(p => p.Key != "class" && p.Key != "id").Select(p => p.Key + "=\"" + p.Value + "\" "));
+            var tfoot = "<tfoot" + _thead.Substring(6, _thead.Length - 6) + "tfoot>";
+            var html = @"
                     <table id=""" + id + @""" class=""table" + classes + @""" " + attr + @">
                         " + _thead + @"
                         " + _tbody + @"

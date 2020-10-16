@@ -13,7 +13,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static Dictionary<string, string> BsTooltipAttibutes(this IHtmlHelper html, string title, Placement placement = Placement.Top)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>
+            var dict = new Dictionary<string, string>
             {
                 { "data-toggle", "tooltip" },
                 { "title", title }

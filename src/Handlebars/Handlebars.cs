@@ -15,31 +15,31 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, Func<object, HelperResult> template)
         {
-            string html = template(null).ToHtmlString();
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var html = template(null).ToHtmlString();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Html = new HtmlString(html);
             return handlebar;
         }
 
         public static HanderBarTemplate CreateHandlebarsTemplateInlineHelper(this IHtmlHelper helper, HelperResult template)
         {
-            string html = template.ToHtmlString();
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var html = template.ToHtmlString();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Html = new HtmlString(html);
             return handlebar;
         }
 
         public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string template)
         {
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Html = new HtmlString(template);
             return handlebar;
         }
 
         public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string id, Func<object, HelperResult> template)
         {
-            string html = template(null).ToHtmlString();
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var html = template(null).ToHtmlString();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(html);
             helper.ScriptSingle(id, @"
@@ -52,8 +52,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static HanderBarTemplate CreateHandlebarsTemplateInlineHelper(this IHtmlHelper helper, string id, HelperResult template)
         {
-            string html = template.ToHtmlString();
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var html = template.ToHtmlString();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(html);
             helper.ScriptSingle(id, @"
@@ -66,7 +66,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string id, string template)
         {
-            HanderBarTemplate handlebar = helper.AddHandlebarsPlugin();
+            var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(template);
             helper.ScriptSingle(id, @"

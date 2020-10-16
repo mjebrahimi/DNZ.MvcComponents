@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static Dictionary<string, string> BsPopoverAttibutes(this IHtmlHelper html, string content, string title = "", Placement placement = Placement.Bottom)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>
+            var dict = new Dictionary<string, string>
             {
                 { "data-toggle", "popover" },
                 { "data-content", content }

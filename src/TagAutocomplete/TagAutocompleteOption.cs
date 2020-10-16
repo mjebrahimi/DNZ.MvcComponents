@@ -45,7 +45,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public TagAutocompleteOption Source(IEnumerable<string> source)
         {
-            string value = ComponentUtility.ToJsonString(source);
+            var value = ComponentUtility.ToJsonString(source);
             return Source(value);
         }
     }

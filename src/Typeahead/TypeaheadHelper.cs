@@ -6,7 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -17,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable<string> source, object htmlAttributes = null)
         {
-            TypeaheadOption option = new TypeaheadOption();
+            var option = new TypeaheadOption();
             if (source != null)
             {
                 option.Source(source);
@@ -28,14 +27,14 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<int, string> source, object htmlAttributes = null)
         {
-            TypeaheadOption option = new TypeaheadOption();
+            var option = new TypeaheadOption();
             option.Source(source);
             return html.TypeaheadFor(expression, option, htmlAttributes);
         }
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable source, object htmlAttributes = null)
         {
-            TypeaheadOption option = new TypeaheadOption();
+            var option = new TypeaheadOption();
             option.Source(source);
             return html.TypeaheadFor(expression, option, htmlAttributes);
         }
@@ -64,16 +63,16 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TypeaheadOption option, object htmlAttributes = null)
         {
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
-            string value = metadata.Model?.ToString() ?? "";
-            option.Dictionary.TryGetValue(value, out string txtValue);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            Dictionary<string, object> mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { id = id + "_typeahead", @class = "form-control", placeholder = displayName, autocomplete = "off" });
-            IHtmlContent textbox = html.TextBox(name + "_typeahead", txtValue, mergAttr);
-            IHtmlContent hidden = html.HiddenFor(expression);
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
+            var value = metadata.Model?.ToString() ?? "";
+            option.Dictionary.TryGetValue(value, out var txtValue);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { id = id + "_typeahead", @class = "form-control", placeholder = displayName, autocomplete = "off" });
+            var textbox = html.TextBox(name + "_typeahead", txtValue, mergAttr);
+            var hidden = html.HiddenFor(expression);
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(typeahead_js) + @"""></script>");
             option.OnSelect(@"function(item) {
                             if ( item.value != ""-21"") {

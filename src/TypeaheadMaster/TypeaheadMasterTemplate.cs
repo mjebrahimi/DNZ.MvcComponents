@@ -113,43 +113,43 @@ namespace Microsoft.AspNetCore.Mvc
 
         public TypeaheadMasterTemplate Suggestion(HanderBarTemplate template)
         {
-            string value = template.Script;
+            var value = template.Script;
             return Suggestion(value);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplate(IHtmlHelper helper, string template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(template);
+            var handlebars = helper.CreateHandlebarsTemplate(template);
             return Suggestion(handlebars);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplate(IHtmlHelper helper, Func<object, HelperResult> template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(template);
+            var handlebars = helper.CreateHandlebarsTemplate(template);
             return Suggestion(handlebars);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplateInlineHelper(IHtmlHelper helper, HelperResult template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplateInlineHelper(template);
+            var handlebars = helper.CreateHandlebarsTemplateInlineHelper(template);
             return Suggestion(handlebars);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplate(IHtmlHelper helper, string id, string template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(id, template);
+            var handlebars = helper.CreateHandlebarsTemplate(id, template);
             return Suggestion(handlebars);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplate(IHtmlHelper helper, string id, Func<object, HelperResult> template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(id, template);
+            var handlebars = helper.CreateHandlebarsTemplate(id, template);
             return Suggestion(handlebars);
         }
 
         public TypeaheadMasterTemplate SuggestionHanderBarTemplateInlineHelper(IHtmlHelper helper, string id, HelperResult template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplateInlineHelper(id, template);
+            var handlebars = helper.CreateHandlebarsTemplateInlineHelper(id, template);
             return Suggestion(handlebars);
         }
     }

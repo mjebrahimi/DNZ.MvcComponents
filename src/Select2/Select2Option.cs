@@ -130,45 +130,45 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Select2Option TemplateResult(HanderBarTemplate template)
         {
-            string value = @"function (context) {
-	                    return " + template.Render("context") + @";
+            var value = @"function (context) {
+	                    return " + template.Render("context").ToHtmlString() + @";
                     }";
             return TemplateResult(value);
         }
 
         public Select2Option TemplateResultHanderBarTemplate(IHtmlHelper helper, string template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(template);
+            var handlebars = helper.CreateHandlebarsTemplate(template);
             return TemplateResult(handlebars);
         }
 
         public Select2Option TemplateResultHanderBarTemplate(IHtmlHelper helper, Func<object, HelperResult> template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(template);
+            var handlebars = helper.CreateHandlebarsTemplate(template);
             return TemplateResult(handlebars);
         }
 
         public Select2Option TemplateResultHanderBarTemplateInlineHelper(IHtmlHelper helper, HelperResult template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplateInlineHelper(template);
+            var handlebars = helper.CreateHandlebarsTemplateInlineHelper(template);
             return TemplateResult(handlebars);
         }
 
         public Select2Option TemplateResultHanderBarTemplate(IHtmlHelper helper, string id, string template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(id, template);
+            var handlebars = helper.CreateHandlebarsTemplate(id, template);
             return TemplateResult(handlebars);
         }
 
         public Select2Option TemplateResultHanderBarTemplate(IHtmlHelper helper, string id, Func<object, HelperResult> template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplate(id, template);
+            var handlebars = helper.CreateHandlebarsTemplate(id, template);
             return TemplateResult(handlebars);
         }
 
         public Select2Option TemplateResultHanderBarTemplateInlineHelper(IHtmlHelper helper, string id, HelperResult template)
         {
-            HanderBarTemplate handlebars = helper.CreateHandlebarsTemplateInlineHelper(id, template);
+            var handlebars = helper.CreateHandlebarsTemplateInlineHelper(id, template);
             return TemplateResult(handlebars);
         }
 

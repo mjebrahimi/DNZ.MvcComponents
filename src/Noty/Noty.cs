@@ -76,7 +76,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Noty AddButton(string text, string onClick, string addClass = null)
         {
-            string str = @"{
+            var str = @"{
             text: '" + text + @"',
             " + (string.IsNullOrEmpty(addClass) ? "" : "addClass: '" + addClass + "',") + @"
             onClick: " + onClick + @"

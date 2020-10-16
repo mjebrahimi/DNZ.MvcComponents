@@ -17,7 +17,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadMasterFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable<string> source, object htmlAttributes = null)
         {
-            TypeaheadMasterOption option = new TypeaheadMasterOption();
+            var option = new TypeaheadMasterOption();
             if (source != null)
             {
                 option.DataSetSource(source);
@@ -60,12 +60,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent TypeaheadMasterFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, TypeaheadMasterOption option, object htmlAttributes = null)
         {
-            ViewFeatures.ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            Dictionary<string, object> mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "form-control", placeholder = displayName, autocomplete = "off" });
-            IHtmlContent editor = html.TextBoxFor(expression, mergAttr);
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "form-control", placeholder = displayName, autocomplete = "off" });
+            var editor = html.TextBoxFor(expression, mergAttr);
             html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(typeahead_css) + @""" rel=""stylesheet"" />");
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(typeahead_bundle_js) + @"""></script>");
             html.Script(@"

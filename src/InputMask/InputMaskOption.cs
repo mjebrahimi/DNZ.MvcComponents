@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -180,7 +179,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public InputMaskOption<TModel, TValue> AddDefinitions(char character, string validator = null, int? cardinality = null, InputMaskCasing? casing = null, char? definitionSymbol = null)
         {
-            Dictionary<string, object> defin = new Dictionary<string, object>();
+            var defin = new Dictionary<string, object>();
             if (validator != null)
             {
                 defin["validator"] = string.Format("'{0}'", validator);
@@ -207,7 +206,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public override string ToHtmlString()
         {
-            string id = "";
+            var id = "";
             IHtmlContent editor = null;
             if (_expression == null)
             {
@@ -216,7 +215,7 @@ namespace Microsoft.AspNetCore.Mvc
             }
             else
             {
-                ModelExplorer metadata = _htmlHelper.GetModelExplorer(_expression);
+                var metadata = _htmlHelper.GetModelExplorer(_expression);
                 id = _htmlHelper.FieldIdFor(_expression);
                 editor = _htmlHelper.TextBoxFor(_expression, _htmlAttributes);
             }
@@ -232,14 +231,14 @@ namespace Microsoft.AspNetCore.Mvc
 
         public string RenderOptions()
         {
-            bool hasRegex = Attributes.ContainsKey("regex");
-            string definitions = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("defin_")).Select(p => p.Value));
+            var hasRegex = Attributes.ContainsKey("regex");
+            var definitions = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("defin_")).Select(p => p.Value));
             if (definitions.Trim().HasValue())
             {
                 Attributes["definitions"] = definitions;
             }
 
-            string result = string.Join(", \n", Attributes.Where(p => !p.Key.StartsWith("defin_")).Select(p => p.Key + ": " + p.Value));
+            var result = string.Join(", \n", Attributes.Where(p => !p.Key.StartsWith("defin_")).Select(p => p.Key + ": " + p.Value));
             return (hasRegex ? "\"Regex\", " : "") + "{\n" + result + "\n}";
         }
     }

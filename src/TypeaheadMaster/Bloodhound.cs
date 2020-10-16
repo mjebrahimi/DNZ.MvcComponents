@@ -43,7 +43,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Bloodhound Local(IEnumerable<string> source)
         {
-            string value = ComponentUtility.ToJsonString(source);
+            var value = ComponentUtility.ToJsonString(source);
             Attributes["local"] = value;
             return this;
         }
@@ -56,7 +56,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Bloodhound RemoteUrl(string url)
         {
-            string urlWithQuery = "";
+            var urlWithQuery = "";
             if (url.Contains("{0}")) //compatibel with "../%QUERY.json"
             {
                 urlWithQuery = string.Format(url, "%QUERY");
@@ -66,7 +66,7 @@ namespace Microsoft.AspNetCore.Mvc
                 urlWithQuery = url.Contains("?") ? url : url.TrimEnd('/') + '/' + "%QUERY";
             }
 
-            string result = @"{
+            var result = @"{
                     url: """ + urlWithQuery + @""",
                     wildcard: '%QUERY'
                 }";
@@ -76,48 +76,48 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Bloodhound RemoteUrlAction(string action)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action });
             RemoteUrl(url);
             return this;
         }
 
         public Bloodhound RemoteUrlAction(string action, object routeValues)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             RemoteUrl(url);
             return this;
         }
 
         public Bloodhound RemoteUrlAction(string action, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             RemoteUrl(url);
             return this;
         }
 
         public Bloodhound RemoteUrlAction(string action, string controller)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
             RemoteUrl(url);
             return this;
         }
 
         public Bloodhound RemoteUrlAction(string action, string controller, object routeValues)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             RemoteUrl(url);
             return this;
         }
 
         public Bloodhound RemoteUrlAction(string action, string controller, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = _httpContext.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = _httpContext.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             RemoteUrl(url);
             return this;
         }

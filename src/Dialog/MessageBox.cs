@@ -19,7 +19,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent OpenDialog(this IHtmlHelper html, string id)
         {
-            string script = new Dialog(id, html).Show().Script;
+            var script = new Dialog(id, html).Show().Script;
             return new HtmlString(script);
         }
 

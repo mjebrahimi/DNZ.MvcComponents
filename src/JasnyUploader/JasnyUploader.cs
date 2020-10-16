@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -134,7 +133,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public JasnyUploaderOption<TModel, TValue> DefaultImage(JasnyDefaultImage value)
         {
-            string resource = string.Format("DNZ.MvcComponents.JasnyUploader.img.{0}.gif", value.ToString());
+            var resource = string.Format("DNZ.MvcComponents.JasnyUploader.img.{0}.gif", value.ToString());
             Attributes["defaultImage"] = ComponentUtility.GetWebResourceUrl(resource);
             return this;
         }
@@ -171,57 +170,57 @@ namespace Microsoft.AspNetCore.Mvc
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action });
             return UploadUrl(url);
         }
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action, object routeValues)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             return UploadUrl(url);
         }
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             return UploadUrl(url);
         }
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action, string controller)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
             return UploadUrl(url);
         }
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action, string controller, object routeValues)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             return UploadUrl(url);
         }
 
         public JasnyUploaderOption<TModel, TValue> UploadUrlAction(string action, string controller, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = HtmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = HtmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             return UploadUrl(url);
         }
 
         public string ToHtmlString()
         {
-            ModelExplorer metadata = HtmlHelper.GetModelExplorer(Expression);
-            IHtmlContent label = HtmlHelper.LabelFor(Expression, new { @class = "control-label", style = "padding: 0 0 10px 0;" });
-            string id = HtmlHelper.FieldIdFor(Expression); //.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
+            var metadata = HtmlHelper.GetModelExplorer(Expression);
+            var label = HtmlHelper.LabelFor(Expression, new { @class = "control-label", style = "padding: 0 0 10px 0;" });
+            var id = HtmlHelper.FieldIdFor(Expression); //.ViewData.TemplateInfo.GetFullHtmlFieldId(htmlFieldName);
             //string htmlFieldName = ExpressionHelper.GetExpressionText(Expression);
             //string name = HtmlHelper.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
-            string name = HtmlHelper.FieldNameFor(Expression);
-            string value = metadata.Model?.ToString() ?? "";
+            var name = HtmlHelper.FieldNameFor(Expression);
+            var value = metadata.Model?.ToString() ?? "";
 
-            string script = "";
+            var script = "";
             if (JustPartial)
             {
                 script += "<link href=\"" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_css) + "\" rel=\"stylesheet\" />\n\n";
@@ -232,22 +231,22 @@ namespace Microsoft.AspNetCore.Mvc
                 HtmlHelper.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_css) + @""" rel=""stylesheet"" />");
                 HtmlHelper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_js) + @"""></script>");
             }
-            string url = Attributes["uploadUrl"].ToString();
-            string selectIcon = Attributes["selectIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["selectIcon"]);
-            string changeIcon = Attributes["changeIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["changeIcon"]);
-            string removeIcon = Attributes["removeIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["removeIcon"]);
-            string urlImage = Attributes["urlImage"].ToString();
-            string defaultImageValue = Attributes["defaultImage"].ToString();
+            var url = Attributes["uploadUrl"].ToString();
+            var selectIcon = Attributes["selectIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["selectIcon"]);
+            var changeIcon = Attributes["changeIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["changeIcon"]);
+            var removeIcon = Attributes["removeIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["removeIcon"]);
+            var urlImage = Attributes["urlImage"].ToString();
+            var defaultImageValue = Attributes["defaultImage"].ToString();
             if (/*urlImage != "" && */value != "")
             {
                 defaultImageValue = urlImage.Contains("{0}") ? string.Format(urlImage, value) : (urlImage + value);
             }
-            string defaultImage = Attributes["defaultImage"].ToString() == "" ? "" : $@"<img src=""{defaultImageValue}"" />";
-            bool autoUpload = Convert.ToBoolean(Attributes["autoUpload"]);
-            string width = Attributes["width"] + "px";
-            string height = Attributes["height"] + "px";
-            string max = Convert.ToBoolean(Attributes["fixSize"]) ? "" : "max-";
-            string styles = $"{max}width: {width}; {max}height: {height};";
+            var defaultImage = Attributes["defaultImage"].ToString() == "" ? "" : $@"<img src=""{defaultImageValue}"" />";
+            var autoUpload = Convert.ToBoolean(Attributes["autoUpload"]);
+            var width = Attributes["width"] + "px";
+            var height = Attributes["height"] + "px";
+            var max = Convert.ToBoolean(Attributes["fixSize"]) ? "" : "max-";
+            var styles = $"{max}width: {width}; {max}height: {height};";
 
             script += @"
             <script>
@@ -274,16 +273,16 @@ namespace Microsoft.AspNetCore.Mvc
                             }
                         });
                     }).on(""clear.bs.fileinput"", function () {
-                        $(""#" + id + @""").val('" + (value != "" ? value : "") + @"').valid();
+                        $(""#" + id + @""").val('" + value + @"').valid();
                     });" : "") + @"
                 });
             </script>";
 
-            string defaultPreview = Convert.ToBoolean(Attributes["defaultPreview"]) ?
+            var defaultPreview = Convert.ToBoolean(Attributes["defaultPreview"]) ?
                     $@"<div class=""fileinput-new thumbnail"" style=""width:{width}; height: {height}"">
                         {defaultImage}
                     </div>" : "";
-            string result = $@"
+            var result = $@"
             <div id=""{id}_jasnyUpload"" class=""fileinput fileinput-new text-center"" data-provides=""fileinput"">
                 <div>{label.ToHtmlString() }</div>
                     {defaultPreview}

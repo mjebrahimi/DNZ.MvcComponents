@@ -254,43 +254,43 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BsUploadSetting UploadUrlAction(string action)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action });
             return UploadUrl(url);
         }
 
         public BsUploadSetting UploadUrlAction(string action, object routeValues)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             return UploadUrl(url);
         }
 
         public BsUploadSetting UploadUrlAction(string action, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Values = routeValues });
             return UploadUrl(url);
         }
 
         public BsUploadSetting UploadUrlAction(string action, string controller)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller });
             return UploadUrl(url);
         }
 
         public BsUploadSetting UploadUrlAction(string action, string controller, object routeValues)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             return UploadUrl(url);
         }
 
         public BsUploadSetting UploadUrlAction(string action, string controller, RouteValueDictionary routeValues)
         {
-            IUrlHelper urlHelper = _htmlHelper.GetUrlHelper();
-            string url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
+            var urlHelper = _htmlHelper.GetUrlHelper();
+            var url = urlHelper.Action(new UrlActionContext { Action = action, Controller = controller, Values = routeValues });
             return UploadUrl(url);
         }
 

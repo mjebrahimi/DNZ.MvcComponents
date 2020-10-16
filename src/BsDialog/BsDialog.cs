@@ -55,7 +55,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BsDialog Message(Func<object, HelperResult> template)
         {
-            string html = template(null).ToHtmlString().ToJavaScriptString();
+            var html = template(null).ToHtmlString().ToJavaScriptString();
             Attributes["message"] = html;
             SetScript();
             return this;
@@ -204,7 +204,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BsDialog AddButton(string label, string action, string cssClass = null, int hotkey = 0, string icon = null, bool? autospin = null)
         {
-            string str = @"{
+            var str = @"{
             label: '" + label + @"',
             " + (hotkey == 0 ? "" : "hotkey: " + hotkey + ",") + @"
             " + (string.IsNullOrEmpty(cssClass) ? "" : "cssClass: '" + cssClass + "',") + @"
@@ -225,7 +225,7 @@ namespace Microsoft.AspNetCore.Mvc
             }
 
             const string x = ""; //(string.IsNullOrEmpty(callback) ? "" : ", " + callback);
-            Script = @"BootstrapDialog." + method + "(" + this.RenderOptions() + x + ")";
+            Script = $"BootstrapDialog.{method}({this.RenderOptions() + x})";
             if (!ComponentUtility.GetHttpContext().Request.IsAjaxRequest() && HtmlHelper == null)
             {
                 SetScriptTag();

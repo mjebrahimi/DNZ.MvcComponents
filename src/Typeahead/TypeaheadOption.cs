@@ -106,7 +106,7 @@ namespace Microsoft.AspNetCore.Mvc
         public TypeaheadOption Source(IEnumerable<string> source)
         {
             Dictionary = source.ToDictionary(p => p, p => p);
-            string value = ComponentUtility.ToJsonString(source);
+            var value = ComponentUtility.ToJsonString(source);
             return Source(value);
         }
 
@@ -114,14 +114,14 @@ namespace Microsoft.AspNetCore.Mvc
         {
             _source = source;
             SetDictionaryByEnumerable();
-            string value = ComponentUtility.ToJsonString(source);
+            var value = ComponentUtility.ToJsonString(source);
             return Source(value);
         }
 
         public TypeaheadOption Source(Dictionary<int, string> source)
         {
             Dictionary = source.ToDictionary(p => p.Key.ToString(), p => p.Value);
-            string value = ComponentUtility.ToJsonString(source.Select(p => new { id = p.Key, name = p.Value }));
+            var value = ComponentUtility.ToJsonString(source.Select(p => new { id = p.Key, name = p.Value }));
             return Source(value);
         }
 
@@ -132,13 +132,13 @@ namespace Microsoft.AspNetCore.Mvc
         {
             if (Attributes.ContainsKey("valueField") && Attributes["valueField"] != null && Attributes.ContainsKey("displayField") && Attributes["displayField"] != null && _source != null)
             {
-                string valueField = Attributes["valueField"].ToString().Trim('\'');
-                string displayField = Attributes["displayField"].ToString().Trim('\'');
-                Dictionary<string, string> dic = new Dictionary<string, string>();
-                foreach (object item in _source)
+                var valueField = Attributes["valueField"].ToString().Trim('\'');
+                var displayField = Attributes["displayField"].ToString().Trim('\'');
+                var dic = new Dictionary<string, string>();
+                foreach (var item in _source)
                 {
-                    string keyDic = ComponentUtility.GetPropValue<string>(item, valueField);
-                    string valueDic = ComponentUtility.GetPropValue<string>(item, displayField);
+                    var keyDic = ComponentUtility.GetPropValue<string>(item, valueField);
+                    var valueDic = ComponentUtility.GetPropValue<string>(item, displayField);
                     dic.Add(keyDic, valueDic);
                 }
                 Dictionary = dic;

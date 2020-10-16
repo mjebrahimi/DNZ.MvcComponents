@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -17,22 +16,22 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Select2DropDownFor<TModel, TValue, T1, T2>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
-            option = option ?? new Select2Option();
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            object value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
-            SelectList selectList = new SelectList(source, "Key", "Value", value);
-            List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
+            option ??= new Select2Option();
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
+            var selectList = new SelectList(source, "Key", "Value", value);
+            var items = selectList.Cast<SelectListItem>().ToList();
             if (defaultValue.HasValue())
             {
                 items.Insert(0, new SelectListItem { Value = "", Text = defaultValue });
             }
 
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
-            IHtmlContent editor = html.DropDownListFor(expression, items, attributes);
-            string result =
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
+            var editor = html.DropDownListFor(expression, items, attributes);
+            var result =
                 editor.ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
@@ -50,24 +49,24 @@ namespace Microsoft.AspNetCore.Mvc
         }
 
         public static IHtmlContent Select2DropDownFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression,
-            SelectList selectList,string defaultValue = null,
+            SelectList selectList, string defaultValue = null,
             object htmlAttribute = null, Select2Option option = null, bool isLtr = false)
         {
-            option = option ?? new Select2Option(isLtr);
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            object value = metadata.Model;
-            List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
+            option ??= new Select2Option(isLtr);
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var value = metadata.Model;
+            var items = selectList.Cast<SelectListItem>().ToList();
             if (defaultValue.HasValue())
             {
                 items.Insert(0, new SelectListItem { Value = "", Text = defaultValue });
             }
 
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
-            IHtmlContent editor = html.DropDownListFor(expression, items, attributes);
-            string result =
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
+            var editor = html.DropDownListFor(expression, items, attributes);
+            var result =
                 editor.ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
@@ -86,21 +85,21 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Select2DropDownFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, List<SelectListItem> selectList, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
-            option = option ?? new Select2Option();
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            object value = metadata.Model;
-            List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
+            option ??= new Select2Option();
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var value = metadata.Model;
+            var items = selectList.ToList();
             if (defaultValue.HasValue())
             {
                 items.Insert(0, new SelectListItem { Value = "", Text = defaultValue });
             }
 
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
-            IHtmlContent editor = html.DropDownListFor(expression, items, attributes);
-            string result =
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, style = "width: 100%" });
+            var editor = html.DropDownListFor(expression, items, attributes);
+            var result =
                 editor.ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
@@ -119,15 +118,15 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Select2DropDown<T1, T2>(this IHtmlHelper html, string name, T1 value, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
-            option = option ?? new Select2Option();
-            string id = html.GenerateIdFromName(name);
-            SelectList selectList = new SelectList(source, "Key", "Value", value);
-            List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
+            option ??= new Select2Option();
+            var id = html.GenerateIdFromName(name);
+            var selectList = new SelectList(source, "Key", "Value", value);
+            var items = selectList.Cast<SelectListItem>().ToList();
             //if (defaultValue.HasValue())
             //    items.Insert(0, new SelectListItem { Value = null, Text = defaultValue });
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", style = "width: 100%" });
-            IHtmlContent editor = html.DropDownList(name, items, defaultValue, attributes);
-            string result =
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", style = "width: 100%" });
+            var editor = html.DropDownList(name, items, defaultValue, attributes);
+            var result =
                 editor.ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
                 html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
@@ -146,49 +145,49 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Select2ListBoxFor<TModel, TValue, T1, T2>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
         {
-            option = option ?? new Select2Option();
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
-            object value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
-            SelectList selectList = new SelectList(source, "Key", "Value", value);
-            List<SelectListItem> items = selectList.Cast<SelectListItem>().ToList();
+            option ??= new Select2Option();
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var value = metadata.Model;// == null ? null : Convert.ChangeType(metadata.Model, typeof(T1));
+            var selectList = new SelectList(source, "Key", "Value", value);
+            var items = selectList.Cast<SelectListItem>().ToList();
             if (defaultValue.HasValue())
             {
                 items.Insert(0, new SelectListItem { Value = null, Text = defaultValue });
             }
 
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", style = "width: 100%", placeholder = displayName });
-            IHtmlContent editor = html.ListBoxFor(expression, items, attributes);
-            string result =
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", style = "width: 100%", placeholder = displayName });
+            var editor = html.ListBoxFor(expression, items, attributes);
+            var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />") +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />") +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>") +
+                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){
                     $(""#" + id + @""").select2(" + option.RenderOptions() + @");
                 });
-            </script>");
+            </script>").ToHtmlString();
             return new HtmlString(result);
         }
 
         public static IHtmlContent Select2MultipleFor<TModel, TValue, T1, T2, T3, T4>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source1, Dictionary<T3, T4> source2, bool unique = true, string width = "100%", string col1Style = "", string col2Style = "", DropDownType type1 = DropDownType.Selec2DropDown, DropDownType type2 = DropDownType.Selec2DropDown)
         {
-            ModelExplorer metadata = html.GetModelExplorer(expression);
-            string htmlFieldName = html.FieldNameFor(expression);
-            string id = html.FieldIdFor(expression);
-            string name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
-            string displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
+            var metadata = html.GetModelExplorer(expression);
+            var htmlFieldName = html.FieldNameFor(expression);
+            var id = html.FieldIdFor(expression);
+            var name = html.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
+            var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var value = metadata.Model == null ? new List<KeyValuePair<string,string>>() : (IEnumerable<KeyValuePair<string, string>>)metadata.Model ;
-            KeyValuePair<T1, T3>[] value = (((IEnumerable<KeyValuePair<T1, T3>>)metadata.Model) ?? new List<KeyValuePair<T1, T3>>()).ToArray();
-            string id1 = id + "_Select1";
-            string id2 = id + "_Select2";
-            string divId = id + "_MultipleSelect";
-            string template =
+            var value = (((IEnumerable<KeyValuePair<T1, T3>>)metadata.Model) ?? new List<KeyValuePair<T1, T3>>()).ToArray();
+            var id1 = id + "_Select1";
+            var id2 = id + "_Select2";
+            var divId = id + "_MultipleSelect";
+            var template =
                 @"<tr class=""row-multipleSelect"">
                 <td style='" + col1Style + @"'>
                     {0}
@@ -202,8 +201,8 @@ namespace Microsoft.AspNetCore.Mvc
             </tr>";
             const string imgPlus = @"<button class=""btn btn-primary btn-xs add-item""><i class=""fa fa-plus fa-lg""></i></button>";
             const string imgMinus = @"<button class=""btn btn-danger btn-xs remove-item"" style=""opacity: 0.8;""><i class=""fa fa-minus fa-lg""></i></button>";
-            string item1 = "";
-            string item2 = "";
+            var item1 = "";
+            var item2 = "";
             switch (type1)
             {
                 case DropDownType.DropDownList:
@@ -222,19 +221,19 @@ namespace Microsoft.AspNetCore.Mvc
                     item2 = html.Select2DropDown(id2, default, source2).ToHtmlString();
                     break;
             }
-            string result = string.Format(template,
+            var result = string.Format(template,
                 item1 +
                 html.HiddenFor(expression, new { Name = id + "_HiddenInput" }).ToHtmlString() +
                 html.ValidationMessageFor(expression, null, new Dictionary<string, object> { ["data-valmsg-for"] = id + "_HiddenInput" }).ToHtmlString(),
                 item2,
                 imgPlus);
-            for (int i = 0; i < value.Length; i++)
+            for (var i = 0; i < value.Length; i++)
             {
-                KeyValuePair<T1, T3> item = value[i];
-                string name1 = name + string.Format("[{0}].Key", i);
-                string name2 = name + string.Format("[{0}].Value2", i);
-                string text1 = source1[item.Key].ConvertTo<string>();
-                string text2 = source2[item.Value].ConvertTo<string>();
+                var item = value[i];
+                var name1 = name + string.Format("[{0}].Key", i);
+                var name2 = name + string.Format("[{0}].Value2", i);
+                var text1 = source1[item.Key].ConvertTo<string>();
+                var text2 = source2[item.Value].ConvertTo<string>();
                 result += string.Format(template,
                 html.Label("", text1, new { style = "color: black;" }).ToHtmlString() + "\n" +
                 html.Hidden(name1, item.Key).ToHtmlString(),
@@ -242,7 +241,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.Hidden(name2, item.Value).ToHtmlString(),
                 imgMinus);
             }
-            string values = string.Join(", \n", value.Select(p => string.Format("{{ value1: {0}, value2: {1} }}", p.Key, p.Value)));
+            var values = string.Join(", \n", value.Select(p => string.Format("{{ value1: {0}, value2: {1} }}", p.Key, p.Value)));
             html.Script(@"
             <script>
                 $(function(){

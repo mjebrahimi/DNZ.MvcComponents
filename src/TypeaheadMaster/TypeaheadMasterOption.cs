@@ -42,13 +42,13 @@ namespace Microsoft.AspNetCore.Mvc
 
         public TypeaheadMasterOption DataSetSource(IEnumerable<string> source)
         {
-            string value = new Bloodhound().Local(source).Script;
+            var value = new Bloodhound().Local(source).Script;
             return DataSetSource(value);
         }
 
         public TypeaheadMasterOption DataSetSource(Bloodhound bloodhound)
         {
-            string value = bloodhound.Script;
+            var value = bloodhound.Script;
             return DataSetSource(value);
         }
 
@@ -84,13 +84,13 @@ namespace Microsoft.AspNetCore.Mvc
 
         public string RenderOptions()
         {
-            string result = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("option_")).Select(p => p.Key.Replace("option_", "") + ": " + p.Value));
+            var result = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("option_")).Select(p => p.Key.Replace("option_", "") + ": " + p.Value));
             return "{\n" + result + "\n}";
         }
 
         public string RenderDataSetOptions()
         {
-            string result = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("dataset_")).Select(p => p.Key.Replace("dataset_", "") + ": " + p.Value));
+            var result = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("dataset_")).Select(p => p.Key.Replace("dataset_", "") + ": " + p.Value));
             return string.Join(", \n", "{\n" + result + "\n}");
         }
     }

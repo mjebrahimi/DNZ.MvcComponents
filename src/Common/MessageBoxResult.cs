@@ -36,7 +36,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         protected void SetScriptTag()
         {
-            string script = @"<script>
+            var script = @"<script>
                         $(function(){
                             " + Script + @"
                         });

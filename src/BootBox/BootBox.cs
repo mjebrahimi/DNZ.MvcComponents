@@ -41,7 +41,7 @@ namespace Microsoft.AspNetCore.Mvc
         public BootBox AddButton(string label, string callback, string className = null)
         {
             indexButton++;
-            string str = @"{
+            var str = @"{
                     label: '" + label + @"',
                     " + (string.IsNullOrEmpty(className) ? "" : "className: '" + className + "',") + @"
                     callback: " + callback + @"
@@ -82,7 +82,7 @@ namespace Microsoft.AspNetCore.Mvc
                 Attributes["buttons"] = ButtonAttributes.RenderOptions();
             }
 
-            Script = @"bootbox." + type.ToString().ToLower() + "(" + this.RenderOptions() + ");";
+            Script = $"bootbox.{type.ToString().ToLower()}({this.RenderOptions()});";
             if (!ComponentUtility.GetHttpContext().Request.IsAjaxRequest() && HtmlHelper == null)
             {
                 SetScriptTag();

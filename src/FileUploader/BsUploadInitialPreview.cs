@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BsUploadInitialPreview Add(string src, object htmlAttributes)
         {
-            TagBuilder input = new TagBuilder("img");
+            var input = new TagBuilder("img");
             input.Attributes.Add("src", src);
             input.Attributes.Add("style", "width:auto;height:160px;");
             if (htmlAttributes != null)

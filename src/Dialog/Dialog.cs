@@ -172,7 +172,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         protected void SetScript()
         {
-            string script = "";
+            var script = "";
             if (!string.IsNullOrEmpty(method))
             {
                 script += ".modal('" + method + "')";
@@ -188,7 +188,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public override string ToHtmlString()
         {
-            string result =
+            var result =
     @"<div id=""" + id + @""" class=""modal " + animation + " " + size + @""" tabindex=""-1"" role=""dialog"">
     <div class=""modal-dialog"">
         <div class=""modal-content " + type + @""">

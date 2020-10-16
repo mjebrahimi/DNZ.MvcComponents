@@ -4,7 +4,6 @@ using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 //[assembly: WebResource("DNZ.MvcComponents.iCheck.all.css", "text/css", PerformSubstitution = true)]
 namespace Microsoft.AspNetCore.Mvc
@@ -22,14 +21,14 @@ namespace Microsoft.AspNetCore.Mvc
             //var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var name = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
 
-            string id = html.FieldIdFor(expression);
-            string cssClass = " " + style.ToString().ToLower().Replace('_', '-');
+            var id = html.FieldIdFor(expression);
+            var cssClass = " " + style.ToString().ToLower().Replace('_', '-');
             if (value == null)
             {
                 value = "";
             }
 
-            string result =
+            var result =
     html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />").ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
@@ -43,9 +42,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ICheckRadioButtonsFor<TModel>(this IHtmlHelper<TModel> html, Expression<Func<TModel, bool>> expression, List<Tuple<string, string, string>> values, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null)
         {
-            decimal col = Math.Floor(12 / (decimal)values.Count);
-            string result = "";
-            foreach (Tuple<string, string, string> item in values)
+            var col = Math.Floor(12 / (decimal)values.Count);
+            var result = "";
+            foreach (var item in values)
             {
                 result += @"
 <div class=""col-sm-" + col + @""" style=""padding: 0"">
@@ -62,11 +61,11 @@ namespace Microsoft.AspNetCore.Mvc
             //var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             //var name = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(htmlFieldName);
 
-            string id = html.FieldIdFor(expression);
-            string cssClass = " " + style.ToString().ToLower().Replace('_', '-');
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() });
+            var id = html.FieldIdFor(expression);
+            var cssClass = " " + style.ToString().ToLower().Replace('_', '-');
+            var attributes = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() });
 
-            string result =
+            var result =
     html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />").ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
@@ -80,17 +79,17 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ICheckCheckBox<TModel>(this IHtmlHelper<TModel> html, string name, string label = null, bool value = false, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null, object htmlAttributes = null)
         {
-            string id = html.GenerateIdFromName(name);
-            string cssClass = style.ToString().ToLower().Replace('_', '-');
+            var id = html.GenerateIdFromName(name);
+            var cssClass = style.ToString().ToLower().Replace('_', '-');
 
             html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />");
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_js) + @"""></script>");
             html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_custom_js) + @"""></script>");
 
-            Dictionary<string, object> attributes = ComponentUtility.MergeAttributes(new { @class = $"icheck {cssClass}", id }, htmlAttributes);
-            IHtmlContent radioButton = html.CheckBox(name, value, attributes);
-            string iconTag = string.IsNullOrEmpty(icon) ? "" : $@"<i class=""fa {icon}"" style=""font-size: large;""></i>";
-            string result = $@"
+            var attributes = ComponentUtility.MergeAttributes(new { @class = $"icheck {cssClass}", id }, htmlAttributes);
+            var radioButton = html.CheckBox(name, value, attributes);
+            var iconTag = string.IsNullOrEmpty(icon) ? "" : $@"<i class=""fa {icon}"" style=""font-size: large;""></i>";
+            var result = $@"
             <label for=""{id}"">
                 {radioButton.ToHtmlString()}
                 {iconTag}
