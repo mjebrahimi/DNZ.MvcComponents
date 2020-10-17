@@ -23,3 +23,15 @@ Useful UI-Component (HtmlHelper) for ASP.NET Core MVC based-on Popular JavaScrip
 *   [Bootstrap-Maxlength](http://mimo84.github.io/bootstrap-maxlength/)
 *   [Handlebars](https://handlebarsjs.com/)
 *   Bootstrap-PersianDateTimePicker
+
+**Features:**
+
+*   Easy-to-Use with just one line of code.
+*   Fully Configuralbe for each component.
+*   Add necessary CSS (to top) and JS (to down) resources automatically when you use a component and remove tags when you no longer use it.
+*   No need to deal with a specific script code for each component.
+*   Includes a Variety of components.
+*   Usable in View and PartialView.
+*   Usable with Ajax and Non-Ajax requests.
+*   Using CDN resources instead of Locale Embedded resources (Optional).
+*   Lightweight with small footprint.
