@@ -1,0 +1,19 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "DatePicker";
+}
+
+<h2>DatePicker</h2>
+<div>
+    @Html.LabelFor(p => p.BirthDate)
+    <div>
+        @Html.TarikhFarsiFor(p => p.BirthDate)
+    </div>
+</div>
+
+<div>
+    @Html.LabelFor(p => p.FirstName)
+    <div style="width: 350px;">
+        @Html.DatePicker3Part(p => p.FirstName)
+    </div>
+</div>

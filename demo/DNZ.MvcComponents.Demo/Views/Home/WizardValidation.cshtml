@@ -1,0 +1,31 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "WizardValidation";
+}
+
+<h2>Wizard with validation</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.FueluxWizard().AddStep("Step One", @<div>
+        <h1>Wellcom to first step</h1>
+        <div>
+            @Html.LabelFor(p => p.FirstName)
+            <div>
+                @Html.EditorFor(p => p.FirstName)
+                @Html.ValidationMessageFor(p => p.FirstName)
+            </div>
+        </div>
+        <div>
+            @Html.LabelFor(p => p.LastName)
+            <div>
+                @Html.EditorFor(p => p.LastName)
+                @Html.ValidationMessageFor(p => p.LastName)
+            </div>
+        </div>
+    </div>).AddStep("Step Two", @<div>
+        <h2>Wellcom to second step</h2>
+    </div>).AddStep("Step three", @<div>
+        <h3>Wellcom to third step</h3>
+    </div>).ValidateOnStep(true)
+}

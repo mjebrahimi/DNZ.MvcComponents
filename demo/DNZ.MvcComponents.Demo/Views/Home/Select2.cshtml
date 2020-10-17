@@ -1,0 +1,29 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Select2";
+}
+
+<h2>Select2</h2>
+<div style="width: 500px">
+    <div>
+        @Html.LabelFor(p => p.StateId)
+        <div>
+            @Html.Select2DropDownFor(p => p.StateId, Service.GetState())
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.CityId)
+        <div>
+            @Html.Select2ListBoxFor(p => p.CityId, Service.GetCity())
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.StudentClasses)
+        <div>
+            @Html.Select2MultipleFor(p => p.StudentClasses, Service.GetStudents(), Service.GetClasses())
+        </div>
+    </div>
+</div>
+

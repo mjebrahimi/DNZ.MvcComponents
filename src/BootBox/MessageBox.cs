@@ -9,7 +9,7 @@ namespace Microsoft.AspNetCore.Mvc
             return new BootBox().Title(title).Type(BootBoxType.Alert);
         }
 
-        public static BootBox BootBox(string message, string title = "پیغام")
+        public static BootBox BootBox(string message, string title = "پیام")
         {
             return new BootBox().Title(title).Message(message).Type(BootBoxType.Alert);
         }
@@ -24,7 +24,7 @@ namespace Microsoft.AspNetCore.Mvc
             return new BootBox(helper).Title(title).Type(BootBoxType.Alert);
         }
 
-        public static BootBox BootBox(this IHtmlHelper helper, string message, string title = "پیغام")
+        public static BootBox BootBox(this IHtmlHelper helper, string message, string title = "پیام")
         {
             return new BootBox(helper).Title(title).Message(message).Type(BootBoxType.Alert);
         }

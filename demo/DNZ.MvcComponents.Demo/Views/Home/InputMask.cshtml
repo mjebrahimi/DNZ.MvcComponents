@@ -1,0 +1,35 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "InputMask";
+}
+
+<h2>InputMask</h2>
+<style>
+    input{
+        direction: ltr; text-align: left
+    }
+</style>
+<div>
+    <div>فقط فارسی </div>
+    @Html.InputMaskFor(p => p.FirstName, InputMaskType.Farsi)
+</div>
+<div>
+    <div>اعشاری</div>
+    @Html.InputMaskFor(p => p.LastName, InputMaskType.Decimal)
+</div>
+<div>
+    <div>عددی</div>
+    @Html.InputMaskFor(p => p.StateId, InputMaskType.Integer)
+</div>
+<div>
+    <div>IP</div>
+    @Html.InputMaskFor(p => p.CityId, InputMaskType.IP)
+</div>
+<div>
+    <div>Mail</div>
+    @Html.InputMaskFor(p => p.BirthDate, InputMaskType.Mail)
+</div>
+<div>
+    <div>سفارشی</div>
+    @Html.InputMaskFor(p => p.Test).Mask("999-99")
+</div>

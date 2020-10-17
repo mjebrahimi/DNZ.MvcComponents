@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Noty";
+}
+
+<h2>Noty</h2>
+
+<table>
+    <tr>
+        <td>
+            <input type="button" value="Click Me" onclick="@Html.Noty("A message from Client (on click)", MessageType.Warning, layout: MessageAlignment.BottomRight).Script" />
+        </td>
+        <td>
+            @using (Html.BeginForm())
+            {
+                if (Context.Request.Method.ToLower() == "get")
+                {
+                    @Html.Noty("A message from Client (on pageload)").Modal(true).Type(MessageType.Information)
+                }
+                <input type="submit" value="Submit Form" />
+            }
+        </td>
+        @*<td>
+            @using (Ajax.BeginForm(new AjaxOptions()))
+            {
+                <input type="submit" value="Submit Ajax" />
+            }
+        </td>*@
+    </tr>
+</table>

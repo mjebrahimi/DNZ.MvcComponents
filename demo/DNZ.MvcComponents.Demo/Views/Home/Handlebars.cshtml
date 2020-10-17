@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Handlebars";
+}
+
+<div style="direction:ltr; text-align:left">
+    <h2>Handlebars</h2>
+    <p>Handlebars provides the power necessary to let you build semantic templates effectively with no frustration.</p>
+    <p><a href="http://handlebarsjs.com/">more information</a></p>
+    <br />
+    <br />
+    <h4>Handlebars, render json data into your template and generate final HTML. you don't need to generate html manually</h4>
+    <textarea id="txt" style="width: 500px; height:100px; direction:ltr; text-align:left">
+{ "firstname": "MOHAMMAD JAVAD", "lastname": "EBRAHIMI" }
+    </textarea>
+    <br />
+    <br />
+    <input type="button" value="click me" id="btn1" />
+    <br />
+    <br />
+    <div id="div1">
+    </div>
+</div>
+
+@{
+    var myTemplate = Html.CreateHandlebarsTemplate("mytemplate", @<div>
+        <table style="width: initial;">
+            <tr>
+                <td>first name : </td>
+                <td><strong>{{firstname}}</strong></td>
+            </tr>
+            <tr>
+                <td>last name : </td>
+                <td><strong>{{lastname}}</strong></td>
+            </tr>
+        </table>
+    </div>).Render("context");
+}
+@section scripts{
+    <script>
+        $(function () {
+            $("#btn1").click(function () {
+                var context = JSON.parse($("#txt").val())
+                var result = @myTemplate;
+                alert(result);
+                $("#div1").html(result);
+            })
+        })
+    </script>
+}

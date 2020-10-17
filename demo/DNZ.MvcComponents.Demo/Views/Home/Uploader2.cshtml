@@ -1,0 +1,17 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Uploader2";
+}
+
+<h2>Single Uploader</h2>
+<p>
+    <strong>Sync</strong> and <strong>Async</strong> upload supports
+</p>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.JasnyUploaderFor(p => p.ImagePath, action: "UploadFile2", urlImage: "/")
+    </div>
+    <input type="submit" value="submit" />
+}

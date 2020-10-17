@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "SweetAlert";
+}
+
+<h2>SweetAlert</h2>
+
+<table>
+    <tr>
+        <td>
+            <input type="button" value="Click Me" onclick="@Html.SweetAlert("A message from Client (on click)", "Your Title", SweetAlertType.Warning).Script" />
+        </td>
+        <td>
+            @using (Html.BeginForm())
+            {
+                if (Context.Request.Method.ToLower() == "get")
+                {
+                    @Html.SweetAlert("A message from Client (on pageload)").Title("Your Title").Type(SweetAlertType.Info)
+                }
+                <input type="submit" value="Submit Form" />
+            }
+        </td>
+        @*<td>
+            @using (Ajax.BeginForm(new AjaxOptions()))
+            {
+                <input type="submit" value="Submit Ajax" />
+            }
+        </td>*@
+    </tr>
+</table>

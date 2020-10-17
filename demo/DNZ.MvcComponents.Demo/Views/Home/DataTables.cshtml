@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "DataTables";
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">DataTables</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                @Html.DataTables(@<thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام</th>
+                        <th>کلاس</th>
+                    </tr>
+                </thead>, @<tbody>
+                    @{ var index = 0;
+                        var items = Service.GetClasses();
+                         }
+                    @foreach (var aaa in items.Concat(items).Concat(items).Concat(items))
+                    {
+                        index++;
+                        <tr>
+                            <td>@index</td>
+                            <td>محمد جواد</td>
+                            <td>@aaa.Value</td>
+                        </tr>
+                    }
+                </tbody>)
+            </div>
+        </div>
+    </div>
+</div>

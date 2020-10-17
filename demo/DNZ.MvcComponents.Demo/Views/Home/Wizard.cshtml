@@ -1,0 +1,18 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Wizard";
+}
+
+<h2>Basic Wizard</h2>
+
+@Html.FueluxWizard().AddStep("Step One", @<div>
+        <h1>Wellcom to first step</h1>
+        <img src="~/Content/Images/mvc.jpg" />
+    </div>).AddStep("Step Two", @<div>
+        <h2>Wellcom to second step</h2>
+        <img src="~/Content/Images/entity.jpg" />
+    </div>).AddStep("Step three", @<div>
+        <h3>Wellcom to third step</h3>
+        <img src="~/Content/Images/bootstrap.jpg" />
+    </div>)
+

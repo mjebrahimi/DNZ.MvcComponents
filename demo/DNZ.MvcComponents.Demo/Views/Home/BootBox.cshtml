@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "BootBox";
+}
+
+<h2>BootBox</h2>
+
+<table>
+    <tr>
+        <td>
+            <input type="button" value="Click Me" onclick="@Html.BootBox("A message from Client (on click)", BootBoxType.Prompt).Script" />
+        </td>
+        <td>
+            @using (Html.BeginForm())
+            {
+                if (Context.Request.Method.ToLower() == "get")
+                {
+                    @Html.BootBox("Your Title").Message("A message from Client (on pageload)").Type(BootBoxType.Confirm)
+                }
+                <input type="submit" value="Submit Form" />
+            }
+        </td>
+        @*<td>
+            @using (Ajax.BeginForm(new AjaxOptions()))
+            {
+                <input type="submit" value="Submit Ajax" />
+            }
+        </td>*@
+    </tr>
+</table>

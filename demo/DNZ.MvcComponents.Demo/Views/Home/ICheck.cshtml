@@ -1,0 +1,60 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "ICheck";
+}
+
+<h2>iCheck</h2>
+
+<form style="width: 500px; display: inline-block;">
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Flat_Blue)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Flat_Red)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Futurico)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Minimal_Pink)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Minimal_Green)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Polaris)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Square_Yellow)
+    </div>
+    <div>
+        @Html.ICheckCheckBoxFor(p => p.Test, "تست", ICheckStyle.Square_Blue)
+    </div>
+</form>
+
+<form style="width: 500px; display: inline-block;">
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Flat_Blue)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Flat_Red)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Futurico)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Minimal_Pink)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Minimal_Green)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Polaris)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Square_Yellow)
+    </div>
+    <div>
+        @Html.ICheckRadioButtonFor(p => p.Test, "تست", ICheckStyle.Square_Blue)
+    </div>
+</form>

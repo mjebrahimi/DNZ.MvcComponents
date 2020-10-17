@@ -13,7 +13,6 @@ namespace Microsoft.AspNetCore.Mvc
     {
         //https://github.com/biggora/bootstrap-ajax-typeahead
         private const string typeahead_js = "DNZ.MvcComponents.Typeahead.bootstrap-typeahead.js";
-        private const string typeahead_min_js = "DNZ.MvcComponents.Typeahead.bootstrap-typeahead.min.js";
 
         public static IHtmlContent TypeaheadFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable<string> source, object htmlAttributes = null)
         {
@@ -74,7 +73,7 @@ namespace Microsoft.AspNetCore.Mvc
             var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { id = id + "_typeahead", @class = "form-control", placeholder = displayName, autocomplete = "off" });
             var textbox = html.TextBox(name + "_typeahead", txtValue, mergAttr);
             var hidden = html.HiddenFor(expression);
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(typeahead_js) + @"""></script>");
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(typeahead_js, null));
             option.OnSelect(@"function(item) {
                             if ( item.value != ""-21"") {
                                 $(""#" + id + @""").val(item.value).trigger('change').valid();

@@ -235,7 +235,6 @@ namespace Microsoft.AspNetCore.Mvc
 
         public string RenderOptions()
         {
-            var hasRegex = Attributes.ContainsKey("regex");
             var definitions = string.Join(", \n", Attributes.Where(p => p.Key.StartsWith("defin_")).Select(p => p.Value));
             if (definitions.Trim().HasValue())
             {
@@ -243,7 +242,7 @@ namespace Microsoft.AspNetCore.Mvc
             }
 
             var result = string.Join(", \n", Attributes.Where(p => !p.Key.StartsWith("defin_")).Select(p => p.Key + ": " + p.Value));
-            return (hasRegex ? "\"Regex\", " : "") + "{\n" + result + "\n}";
+            return "{\n" + result + "\n}";
         }
     }
 }

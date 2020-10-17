@@ -1,0 +1,17 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Uploader";
+}
+
+<h2>Multi Uploader</h2>
+<p>
+    <strong>Sync</strong> and <strong>Async</strong> upload supports
+</p>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.BsUploadFor(p => p.Images, action: "UploadFile", routeValues: new { accomodationId = 1 }, urlImages: "/")
+    </div>
+<input type="submit" value="submit" />
+}

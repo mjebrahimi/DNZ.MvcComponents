@@ -70,9 +70,9 @@ namespace Microsoft.AspNetCore.Mvc
             var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, attributes);
             var result = helper.TextBoxFor(expression, mergAttr).ToHtmlString(); //input.RenderSelfClosingTag();
 
-            helper.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(PersianDateTimePicker_css) + @""" rel=""stylesheet"" />");
-            helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Jalali_js) + @"""></script>");
-            helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(PersianDateTimePicker_js) + @"""></script>");
+            helper.StyleFileSingle(ComponentUtility.GetCssTag(PersianDateTimePicker_css, null));
+            helper.ScriptFileSingle(ComponentUtility.GetJsTag(Jalali_js, null));
+            helper.ScriptFileSingle(ComponentUtility.GetJsTag(PersianDateTimePicker_js, null));
 
             return new HtmlString(result);
         }

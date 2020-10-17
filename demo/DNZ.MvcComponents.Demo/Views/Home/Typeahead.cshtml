@@ -1,0 +1,16 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Typeahead";
+}
+
+<h2>Typeahead Autocomplete</h2>
+
+
+
+<div style="width: 500px">
+    @Html.TypeaheadMasterFor(p => p.FirstName, Service.GetList())
+</div>
+
+@*<div>
+    @Html.TypeaheadMasterFor(p => p.LastName, Service.GetList())
+</div>*@

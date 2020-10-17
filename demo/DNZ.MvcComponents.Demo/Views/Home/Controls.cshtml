@@ -1,0 +1,28 @@
+﻿@model TestViewModel
+@{
+    ViewData["Title"] = "Controls";
+}
+
+<h2>Form Elements</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AddMaxLenghtPlugin()
+    @Html.AddValidationPlugin()
+    <div class="row">
+        <div class="col-md-12">
+            @Html.BsTextBoxFor(p => p.FirstName, "fa fa-user")
+            @Html.BsPelakFor(p => p.LastName)
+            @Html.BsICheckRadioButtonsFor(p => p.Test, new List<Tuple<string, string, string>>()
+                                                   {
+                                                       Tuple.Create("آقا", "1" ,"fa fa-male"),
+                                                       Tuple.Create("خانم", "2", "fa fa-female")
+                                                   })
+            @Html.BsPersianDatePickerFor(p => p.BirthDate, "fa fa-calendar")
+            @Html.BsPersianDatePicker3PartFor(p => p.StartDate)
+            @Html.BsSelect2DropDownFor(p => p.StateId, Service.GetState(), "انتخاب کنید")
+            <br />
+            <input type="submit" value="Submit" class="btn btn-lg btn-block btn-primary" />
+        </div>
+    </div>
+}
