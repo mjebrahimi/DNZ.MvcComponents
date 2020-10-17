@@ -9,12 +9,15 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class HanderBarTemplate : IHtmlContent
     {
+        //https://handlebarsjs.com/
+        //https://cdnjs.com/libraries/handlebars.js
+        private const string handlebars_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js\" integrity=\"sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw==\" crossorigin=\"anonymous\"></script>";
         private const string handlebars_js = "DNZ.MvcComponents.Handlebars.handlebars.js";
-        private const string handlebars_4_js = "DNZ.MvcComponents.Handlebars.handlebars-v4.0.5.js";
+        //private const string handlebars_4_js = "DNZ.MvcComponents.Handlebars.handlebars-v4.0.5.js";
 
         public HanderBarTemplate(IHtmlHelper helper)
         {
-            helper.ScriptFileSingle(@"<script hand src=""" + ComponentUtility.GetWebResourceUrl(handlebars_js) + @"""></script>");
+            helper.ScriptFileSingle(@"<script hand src=""" + ComponentUtility.GetJsTag(handlebars_js, handlebars_js_cdn) + @"""></script>");
         }
 
         public IHtmlContent Html { get; set; }

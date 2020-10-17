@@ -10,6 +10,10 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class ICheckControls
     {
+        //http://icheck.fronteed.com/
+        //https://cdnjs.com/libraries/iCheck
+        private const string iCheck_all_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.3/skins/all.min.css\" integrity=\"sha512-wcKDxok85zB8F9HzgUwzzzPKJhHG7qMfC7bSKrZcFTC2wZXVhmgKNXYuid02cHVnFSC8KOJCXQ8M83UVA7v5Bw==\" crossorigin=\"anonymous\" />";
+        private const string iCheck_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.3/icheck.min.js\" integrity=\"sha512-RGDpUuNPNGV62jwbX1n/jNVUuK/z/GRbasvukyOim4R8gUEXSAjB4o0gBplhpO8Mv9rr7HNtGzV508Q1LBGsfA==\" crossorigin=\"anonymous\"></script>";
         private const string iCheck_all_css = "DNZ.MvcComponents.iCheck.all.css";
         private const string iCheck_js = "DNZ.MvcComponents.iCheck.icheck.min.js";
         private const string iCheck_custom_js = "DNZ.MvcComponents.iCheck.icheck.custom.js";
@@ -29,14 +33,14 @@ namespace Microsoft.AspNetCore.Mvc
             }
 
             var result =
-    html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />").ToHtmlString()
+    html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
     " + html.RadioButtonFor(expression, value, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() }).ToHtmlString() + @"
     " + (string.IsNullOrEmpty(icon) ? "" : @"<i class=""fa " + icon + @""" style=""font-size: large;""></i>") + " " + label + @"
 </label>"
-     + html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_js) + @"""></script>").ToHtmlString()
-     + html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_custom_js) + @"""></script>").ToHtmlString();
+     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
+     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
             return new HtmlString(result);
         }
 
@@ -66,14 +70,14 @@ namespace Microsoft.AspNetCore.Mvc
             var attributes = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() });
 
             var result =
-    html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />").ToHtmlString()
+    html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
     " + html.CheckBoxFor(expression, attributes).ToHtmlString() + @"
     " + (string.IsNullOrEmpty(icon) ? "" : @"<i class=""fa " + icon + @""" style=""font-size: large;""></i>") + " " + label + @"
 </label>"
-     + html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_js) + @"""></script> ").ToHtmlString()
-     + html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_custom_js) + @"""></script> ").ToHtmlString();
+     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
+     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
             return new HtmlString(result);
         }
 
@@ -82,9 +86,9 @@ namespace Microsoft.AspNetCore.Mvc
             var id = html.GenerateIdFromName(name);
             var cssClass = style.ToString().ToLower().Replace('_', '-');
 
-            html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(iCheck_all_css) + @""" rel=""stylesheet"" />");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_js) + @"""></script>");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(iCheck_custom_js) + @"""></script>");
+            html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn));
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn));
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null));
 
             var attributes = ComponentUtility.MergeAttributes(new { @class = $"icheck {cssClass}", id }, htmlAttributes);
             var radioButton = html.CheckBox(name, value, attributes);

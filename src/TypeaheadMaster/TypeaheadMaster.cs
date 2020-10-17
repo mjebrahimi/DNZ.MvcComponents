@@ -10,9 +10,11 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class TypeaheadMaster
     {
+        //http://twitter.github.io/typeahead.js/
+        //https://cdnjs.com/libraries/typeahead.js
+
+        private const string typeahead_bundle_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js\" integrity=\"sha512-qOBWNAMfkz+vXXgbh0Wz7qYSLZp6c14R0bZeVX2TdQxWpuKr6yHjBIM69fcF8Ve4GUX6B6AKRQJqiiAmwvmUmQ==\" crossorigin=\"anonymous\"></script>";
         private const string typeahead_css = "DNZ.MvcComponents.TypeaheadMaster.typeahead.css";
-        private const string typeahead_jquery_js = "DNZ.MvcComponents.TypeaheadMaster.typeahead.jquery.js";
-        private const string bloodhound_js = "DNZ.MvcComponents.TypeaheadMaster.bloodhound.js";
         private const string typeahead_bundle_js = "DNZ.MvcComponents.TypeaheadMaster.typeahead.bundle.js";
 
         public static IHtmlContent TypeaheadMasterFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, IEnumerable<string> source, object htmlAttributes = null)
@@ -66,8 +68,8 @@ namespace Microsoft.AspNetCore.Mvc
             var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "form-control", placeholder = displayName, autocomplete = "off" });
             var editor = html.TextBoxFor(expression, mergAttr);
-            html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(typeahead_css) + @""" rel=""stylesheet"" />");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(typeahead_bundle_js) + @"""></script>");
+            html.StyleFileSingle(ComponentUtility.GetCssTag(typeahead_css, null));
+            html.ScriptFileSingle(ComponentUtility.GetCssTag(typeahead_bundle_js, typeahead_bundle_js_cdn));
             html.Script(@"
             <script>
                 $(function(){

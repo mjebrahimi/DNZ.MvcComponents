@@ -11,6 +11,7 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class TypeaheadHelper
     {
+        //https://github.com/biggora/bootstrap-ajax-typeahead
         private const string typeahead_js = "DNZ.MvcComponents.Typeahead.bootstrap-typeahead.js";
         private const string typeahead_min_js = "DNZ.MvcComponents.Typeahead.bootstrap-typeahead.min.js";
 

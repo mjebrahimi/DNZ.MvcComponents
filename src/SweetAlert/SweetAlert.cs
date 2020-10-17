@@ -7,15 +7,21 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class SweetAlert : MessageBoxResult
     {
-        private const string sweetalert_css = "DNZ.MvcComponents.SweetAlert.sweetalert.css";
+        //https://sweetalert.js.org/
+        //https://cdnjs.com/libraries/sweetalert
+        //sweetalert2
+        //https://sweetalert2.github.io/
+        //https://cdnjs.com/libraries/limonte-sweetalert2
+        private const string sweetalert_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js\" integrity=\"sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==\" crossorigin=\"anonymous\"></script>";
+        //private const string sweetalert_css = "DNZ.MvcComponents.SweetAlert.sweetalert.css";
         private const string sweetalert_js = "DNZ.MvcComponents.SweetAlert.sweetalert-dev.js";
-        private const string sweetalert_min_js = "DNZ.MvcComponents.SweetAlert.sweetalert.min.js";
+
         private string function;
 
         public SweetAlert(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(sweetalert_css) + @""" rel=""stylesheet"" />");
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(sweetalert_js) + @"""></script>");
+            //RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(sweetalert_css, null));
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(sweetalert_js, sweetalert_js_cdn));
         }
 
         public SweetAlert Function(string value)

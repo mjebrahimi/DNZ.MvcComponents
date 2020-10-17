@@ -10,6 +10,18 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class TagAutocompleteHelper
     {
+        //https://blog.sandglaz.com/bootstrap-tagautocomplete/
+        //https://getbootstrap.com/2.3.2/javascript.html#typeahead
+        //Bootstrap-3-Typeahead
+        //https://github.com/bassjobsen/Bootstrap-3-Typeahead
+        //https://cdnjs.com/libraries/bootstrap-3-typeahead
+        //Caret.js
+        //https://github.com/ichord/Caret.js
+        //https://cdnjs.com/libraries/Caret.js
+        //rangy
+        //https://github.com/timdown/rangy
+        //https://cdnjs.com/libraries/rangy
+
         private const string Bootstrap_Typeahead_js = "DNZ.MvcComponents.TagAutocomplete.bootstrap-typeahead.js";
         private const string Rangy_Core_js = "DNZ.MvcComponents.TagAutocomplete.rangy-core.js";
         private const string Caret_Position_js = "DNZ.MvcComponents.TagAutocomplete.caret-position.js";
@@ -51,10 +63,10 @@ namespace Microsoft.AspNetCore.Mvc
             tag.InnerHtml.SetContent(value.ToString());
             var editor = html.HiddenFor(expression);
 
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Bootstrap_Typeahead_js) + @"""></script>");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Rangy_Core_js) + @"""></script>");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Caret_Position_js) + @"""></script>");
-            html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(Bootstrap_Tagautocomplete_js) + @"""></script>");
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(Bootstrap_Typeahead_js, null));
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(Rangy_Core_js, null));
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(Caret_Position_js, null));
+            html.ScriptFileSingle(ComponentUtility.GetJsTag(Bootstrap_Tagautocomplete_js, null));
             html.Script(@"
             <script>
                 $(function(){

@@ -9,10 +9,12 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class BsDialog : MessageBoxResult
     {
-        private const string BsDialog_css = "DNZ.MvcComponents.BsDialog.css.bootstrap-dialog.css";
+        //http://nakupanda.github.io/bootstrap3-dialog
+        //https://cdnjs.com/libraries/bootstrap3-dialog
+        private const string BsDialog_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/css/bootstrap-dialog.min.css\" integrity=\"sha512-PvZCtvQ6xGBLWHcXnyHD67NTP+a+bNrToMsIdX/NUqhw+npjLDhlMZ/PhSHZN4s9NdmuumcxKHQqbHlGVqc8ow==\" crossorigin=\"anonymous\" />";
+        private const string BsDialog_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/js/bootstrap-dialog.min.js\" integrity=\"sha512-LbO5ZwEjd9FPp4KVKsS6fBk2RRvKcXYcsHatEapmINf8bMe9pONiJbRWTG9CF/WDzUig99yvvpGb64dNQ27Y4g==\" crossorigin=\"anonymous\"></script>";
         private const string BsDialog_min_css = "DNZ.MvcComponents.BsDialog.css.bootstrap-dialog.min.css";
-        private const string BsDialog_js = "DNZ.MvcComponents.BsDialog.js.bootstrap-dialog.js";
-        private const string BsDialog_mi_js = "DNZ.MvcComponents.BsDialog.js.bootstrap-dialog.min.js";
+        private const string BsDialog_min_js = "DNZ.MvcComponents.BsDialog.js.bootstrap-dialog.min.js";
         private string method = "";
         //private string callback = "";
         public Dictionary<string, object> ButtonAttributes { get; set; }
@@ -20,8 +22,8 @@ namespace Microsoft.AspNetCore.Mvc
         public BsDialog(IHtmlHelper helper = null) : base(helper)
         {
             ButtonAttributes = new Dictionary<string, object>();
-            RenderScriptAndStyle.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(BsDialog_min_css) + @""" rel=""stylesheet"" />");
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(BsDialog_mi_js) + @"""></script>");
+            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(BsDialog_min_css, BsDialog_css_cdn));
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(BsDialog_min_js, BsDialog_js_cdn));
             Method(BsMethod.Show);
         }
 

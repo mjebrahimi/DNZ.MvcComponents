@@ -7,14 +7,16 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class Noty : MessageBoxResult
     {
-        private const string noty_js = "DNZ.MvcComponents.Noty.jquery.noty.js";
-        private const string noty_packaged_js = "DNZ.MvcComponents.jquery.noty.packaged.js";
+        //https://ned.im/noty/
+        //https://cdnjs.com/libraries/noty
+        //https://cdnjs.com/libraries/jquery-noty
+        private const string noty_packaged_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.4.1/packaged/jquery.noty.packaged.min.js\" integrity=\"sha512-deW7s7mlh1kdsULBlS05epcSl1Zze2KafJ4KH5kyOP3MkAYCbVC3lrVYoQ2lM1AlaWR3jYm+Myiad2sluDPoEg==\" crossorigin=\"anonymous\"></script>";
         private const string noty_packaged_min_js = "DNZ.MvcComponents.Noty.jquery.noty.packaged.min.js";
         public Dictionary<string, object> ButtonAttributes { get; set; }
 
         public Noty(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(noty_packaged_min_js) + @"""></script>");
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(noty_packaged_min_js, noty_packaged_js_cdn));
             ButtonAttributes = new Dictionary<string, object>();
         }
 

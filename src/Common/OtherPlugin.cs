@@ -6,11 +6,14 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class OtherPlugin
     {
+        //https://cdnjs.com/libraries/bootstrap-maxlength
+        //http://mimo84.github.io/bootstrap-maxlength/
+        private const string bootstrap_maxlength_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-maxlength/1.10.0/bootstrap-maxlength.min.js\" integrity=\"sha512-04L+TAgzlDAaUpaEGriEBg/qEryUjw4GNL/FkxA3h621EFPycccO2Y8vNhvid9UhgGC/9+MHLAFwGythpvOAAQ==\" crossorigin=\"anonymous\"></script>";
         private const string bootstrap_maxlength_js = "DNZ.MvcComponents.MaxLenght.bootstrap-maxlength.js";
 
         public static IHtmlContent AddMaxLenghtPlugin(this IHtmlHelper helper)
         {
-            var result = helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(bootstrap_maxlength_js) + @"""></script>").ToHtmlString() +
+            var result = helper.ScriptFileSingle(ComponentUtility.GetJsTag(bootstrap_maxlength_js, bootstrap_maxlength_js_cdn)).ToHtmlString() +
     helper.ScriptSingle("MaxLenghtPlugin", @"
 <script>
     $(function(){

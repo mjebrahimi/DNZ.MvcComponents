@@ -11,6 +11,12 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class BootstrapUploadHelper
     {
+        //https://plugins.krajee.com/file-input
+        //https://cdnjs.com/libraries/bootstrap-fileinput
+        private const string fileinput_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/css/fileinput.min.css\" integrity=\"sha512-KrsXJaSKHqHogNzPCOHPvkyvH4ZQGzUcR/Q6R3qywbdtrvOHPuPz9iRIoJoiKguuIgkDGsj+PwPh3QKnlwwQPA==\" crossorigin=\"anonymous\" />";
+        private const string fileinput_rtl_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/css/fileinput-rtl.min.css\" integrity=\"sha512-4WMzB1hPkUhmbQGzhLBpnj/zOaKExiFge5OQ1O+2pOBABe8jxnvYxxGMMWwGBzsaTMg7m+qJ+5w+Kx00twTWjw==\" crossorigin=\"anonymous\" />";
+        private const string fileinput_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/fileinput.min.js\" integrity=\"sha512-wvbv0QlgtUZ1jkgRfB7HNUICt+27sqAUh2IwVJXfN9q7rtrmgbdI6LQjhzurdLo1+vxO645+GY+Kq8Vop0WA4w==\" crossorigin=\"anonymous\"></script>";
+        private const string fileinput_locale_fa_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.1.2/js/locales/fa.min.js\" integrity=\"sha512-y4nBJrp9k1LBB2NTZsVdtc92qR84xFSAQAMPOo64VZhN/f1nI3+6LbDUDcGTyzwB5Agqubeb8SeHKQnu/gRvOg==\" crossorigin=\"anonymous\"></script>";
         private const string fileinput_css = "DNZ.MvcComponents.FileUploader.css.fileinput.css";
         private const string custom_fileinput_css = "DNZ.MvcComponents.FileUploader.css.custom-fileinput.css";
         private const string fileinput_js = "DNZ.MvcComponents.FileUploader.js.fileinput.js";
@@ -66,11 +72,12 @@ namespace Microsoft.AspNetCore.Mvc
     <div id=""" + id + @"_hidden""></div>
 </div>
 
-" + html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(fileinput_css) + @""" rel=""stylesheet"" />").ToHtmlString() + @"
-" + html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(custom_fileinput_css) + @""" rel=""stylesheet"" />").ToHtmlString() + @"
+" + html.StyleFileSingle(ComponentUtility.GetCssTag(fileinput_css, fileinput_css_cdn)).ToHtmlString() + @"
+" + html.StyleFileSingle(ComponentUtility.GetCssTag(null, fileinput_rtl_css_cdn)).ToHtmlString() + @"
+" + html.StyleFileSingle(ComponentUtility.GetCssTag(custom_fileinput_css, null)).ToHtmlString() + @"
 
-" + html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(fileinput_js) + @"""></script>").ToHtmlString() + @"
-" + html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(fileinput_locale_fa_js) + @"""></script>").ToHtmlString() + @"
+" + html.ScriptFileSingle(ComponentUtility.GetJsTag(fileinput_js, fileinput_js_cdn)).ToHtmlString() + @"
+" + html.ScriptFileSingle(ComponentUtility.GetJsTag(fileinput_locale_fa_js, fileinput_locale_fa_js_cdn)).ToHtmlString() + @"
 
 " + html.Script(@"
 <script>

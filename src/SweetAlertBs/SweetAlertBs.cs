@@ -7,15 +7,18 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class SweetAlertBs : MessageBoxResult
     {
+        //https://lipis.github.io/bootstrap-sweetalert/
+        //https://cdnjs.com/libraries/bootstrap-sweetalert
+        private const string sweetalert_bs_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css\" integrity=\"sha512-hwwdtOTYkQwW2sedIsbuP1h0mWeJe/hFOfsvNKpRB3CkRxq8EW7QMheec1Sgd8prYxGm1OM9OZcGW7/GUud5Fw==\" crossorigin=\"anonymous\" />";
+        private const string sweetalert_bs_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js\" integrity=\"sha512-MqEDqB7me8klOYxXXQlB4LaNf9V9S0+sG1i8LtPOYmHqICuEZ9ZLbyV3qIfADg2UJcLyCm4fawNiFvnYbcBJ1w==\" crossorigin=\"anonymous\"></script>";
         private const string sweetalert_bs_css = "DNZ.MvcComponents.SweetAlertBs.sweet-alert.css";
-        private const string sweetalert_bs_js = "DNZ.MvcComponents.SweetAlertBs.sweet-alert.js";
         private const string sweetalert_bs_min_js = "DNZ.MvcComponents.SweetAlertBs.sweet-alert.min.js";
         private string function;
 
         public SweetAlertBs(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(sweetalert_bs_css) + @""" rel=""stylesheet"" />");
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(sweetalert_bs_min_js) + @"""></script>");
+            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(sweetalert_bs_css, sweetalert_bs_css_cdn));
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(sweetalert_bs_min_js, sweetalert_bs_js_cdn));
 
             ConfirmButtonClass("btn btn-primary");
         }

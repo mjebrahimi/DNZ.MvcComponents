@@ -10,8 +10,12 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public static class Select2Controls
     {
-        private const string select2_css = "DNZ.MvcComponents.Select2.select2.css";
+        //https://select2.org/
+        //https://cdnjs.com/libraries/select2
+        private const string select2_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css\" integrity=\"sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==\" crossorigin=\"anonymous\" />";
+        private const string select2_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js\" integrity=\"sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==\" crossorigin=\"anonymous\"></script>";
         private const string select2_custom_css = "DNZ.MvcComponents.Select2.select2.custom.css";
+        private const string select2_css = "DNZ.MvcComponents.Select2.select2.css";
         private const string select2_js = "DNZ.MvcComponents.Select2.select2.full.js";
 
         public static IHtmlContent Select2DropDownFor<TModel, TValue, T1, T2>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Dictionary<T1, T2> source, string defaultValue = null, object htmlAttribute = null, Select2Option option = null)
@@ -33,10 +37,10 @@ namespace Microsoft.AspNetCore.Mvc
             var editor = html.DropDownListFor(expression, items, attributes);
             var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
+                html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
                 html.Script(@"
             <script>
                 $(function(){
@@ -68,10 +72,10 @@ namespace Microsoft.AspNetCore.Mvc
             var editor = html.DropDownListFor(expression, items, attributes);
             var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
+                html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
                 html.Script(@"
             <script>
                 $(function(){
@@ -101,10 +105,10 @@ namespace Microsoft.AspNetCore.Mvc
             var editor = html.DropDownListFor(expression, items, attributes);
             var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
+                html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
                 html.Script(@"
             <script>
                 $(function(){
@@ -128,10 +132,10 @@ namespace Microsoft.AspNetCore.Mvc
             var editor = html.DropDownList(name, items, defaultValue, attributes);
             var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
+                html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
                 html.Script(@"
             <script>
                 $(function(){
@@ -162,9 +166,9 @@ namespace Microsoft.AspNetCore.Mvc
             var editor = html.ListBoxFor(expression, items, attributes);
             var result =
                 editor.ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(select2_custom_css) + @""" rel=""stylesheet"" />").ToHtmlString() +
-                html.ScriptFileSingle(@" <script src=""" + ComponentUtility.GetWebResourceUrl(select2_js) + @"""></script>").ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
+                html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
+                html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
                 (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
                 html.Script(@"
             <script>

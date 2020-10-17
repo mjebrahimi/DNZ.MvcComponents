@@ -10,6 +10,10 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class InputMaskOption<TModel, TValue> : BaseComponent, IOptionBuilder
     {
+        //https://robinherbots.github.io/Inputmask/
+        //https://cdnjs.com/libraries/inputmask
+        //https://cdnjs.com/libraries/jquery.inputmask
+        private const string inputmask_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js\" integrity=\"sha512-VpQwrlvKqJHKtIvpL8Zv6819FkTJyE1DoVNH0L2RLn8hUPjRjkS/bCYurZs0DX9Ybwu9oHRHdBZR9fESaq8Z8A==\" crossorigin=\"anonymous\"></script>";
         private const string inputmask_js = "DNZ.MvcComponents.InputMask.jquery.inputmask.bundle.js";
 
         private readonly IHtmlHelper<TModel> _htmlHelper;
@@ -219,7 +223,7 @@ namespace Microsoft.AspNetCore.Mvc
                 id = _htmlHelper.FieldIdFor(_expression);
                 editor = _htmlHelper.TextBoxFor(_expression, _htmlAttributes);
             }
-            _htmlHelper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(inputmask_js) + @"""></script>");
+            _htmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(inputmask_js, inputmask_js_cdn));
             _htmlHelper.Script(@"
             <script>
                 $(function(){

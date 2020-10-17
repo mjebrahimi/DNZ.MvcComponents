@@ -7,16 +7,21 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class Toastr : MessageBoxResult
     {
+        //https://codeseven.github.io/toastr/demo.html
+        //https://codeseven.github.io/toastr/
+        private const string toastr_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css\" integrity=\"sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==\" crossorigin=\"anonymous\" />";
+        private const string toastr_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js\" integrity=\"sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==\" crossorigin=\"anonymous\"></script>";
         private const string toastr_css = "DNZ.MvcComponents.Toastr.toastr.min.css";
         private const string toastr_js = "DNZ.MvcComponents.Toastr.toastr.min.js";
+
         private string type = string.Format("'{0}'", nameof(ToastrType.Info).ToLower());
         private string title = "''";
         private string text = "''";
 
         public Toastr(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(toastr_css) + @""" rel=""stylesheet"" />");
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(toastr_js) + @"""></script>");
+            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(toastr_css, toastr_css_cdn));
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(toastr_js, toastr_js_cdn));
         }
 
         public Toastr Title(string value)

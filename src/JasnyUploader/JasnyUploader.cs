@@ -13,10 +13,12 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class JasnyUploaderOption<TModel, TValue> : IOptionBuilder, IHtmlContent
     {
+        //https://www.jasny.net/bootstrap/
+        //https://cdnjs.com/libraries/jasny-bootstrap
+        private const string jasny_bootstrap_css_cdn = "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/css/jasny-bootstrap.min.css\" integrity=\"sha512-VUj0sZbQFPixq7NJ6ioBRK/scakfsdlKl647mLmZaZHWPgpnrWvIfy80/QF3q1l+kozBc8IHrTEoiZY25PSUTw==\" crossorigin=\"anonymous\" />";
+        private const string jasny_bootstrap_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/js/jasny-bootstrap.min.js\" integrity=\"sha512-T+qL8JzVjquTv+yKR64v+58O+GVCe7A68gbJTzFVs76I7iAcgwisXKyOTaeKZaekcHeiG65p48NDqcMmPgnvIA==\" crossorigin=\"anonymous\"></script>";
         private const string jasny_bootstrap_css = "DNZ.MvcComponents.JasnyUploader.css.jasny-bootstrap.css";
-        private const string jasny_bootstrap_css_min = "DNZ.MvcComponents.JasnyUploader.css.jasny-bootstrap.min.css";
         private const string jasny_bootstrap_js = "DNZ.MvcComponents.JasnyUploader.js.jasny-bootstrap.js";
-        private const string jasny_bootstrap_min_js = "DNZ.MvcComponents.JasnyUploader.js.jasny-bootstrap.min.js";
 
         public IHtmlHelper<TModel> HtmlHelper { get; set; }
         public Expression<Func<TModel, TValue>> Expression { get; set; }
@@ -223,13 +225,13 @@ namespace Microsoft.AspNetCore.Mvc
             var script = "";
             if (JustPartial)
             {
-                script += "<link href=\"" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_css) + "\" rel=\"stylesheet\" />\n\n";
-                script += "<script src=\"" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_js) + "\"></script>\n";
+                script += ComponentUtility.GetCssTag(jasny_bootstrap_css, jasny_bootstrap_css_cdn) + "\n";
+                script += ComponentUtility.GetJsTag(jasny_bootstrap_js, jasny_bootstrap_js_cdn) + "\n";
             }
             else
             {
-                HtmlHelper.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_css) + @""" rel=""stylesheet"" />");
-                HtmlHelper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(jasny_bootstrap_js) + @"""></script>");
+                HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(jasny_bootstrap_css, jasny_bootstrap_css_cdn));
+                HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(jasny_bootstrap_js, jasny_bootstrap_js_cdn));
             }
             var url = Attributes["uploadUrl"].ToString();
             var selectIcon = Attributes["selectIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["selectIcon"]);
@@ -253,7 +255,7 @@ namespace Microsoft.AspNetCore.Mvc
                 $(function(){
                     var changedCount = 0;
                     var clearedCount = 0;
-                    $(""#" + id + @"_jasnyUpload"").jasnyfileinput()" + ((autoUpload && url != "") ? @"
+                    $(""#" + id + @"_jasnyUpload"").fileinput()" + ((autoUpload && url != "") ? @"
                     .on(""change.bs.fileinput"", function () {
                         $('<div class=""jasny-loading " + Attributes["loadingImage"] + @""" ></div>').insertAfter($(this).find("".fileinput-preview img""));
                         var hidden = $(""#" + id + @""");

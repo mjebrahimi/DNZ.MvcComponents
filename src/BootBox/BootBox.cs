@@ -6,6 +6,9 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class BootBox : MessageBoxResult
     {
+        //http://bootboxjs.com/
+        //https://cdnjs.com/libraries/bootbox.js
+        private const string bootbox_js_cdn = "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.4.1/bootbox.min.js\" integrity=\"sha512-eoo3vw71DUo5NRvDXP/26LFXjSFE1n5GQ+jZJhHz+oOTR4Bwt7QBCjsgGvuVMQUMMMqeEvKrQrNEI4xQMXp3uA==\" crossorigin=\"anonymous\"></script>";
         private const string bootbox_js = "DNZ.MvcComponents.BootBox.bootbox.js";
         private int indexButton;
         private BootBoxType type;
@@ -13,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BootBox(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(bootbox_js) + @"""></script>");
+            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(bootbox_js, bootbox_js_cdn));
             ButtonAttributes = new Dictionary<string, object>();
         }
 

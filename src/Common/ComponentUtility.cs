@@ -28,16 +28,38 @@ namespace DNZ.MvcComponents
     public static class ComponentUtility
     {
         private const string path = "/DNZ.MvcComponents";
-        internal static IServiceProvider ApplicationServiceProvider { get; private set; }
+        private static IServiceProvider ApplicationServiceProvider;
+        private static bool UseCdn;
 
-        public static IServiceCollection AddMvcComponents(this IServiceCollection services)
+        public static IServiceCollection AddMvcComponents(this IServiceCollection services, bool useCdn = true)
         {
+            UseCdn = useCdn;
             services.AddHttpContextAccessor();
             services.TryAddSingleton<HttpContextAccessor>();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddSingleton<ActionContextAccessor>();
 
             return services;
+        }
+
+        public static string GetCssTag(string localUrl, string cdnTag)
+        {
+            if (localUrl == null)
+                return cdnTag;
+            if (cdnTag == null)
+                return "<link href=\"" + GetWebResourceUrl(localUrl) + "\" rel=\"stylesheet\" />";
+
+            return UseCdn ? cdnTag : "<link href=\"" + GetWebResourceUrl(localUrl) + "\" rel=\"stylesheet\" />";
+        }
+
+        public static string GetJsTag(string localUrl, string cdnTag)
+        {
+            if (localUrl == null)
+                return cdnTag;
+            if (cdnTag == null)
+                return "<script src=\"" + GetWebResourceUrl(localUrl) + "\"></script>";
+
+            return UseCdn ? cdnTag : "<script src=\"" + GetWebResourceUrl(localUrl) + "\"></script>";
         }
 
         public static IApplicationBuilder UseMvcComponents(this IApplicationBuilder appBuilder)
