@@ -4,16 +4,16 @@ Useful UI-Component (HtmlHelper) for ASP.NET Core MVC based-on Popular JavaScrip
 
 **Includes:**
 
-*   Select2
-*   CKEditor
-*   DataTables
+*   [Select2](https://select2.org/)
+*   [CKEditor](https://ckeditor.com/)
+*   [DataTables](https://datatables.net/)
 *   iCheck
 *   SweetAlert
 *   SweetAlert-Bootstrap
 *   Noty
 *   Toaster
-*   Bootstrap-Dialog
-*   BootBox
+*   [Bootstrap3-Dialog](http://nakupanda.github.io/bootstrap3-dialog)
+*   [BootBox](http://bootboxjs.com/)
 *   InputMask
 *   Bootstrap-TagAutoComplete
 *   TypeAhead
