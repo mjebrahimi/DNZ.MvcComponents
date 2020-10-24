@@ -95,7 +95,7 @@ namespace Microsoft.AspNetCore.Mvc
                            " + mask2.ToHtmlString() + @" 
                            " + html.HiddenFor(expression).ToHtmlString() + @"
                        </div>";
-            html.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(pelak_css) + @""" rel=""stylesheet"" />");
+            html.StyleFileSingle(ComponentUtility.GetCssTag(pelak_css, null));
             html.Script(@"
             <script>
                 $(function(){

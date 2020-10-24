@@ -40,7 +40,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
                 html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
-                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
+                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(ComponentUtility.GetJsTag(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\'')), null)).ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){
@@ -75,7 +75,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
                 html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
-                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
+                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(ComponentUtility.GetJsTag(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\'')), null)).ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){
@@ -108,7 +108,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
                 html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
-                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
+                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(ComponentUtility.GetJsTag(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\'')), null)).ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){
@@ -135,7 +135,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
                 html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
-                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
+                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(ComponentUtility.GetJsTag(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\'')), null)).ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){
@@ -169,7 +169,7 @@ namespace Microsoft.AspNetCore.Mvc
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_css, select2_css_cdn)).ToHtmlString() +
                 html.StyleFileSingle(ComponentUtility.GetCssTag(select2_custom_css, null)).ToHtmlString() +
                 html.ScriptFileSingle(ComponentUtility.GetJsTag(select2_js, select2_js_cdn)).ToHtmlString() +
-                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\''))) + @"""></script>").ToHtmlString()) +
+                (option.Attributes["language"] == null ? "" : html.ScriptFileSingle(ComponentUtility.GetJsTag(string.Format("DNZ.MvcComponents.Select2.i18n.{0}.js", option.Attributes["language"].ToString().Trim('\'')), null)).ToHtmlString()) +
                 html.Script(@"
             <script>
                 $(function(){

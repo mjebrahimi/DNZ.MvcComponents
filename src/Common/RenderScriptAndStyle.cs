@@ -5,26 +5,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using DNZ.MvcComponents;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
+using System.IO;
+using System.Text.Encodings.Web;
 
 namespace Microsoft.AspNetCore.Mvc
 {
-    public class HtmlContent : IHtmlContent
+    public class LazyHtmlContent : IHtmlContent
     {
         private readonly Func<string> _func;
-
-        public HtmlContent(Func<string> func)
+        public LazyHtmlContent(Func<string> func)
         {
             _func = func;
         }
-
         public void WriteTo(TextWriter writer, HtmlEncoder encoder)
         {
-            var result = _func();
+            string result = _func();
             writer.WriteLine(result);
         }
     }
@@ -103,12 +101,12 @@ namespace Microsoft.AspNetCore.Mvc
         // ===============================================================================
         public static IHtmlContent RenderScripts(this IHtmlHelper htmlHelper)
         {
-            return new HtmlContent(() =>
+            return new LazyHtmlContent(() =>
             {
-                var stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder();
                 foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_script_")).OrderBy(p => p))
                 {
-                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
                     if (template.Value != null)
                     {
                         stringBuilder.AppendLine(template.Value);
@@ -120,12 +118,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent RenderStyles(this IHtmlHelper htmlHelper)
         {
-            return new HtmlContent(() =>
+            return new LazyHtmlContent(() =>
             {
-                var stringBuilder = new StringBuilder();
+                StringBuilder stringBuilder = new StringBuilder();
                 foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_style_")).OrderBy(p => p))
                 {
-                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
                     if (template.Value != null)
                     {
                         stringBuilder.AppendLine(template.Value);

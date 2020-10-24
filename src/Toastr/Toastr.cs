@@ -103,7 +103,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Toastr PositionClass(ToastrAlignment value)
         {
-            Attributes["positionClass"] = string.Format("'{0}'", value.ToDescription());
+            Attributes["positionClass"] = string.Format("'{0}'", value.ToDisplayName());
             SetScript();
             return this;
         }

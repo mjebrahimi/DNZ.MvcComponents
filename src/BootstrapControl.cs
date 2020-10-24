@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
+using System.Globalization;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -270,8 +271,10 @@ namespace Microsoft.AspNetCore.Mvc
         {
             string displayName = null;
             SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+            var model = html.GetModelExplorer(expression).Model as IFormattable;
+            var value = model?.ToString("yyyy/MM/dd", CultureInfo.GetCultureInfo("fa-IR"));
             var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
-            var editor = html.TarikhFarsiFor(expression, attributes, false);
+            var editor = html.PersianDateTimePickerFor(expression, value, attributes).Theme(DateRangePickerTheme.RTL_Blue);
             var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
             return new HtmlString(result);
         }
@@ -280,20 +283,42 @@ namespace Microsoft.AspNetCore.Mvc
         {
             string displayName = null;
             SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+            var model = html.GetModelExplorer(expression).Model as IFormattable;
+            var value = model?.ToString("yyyy/MM/dd HH:mm", CultureInfo.GetCultureInfo("fa-IR"));
             var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
-            var editor = html.TarikhFarsiFor(expression, attributes, true);
+            var editor = html.PersianDateTimePickerFor(expression, value, attributes).Theme(DateRangePickerTheme.RTL_Blue);
             var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
             return new HtmlString(result);
         }
 
-        public static IHtmlContent BsPersianDatePicker3PartFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int lowYear = -5, int highYear = +5, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4)
-        {
-            string displayName = null;
-            SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
-            var editor = html.DatePicker3Part(expression, lowYear, highYear);
-            var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
-            return new HtmlString(result);
-        }
+        //public static IHtmlContent BsPersianDatePickerFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4, object htmlAttribute = null)
+        //{
+        //    string displayName = null;
+        //    SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+        //    var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
+        //    var editor = html.TarikhFarsiFor(expression, attributes, false);
+        //    var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
+        //    return new HtmlString(result);
+        //}
+
+        //public static IHtmlContent BsPersianDateTimePickerFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4, object htmlAttribute = null)
+        //{
+        //    string displayName = null;
+        //    SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+        //    var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
+        //    var editor = html.TarikhFarsiFor(expression, attributes, true);
+        //    var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
+        //    return new HtmlString(result);
+        //}
+
+        //public static IHtmlContent BsPersianDatePicker3PartFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, int lowYear = -5, int highYear = +5, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4)
+        //{
+        //    string displayName = null;
+        //    SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+        //    var editor = html.DatePicker3Part(expression, lowYear, highYear);
+        //    var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
+        //    return new HtmlString(result);
+        //}
 
         public static IHtmlContent BsICheckRadioButtonsFor<TModel>(this IHtmlHelper<TModel> html, Expression<Func<TModel, bool>> expression, List<Tuple<string, string, string>> values, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4)
         {
@@ -357,11 +382,12 @@ namespace Microsoft.AspNetCore.Mvc
 
             value = expression == null ? null : metadata.Model;
 
-            var direction = dir ?? (Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? ComponentDirection.RightToLeft : ComponentDirection.LeftToRight);
-            direction = ComponentDirection.RightToLeft;
+            var direction =
+                //dir ?? (Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? ComponentDirection.RightToLeft : ComponentDirection.LeftToRight);
+                ComponentDirection.RightToLeft;
 
             var isRtl = direction == ComponentDirection.RightToLeft;
-            dirName = direction.ToDescription();
+            dirName = direction.ToDisplayName();
             style = $"direction: {dirName}; text-align: {(isRtl ? "right" : "left")};";
             if (expression == null)
             {

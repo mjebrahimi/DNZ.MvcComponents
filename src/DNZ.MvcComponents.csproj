@@ -7,7 +7,6 @@
     <!--<TargetFramework>netcoreapp2.2</TargetFramework>-->
     <OutputType>Library</OutputType>
     <LangVersion>latest</LangVersion>
-    <!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
     <AssemblyName>DNZ.MvcComponents</AssemblyName>
     <PackageId>DNZ.MvcComponents</PackageId>
     <Product>DNZ.MvcComponents</Product>
@@ -18,17 +17,49 @@
     <Authors>Mohammad Javad Ebrahimi</Authors>
     <Company>Mohammad Javad Ebrahimi</Company>
     <Copyright>Copyright © Mohammad Javad Ebrahimi 2019</Copyright>
-    <Description>Simplified multi-language POCO localization for ASP.NET Core</Description>
+    <Description>A set of useful UI-Components (HtmlHelper) for ASP.NET Core MVC based-on Popular JavaScript Plugins</Description>
     <PackageTags></PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/dotnetzoom/Dnz.MvcComponents/master/docs/icon.png</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/dotnetzoom/DNZ.MvcComponents/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/dotnetzoom/DNZ.MvcComponents</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/dotnetzoom/DNZ.MvcComponents</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mjebrahimi/DNZ.MvcComponents</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mjebrahimi/DNZ.MvcComponents</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <RootNamespace>DNZ.MvcComponents</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MdBootstrapPersianDateTimePicker\**" />
+    <Content Remove="MdBootstrapPersianDateTimePicker\**" />
+    <EmbeddedResource Remove="MdBootstrapPersianDateTimePicker\**" />
+    <None Remove="MdBootstrapPersianDateTimePicker\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DateRangePicker\ltr\css\daterangepicker.min.css" />
+    <None Remove="DateRangePicker\ltr\css\daterangepicker.min.css.map" />
+    <None Remove="DateRangePicker\ltr\js\daterangepicker.min.js" />
+    <None Remove="DateRangePicker\ltr\js\daterangepicker.min.js.map" />
+    <None Remove="DateRangePicker\ltr\js\fa.min.js" />
+    <None Remove="DateRangePicker\ltr\js\moment-with-locales.min.js" />
+    <None Remove="DateRangePicker\ltr\js\moment.min.js" />
+    <None Remove="DateRangePicker\ltr\js\moment2.min.js" />
+    <None Remove="DateRangePicker\rtl2\css\calendare_arrow.png" />
+    <None Remove="DateRangePicker\rtl2\css\datepicker-theme.css" />
+    <None Remove="DateRangePicker\rtl2\css\daterangepicker.css" />
+    <None Remove="DateRangePicker\rtl2\css\fonts\datepicker.eot" />
+    <None Remove="DateRangePicker\rtl2\css\fonts\datepicker.svg" />
+    <None Remove="DateRangePicker\rtl2\css\fonts\datepicker.ttf" />
+    <None Remove="DateRangePicker\rtl2\css\fonts\datepicker.woff" />
+    <None Remove="DateRangePicker\rtl2\js\daterangepicker-fa-ex.js" />
+    <None Remove="DateRangePicker\rtl2\js\daterangepicker-fa.js" />
+    <None Remove="DateRangePicker\rtl2\js\moment-jalaali.js" />
+    <None Remove="DateRangePicker\rtl2\js\moment.min.js" />
+    <None Remove="DateRangePicker\rtl\daterangepicker.css" />
+    <None Remove="DateRangePicker\rtl\daterangepicker.js" />
+    <None Remove="DateRangePicker\rtl\date_picker.css" />
+    <None Remove="DateRangePicker\rtl\date_picker_rtl.css" />
+    <None Remove="DateRangePicker\rtl\moment-jalaali.js" />
+    <None Remove="DateRangePicker\rtl\moment.min.js" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="DataTables\extensions\AutoFill\css\dataTables.autoFill.css" />
@@ -268,6 +299,30 @@
     <EmbeddedResource Include="DataTables\jquery.dataTables.min.js" />
     <EmbeddedResource Include="DataTables\jquery.dataTables_themeroller.css" />
     <EmbeddedResource Include="DataTables\Persian.json" />
+    <EmbeddedResource Include="DateRangePicker\ltr\css\daterangepicker.min.css" />
+    <EmbeddedResource Include="DateRangePicker\ltr\css\daterangepicker.min.css.map" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\daterangepicker.min.js" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\daterangepicker.min.js.map" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\fa.min.js" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\moment-with-locales.min.js" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\moment.min.js" />
+    <EmbeddedResource Include="DateRangePicker\ltr\js\moment2.min.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\calendare_arrow.png" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\datepicker-theme.css" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\daterangepicker.css" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\fonts\datepicker.eot" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\fonts\datepicker.svg" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\fonts\datepicker.ttf" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\css\fonts\datepicker.woff" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\js\daterangepicker-fa-ex.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\js\daterangepicker-fa.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\js\moment-jalaali.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl2\js\moment.min.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl\css\daterangepicker.css" />
+    <EmbeddedResource Include="DateRangePicker\rtl\js\daterangepicker.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl\css\datepicker-theme.css" />
+    <EmbeddedResource Include="DateRangePicker\rtl\js\moment-jalaali.js" />
+    <EmbeddedResource Include="DateRangePicker\rtl\js\moment.min.js" />
     <EmbeddedResource Include="FileUploader\css\custom-fileinput.css" />
     <EmbeddedResource Include="FileUploader\css\fileinput.css" />
     <EmbeddedResource Include="FileUploader\css\fileinput.min.css" />
@@ -508,9 +563,6 @@
     <EmbeddedResource Include="JasnyUploader\js\jasny-bootstrap.js" />
     <EmbeddedResource Include="JasnyUploader\js\jasny-bootstrap.min.js" />
     <EmbeddedResource Include="MaxLenght\bootstrap-maxlength.js" />
-    <EmbeddedResource Include="MdBootstrapPersianDateTimePicker\css\jquery.Bootstrap-PersianDateTimePicker.css" />
-    <EmbeddedResource Include="MdBootstrapPersianDateTimePicker\js\jalaali.js" />
-    <EmbeddedResource Include="MdBootstrapPersianDateTimePicker\js\jquery.Bootstrap-PersianDateTimePicker.js" />
     <EmbeddedResource Include="Noty\jquery.noty.js" />
     <EmbeddedResource Include="Noty\jquery.noty.packaged.js" />
     <EmbeddedResource Include="Noty\jquery.noty.packaged.min.js" />

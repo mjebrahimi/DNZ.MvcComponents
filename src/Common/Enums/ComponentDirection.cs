@@ -1,13 +1,13 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.AspNetCore.Mvc
 {
     public enum ComponentDirection
     {
-        [Description("rtl")]
+        [Display(Name = "rtl")]
         RightToLeft,
 
-        [Description("ltr")]
+        [Display(Name = "ltr")]
         LeftToRight
     }
 }

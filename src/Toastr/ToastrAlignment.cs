@@ -1,31 +1,31 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Microsoft.AspNetCore.Mvc
 {
     public enum ToastrAlignment
     {
-        [Description("toast-top-right")]
+        [Display(Name = "toast-top-right")]
         TopRight,
 
-        [Description("toast-bottom-right")]
+        [Display(Name = "toast-bottom-right")]
         BottomRight,
 
-        [Description("toast-top-left")]
+        [Display(Name = "toast-top-left")]
         TopLeft,
 
-        [Description("toast-bottom-left")]
+        [Display(Name = "toast-bottom-left")]
         BottomLeft,
 
-        [Description("toast-top-full-width")]
+        [Display(Name = "toast-top-full-width")]
         TopFullWidth,
 
-        [Description("toast-bottom-full-width")]
+        [Display(Name = "toast-bottom-full-width")]
         BottomFullWidth,
 
-        [Description("toast-top-center")]
+        [Display(Name = "toast-top-center")]
         TopCenter,
 
-        [Description("toast-bottom-center")]
+        [Display(Name = "toast-bottom-center")]
         BottomCenter
     }
 }

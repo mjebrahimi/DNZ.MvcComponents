@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -20,7 +21,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <summary>
         /// The virtual, rooted directory where CKEditor can be found. Should include trailing slash. eg /CKEditor/
         /// </summary>
-        private const string CK_Ed_Location = "/Scripts/ckeditor4/";
+        private const string CK_Ed_Location = "/wwwroot/plugins/ckeditor-v4.5.6/";
 
         /// <summary>
         /// The default rows of textarea/em height of CKEditor
@@ -363,40 +364,29 @@ namespace Microsoft.AspNetCore.Mvc
             textAreaBuilder.MergeAttribute("name", fullName, true);
             var style = "";
             if (textAreaBuilder.Attributes.ContainsKey("style"))
-            {
                 style = textAreaBuilder.Attributes["style"];
-            }
             if (string.IsNullOrWhiteSpace(style))
-            {
                 style = "";
-            }
+
             style += string.Format("height:{0}em; width:{1}em; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
             //style += string.Format("height:{0}em; width:100%; margin-bottom: 20px !important;", rowsAndColumns["rows"], rowsAndColumns["cols"]);
             textAreaBuilder.MergeAttribute("style", style, true);
             // If there are any errors for a named field, we add the CSS attribute.
             if (htmlHelper.ViewData.ModelState.TryGetValue(fullName, out var modelState) && modelState.Errors.Count > 0)
-            {
                 textAreaBuilder.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            }
 
             //var modelExplorer = ExpressionMetadataProvider.FromStringExpression(expression, htmlHelper.ViewContext.ViewData, htmlHelper.MetadataProvider);
-            //var validator = htmlHelper.ViewContext.HttpContext.RequestServices.GetService<ValidationHtmlAttributeProvider>();
-            //validator?.AddAndTrackValidationAttributes(htmlHelper.ViewContext, modelExplorer, expression, tagBuilder.Attributes);
+            var validator = htmlHelper.ViewContext.HttpContext.RequestServices.GetService<ValidationHtmlAttributeProvider>();
+            validator?.AddAndTrackValidationAttributes(htmlHelper.ViewContext, modelMetadata, name/*expression*/, textAreaBuilder.Attributes);
             //textAreaBuilder.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name));
 
             string value;
-            if (modelState.AttemptedValue != null)
-            {
+            if (modelState?.AttemptedValue != null)
                 value = modelState.AttemptedValue;
-            }
             else if (modelMetadata.Model != null)
-            {
                 value = modelMetadata.Model.ToString();
-            }
             else
-            {
                 value = string.Empty;
-            }
 
             // The first newline is always trimmed when a TextArea is rendered, so we add an extra one
             // in case the value being rendered is something like "\r\nHello".
@@ -405,18 +395,13 @@ namespace Microsoft.AspNetCore.Mvc
             var scriptBuilder = new TagBuilder("script");
             scriptBuilder.MergeAttribute("type", "text/javascript");
             if (string.IsNullOrEmpty(ckEditorConfigOptions))
-            {
                 ckEditorConfigOptions = string.Format("{{ width:'100%', height:'{1}em', filebrowserImageUploadUrl:'{2}' }}", rowsAndColumns["cols"], rowsAndColumns["rows"], uploadUrl);
-            }
+
             if (!ckEditorConfigOptions.Trim().StartsWith("{"))
-            {
                 ckEditorConfigOptions = "{" + ckEditorConfigOptions;
-            }
 
             if (!ckEditorConfigOptions.Trim().EndsWith("}"))
-            {
                 ckEditorConfigOptions += "}";
-            }
 
             scriptBuilder.InnerHtml.SetHtmlContent(string.Format(" $('#{0}').ckeditor({1}).addClass('{2}'); ", id, ckEditorConfigOptions, CK_Ed_Class));
 
@@ -442,23 +427,15 @@ namespace Microsoft.AspNetCore.Mvc
         private static Dictionary<string, object> GetRowsAndColumnsDictionary(int rows, int columns)
         {
             if (rows < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(rows), "A text area parameter is out of range");
-            }
             if (columns < 0)
-            {
                 throw new ArgumentOutOfRangeException(nameof(columns), "A text area parameter is out of range");
-            }
 
             var result = new Dictionary<string, object>();
             if (rows > 0)
-            {
                 result.Add("rows", rows.ToString(CultureInfo.InvariantCulture));
-            }
             if (columns > 0)
-            {
                 result.Add("cols", columns.ToString(CultureInfo.InvariantCulture));
-            }
 
             return result;
         }

@@ -8,6 +8,7 @@ A set of useful UI-Components (HtmlHelper) for ASP.NET Core MVC based-on Popular
 *   [CKEditor](https://ckeditor.com/)
 *   [DataTables](https://datatables.net/)
 *   [iCheck](http://icheck.fronteed.com/)
+*   [DateRangePicker](http://www.daterangepicker.com/) (with jalaali support)
 *   [SweetAlert](https://sweetalert.js.org/)
 *   [Bootstrap-SweetAlert](https://lipis.github.io/bootstrap-sweetalert/)
 *   [Noty](https://ned.im/noty/)
@@ -39,4 +40,4 @@ A set of useful UI-Components (HtmlHelper) for ASP.NET Core MVC based-on Popular
 
 ## Demo
 
-![Demo](Demo.png)
+![Demo](Demo2.jpg)

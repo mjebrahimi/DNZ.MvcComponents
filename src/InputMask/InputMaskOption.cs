@@ -210,8 +210,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public override string ToHtmlString()
         {
-            var id = "";
-            IHtmlContent editor = null;
+            string id;
+            IHtmlContent editor;
             if (_expression == null)
             {
                 id = _htmlHelper.GenerateIdFromName(_name);
@@ -219,7 +219,6 @@ namespace Microsoft.AspNetCore.Mvc
             }
             else
             {
-                var metadata = _htmlHelper.GetModelExplorer(_expression);
                 id = _htmlHelper.FieldIdFor(_expression);
                 editor = _htmlHelper.TextBoxFor(_expression, _htmlAttributes);
             }
