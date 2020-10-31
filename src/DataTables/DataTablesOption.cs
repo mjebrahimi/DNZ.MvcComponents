@@ -41,7 +41,7 @@ namespace Microsoft.AspNetCore.Mvc
             Info(false);
             Paging(false);
             Order(0, DataTabledOrder.Asc);
-            //Attributes["language"] = "{ 'sUrl': '" + ComponentUtility.GetWebResourceUrl(persian_json) + "' }";
+            Attributes["language"] = "{ 'sUrl': '" + ComponentUtility.GetWebResourceUrl(persian_json) + "' }";
         }
 
         public DataTablesOption Paging(bool value)

@@ -1,12 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!--<TargetFramework>net5.0</TargetFramework>-->
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <!--<TargetFramework>netcoreapp3.0</TargetFramework>-->
-    <!--<TargetFramework>netcoreapp2.2</TargetFramework>-->
+    <TargetFrameworks>netcoreapp3.0;netcoreapp3.1;net5.0</TargetFrameworks>
     <OutputType>Library</OutputType>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <AssemblyName>DNZ.MvcComponents</AssemblyName>
     <PackageId>DNZ.MvcComponents</PackageId>
     <Product>DNZ.MvcComponents</Product>
@@ -25,6 +22,14 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="MdBootstrapPersianDateTimePicker\**" />
@@ -641,14 +646,6 @@
     <EmbeddedResource Include="TypeaheadMaster\typeahead.css" />
     <EmbeddedResource Include="TypeaheadMaster\typeahead.jquery.js" />
     <EmbeddedResource Include="TypeaheadMaster\typeahead.jquery.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!--<PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />-->
-    <!--<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />-->
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>

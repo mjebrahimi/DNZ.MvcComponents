@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading;
-using System.Globalization;
 
 namespace Microsoft.AspNetCore.Mvc
 {
@@ -271,10 +269,8 @@ namespace Microsoft.AspNetCore.Mvc
         {
             string displayName = null;
             SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
-            var model = html.GetModelExplorer(expression).Model as IFormattable;
-            var value = model?.ToString("yyyy/MM/dd", CultureInfo.GetCultureInfo("fa-IR"));
             var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
-            var editor = html.PersianDateTimePickerFor(expression, value, attributes).Theme(DateRangePickerTheme.RTL_Blue);
+            var editor = html.PersianDateTimePickerFor(expression, "{0:yyyy/MM/dd}", attributes).Theme(DateRangePickerTheme.RTL_Blue);
             var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
             return new HtmlString(result);
         }
@@ -283,14 +279,15 @@ namespace Microsoft.AspNetCore.Mvc
         {
             string displayName = null;
             SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
-            var model = html.GetModelExplorer(expression).Model as IFormattable;
-            var value = model?.ToString("yyyy/MM/dd HH:mm", CultureInfo.GetCultureInfo("fa-IR"));
+            //var model = html.GetModelExplorer(expression).Model as IFormattable;
+            //var value = model?.ToString("yyyy/MM/dd HH:mm", CultureInfo.GetCultureInfo("fa-IR"));
             var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
-            var editor = html.PersianDateTimePickerFor(expression, value, attributes).Theme(DateRangePickerTheme.RTL_Blue);
+            var editor = html.PersianDateTimePickerFor(expression, "{0:yyyy/MM/dd HH:mm}", attributes).Theme(DateRangePickerTheme.RTL_Blue);
             var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
             return new HtmlString(result);
         }
 
+        #region For Old Component
         //public static IHtmlContent BsPersianDatePickerFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4, object htmlAttribute = null)
         //{
         //    string displayName = null;
@@ -319,6 +316,7 @@ namespace Microsoft.AspNetCore.Mvc
         //    var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
         //    return new HtmlString(result);
         //}
+        #endregion
 
         public static IHtmlContent BsICheckRadioButtonsFor<TModel>(this IHtmlHelper<TModel> html, Expression<Func<TModel, bool>> expression, List<Tuple<string, string, string>> values, ICheckStyle style = ICheckStyle.Flat_Blue, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4)
         {

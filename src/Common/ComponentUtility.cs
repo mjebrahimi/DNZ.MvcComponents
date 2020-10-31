@@ -19,7 +19,6 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 
@@ -30,6 +29,7 @@ namespace DNZ.MvcComponents
         private const string path = "/DNZ.MvcComponents";
         private static IServiceProvider ApplicationServiceProvider;
         private static bool UseCdn;
+        private static Assembly currentAssembly = typeof(ComponentUtility).Assembly;
 
         public static IServiceCollection AddMvcComponents(this IServiceCollection services, bool useCdn = true)
         {
@@ -51,16 +51,16 @@ namespace DNZ.MvcComponents
                     app.Run(async context =>
                     {
                         var fileName = Path.GetFileName(context.Request.Path.ToString());
-                        var content = GetWebResource(fileName);
-                        context.Response.ContentType = GetMimeType(fileName);
-                        if (content == null)
+                        using var stream = currentAssembly.GetManifestResourceStream(fileName);
+                        if (stream == null)
                         {
                             context.Response.StatusCode = 404;
                         }
                         else
                         {
-                            context.Response.ContentLength = Encoding.UTF8.GetByteCount(content);
-                            await context.Response.WriteAsync(content, Encoding.UTF8).ConfigureAwait(false);
+                            context.Response.ContentLength = stream.Length;
+                            context.Response.ContentType = GetMimeType(fileName);
+                            await stream.CopyToAsync(context.Response.Body, context.RequestAborted);
                         }
                     });
                 });
@@ -121,68 +121,44 @@ namespace DNZ.MvcComponents
         }
 
         #region MergeAttributes
-        public static Dictionary<string, object> MergeAttributes(object primaryAttributes, Dictionary<string, object> secondaryAttributes, bool appendCssClass = true) //not replace css class
+        public static IDictionary<string, object> MergeAttributes(object primaryAttributes, object secondaryAttributes, bool appendCssClass = true) //not replace css class
         {
-            if (primaryAttributes is Dictionary<string, object> primary)
-            {
-                return MergeAttributes(primary, secondaryAttributes, appendCssClass);
-            }
+            if (secondaryAttributes is not IDictionary<string, object> secondary)
+                secondary = HtmlHelper.AnonymousObjectToHtmlAttributes(secondaryAttributes);
 
-            return new RouteValueDictionary(primaryAttributes).Concat(secondaryAttributes).GroupBy(d => d.Key).ToDictionary(d => d.Key, d => GetValue(d, appendCssClass));
+            if (primaryAttributes is not IDictionary<string, object> primary)
+                primary = HtmlHelper.AnonymousObjectToHtmlAttributes(primaryAttributes);
+
+            return MergeAttributes(primary, secondary, appendCssClass);
         }
 
-        public static Dictionary<string, object> MergeAttributes(object primaryAttributes, object secondaryAttributes, bool appendCssClass = true) //not replace css class
+        public static IDictionary<string, object> MergeAttributes(this IDictionary<string, object> primaryAttributes, object secondaryAttributes, bool appendCssClass = true) //not replace css class
         {
-            var primary = primaryAttributes as Dictionary<string, object>;
-            var secondary = secondaryAttributes as Dictionary<string, object>;
+            if (secondaryAttributes is not IDictionary<string, object> secondary)
+                secondary = HtmlHelper.AnonymousObjectToHtmlAttributes(secondaryAttributes);
 
-            if (primary != null && secondary != null)
-            {
-                return MergeAttributes(primary, secondary, appendCssClass);
-            }
-
-            if (primary != null)
-            {
-                return MergeAttributes(primary, secondaryAttributes, appendCssClass);
-            }
-
-            if (secondary != null)
-            {
-                return MergeAttributes(primaryAttributes, secondary, appendCssClass);
-            }
-
-            var attributes = new RouteValueDictionary(primaryAttributes).Concat(new RouteValueDictionary(secondaryAttributes)).GroupBy(d => d.Key)
-                .ToDictionary(d => d.Key.Replace('_', '-'), d => GetValue(d, appendCssClass));
-            return attributes;
+            return MergeAttributes(primaryAttributes, secondary, appendCssClass);
         }
 
-        public static Dictionary<string, object> MergeAttributes(this Dictionary<string, object> primaryAttributes, Dictionary<string, object> secondaryAttributes, bool appendCssClass = true) //not replace css class
+        public static IDictionary<string, object> MergeAttributes(object primaryAttributes, IDictionary<string, object> secondaryAttributes, bool appendCssClass = true) //not replace css class
+        {
+            if (primaryAttributes is not IDictionary<string, object> primary)
+                primary = HtmlHelper.AnonymousObjectToHtmlAttributes(primaryAttributes);
+
+            return MergeAttributes(primary, secondaryAttributes, appendCssClass);
+        }
+
+        public static IDictionary<string, object> MergeAttributes(this IDictionary<string, object> primaryAttributes, IDictionary<string, object> secondaryAttributes, bool appendCssClass = true) //not replace css class
         {
             return primaryAttributes.Concat(secondaryAttributes).GroupBy(d => d.Key).ToDictionary(d => d.Key, d => GetValue(d, appendCssClass));
-        }
 
-        public static Dictionary<string, object> MergeAttributes(this Dictionary<string, object> primaryAttributes, object secondaryAttributes, bool appendCssClass = true) //not replace css class
-        {
-            if (secondaryAttributes is Dictionary<string, object> secondary)
+            static object GetValue(IGrouping<string, KeyValuePair<string, object>> source, bool appendCssClass)
             {
-                return MergeAttributes(primaryAttributes, secondary, appendCssClass);
+                if (appendCssClass && source.Key == "class")
+                    return string.Join(" ", source.Select(p => p.Value));
+
+                return source.First().Value;
             }
-
-            return primaryAttributes.Concat(new RouteValueDictionary(secondaryAttributes)).GroupBy(d => d.Key).ToDictionary(d => d.Key, d => GetValue(d, appendCssClass));
-
-            //var input = new TagBuilder("input");
-            //var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
-            //input.MergeAttributes(attributes);
-        }
-
-        private static object GetValue(IGrouping<string, KeyValuePair<string, object>> source, bool appendCssClass)
-        {
-            if (appendCssClass)
-            {
-                return source.Key == "class" ? string.Join(" ", source.Select(p => p.Value)) : source.First().Value;
-            }
-
-            return source.First().Value;
         }
         #endregion
 
@@ -217,10 +193,11 @@ namespace DNZ.MvcComponents
             return expresionProvider.CreateModelExpression(html.ViewData, expression).ModelExplorer;
         }
 
+        private static readonly Type stringType = typeof(string);
         internal static ModelExplorer GetModelExplorerForString(this IHtmlHelper html, string expression)
         {
             //IHtmlGenerator
-            return html.MetadataProvider.GetModelExplorerForType(typeof(string), expression);
+            return html.MetadataProvider.GetModelExplorerForType(stringType, expression);
         }
 
         internal static void DefinGlobalJavascriptVariable(this IScript script, IHtmlHelper html, string name)
@@ -237,19 +214,6 @@ namespace DNZ.MvcComponents
         internal static string GetWebResourceUrl(string resourceId)
         {
             return $"{path}/{resourceId}";
-        }
-
-        internal static string GetWebResource(string resourceId)
-        {
-            var type = typeof(ComponentUtility);
-            using (var stream = type.Assembly.GetManifestResourceStream(resourceId))
-            {
-                if (stream == null)
-                    return null;
-
-                using var reader = new StreamReader(stream, Encoding.UTF8);
-                return reader.ReadToEnd();
-            }
         }
 
         internal static string RenderOptions(this IOptionBuilder options)
@@ -297,24 +261,9 @@ namespace DNZ.MvcComponents
         }
 
         internal static T NotNull<T>(this T obj, string name, string message = null)
-            where T : class
         {
             if (obj is null)
-            {
                 throw new ArgumentNullException($"{name} : {typeof(T)}", message);
-            }
-
-            return obj;
-        }
-
-        internal static T? NotNull<T>(this T? obj, string name, string message = null)
-            where T : struct
-        {
-            if (!obj.HasValue)
-            {
-                throw new ArgumentNullException($"{name} : {typeof(T)}", message);
-            }
-
             return obj;
         }
 

@@ -243,7 +243,7 @@ namespace Microsoft.AspNetCore.Mvc
             {
                 defaultImageValue = urlImage.Contains("{0}") ? string.Format(urlImage, value) : (urlImage + value);
             }
-            var defaultImage = Attributes["defaultImage"].ToString() == "" ? "" : $@"<img src=""{defaultImageValue}"" />";
+            var defaultImage = Attributes["defaultImage"].ToString() == "" ? "" : $@"<img src=""{defaultImageValue}"" style='max-width: 100%; max-height: 100%;' />";
             var autoUpload = Convert.ToBoolean(Attributes["autoUpload"]);
             var width = Attributes["width"] + "px";
             var height = Attributes["height"] + "px";
