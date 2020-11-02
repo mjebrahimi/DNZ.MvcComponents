@@ -22,8 +22,8 @@ namespace Microsoft.AspNetCore.Mvc
         public BsDialog(IHtmlHelper helper = null) : base(helper)
         {
             ButtonAttributes = new Dictionary<string, object>();
-            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(BsDialog_min_css, BsDialog_css_cdn));
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(BsDialog_min_js, BsDialog_js_cdn));
+            RenderScriptAndStyle.StyleOnce(ComponentUtility.GetCssTag(BsDialog_min_css, BsDialog_css_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(BsDialog_min_js, BsDialog_js_cdn));
             Method(BsMethod.Show);
         }
 

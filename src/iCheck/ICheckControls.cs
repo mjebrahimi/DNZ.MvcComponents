@@ -33,14 +33,14 @@ namespace Microsoft.AspNetCore.Mvc
             }
 
             var result =
-    html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
+    html.StyleOnce(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
     " + html.RadioButtonFor(expression, value, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() }).ToHtmlString() + @"
     " + (string.IsNullOrEmpty(icon) ? "" : @"<i class=""fa " + icon + @""" style=""font-size: large;""></i>") + " " + label + @"
 </label>"
-     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
-     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
+     + html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
+     + html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
             return new HtmlString(result);
         }
 
@@ -70,14 +70,14 @@ namespace Microsoft.AspNetCore.Mvc
             var attributes = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "icheck" + cssClass, id = id + "_" + Guid.NewGuid() });
 
             var result =
-    html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
+    html.StyleOnce(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn)).ToHtmlString()
     + @"
 <label for=""" + id + "_" + Guid.NewGuid() + @""">
     " + html.CheckBoxFor(expression, attributes).ToHtmlString() + @"
     " + (string.IsNullOrEmpty(icon) ? "" : @"<i class=""fa " + icon + @""" style=""font-size: large;""></i>") + " " + label + @"
 </label>"
-     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
-     + html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
+     + html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn)).ToHtmlString()
+     + html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_custom_js, null)).ToHtmlString();
             return new HtmlString(result);
         }
 
@@ -86,9 +86,9 @@ namespace Microsoft.AspNetCore.Mvc
             var id = html.GenerateIdFromName(name);
             var cssClass = style.ToString().ToLower().Replace('_', '-');
 
-            html.StyleFileSingle(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn));
-            html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn));
-            html.ScriptFileSingle(ComponentUtility.GetJsTag(iCheck_custom_js, null));
+            html.StyleOnce(ComponentUtility.GetCssTag(iCheck_all_css, iCheck_all_css_cdn));
+            html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_js, iCheck_js_cdn));
+            html.ScriptOnce(ComponentUtility.GetJsTag(iCheck_custom_js, null));
 
             var attributes = ComponentUtility.MergeAttributes(new { @class = $"icheck {cssClass}", id }, htmlAttributes);
             var radioButton = html.CheckBox(name, value, attributes);

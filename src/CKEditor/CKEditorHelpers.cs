@@ -329,7 +329,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// </summary>
         public static IHtmlContent CKEditorHeaderScripts(this IHtmlHelper help)
         {
-            RenderScriptAndStyle.Script(
+            help.Script(
 @"<script src=""" + CK_Ed_Location + @"ckeditor.js"" type=""text/javascript""></script>
 <script src=""" + CK_Ed_Location + @"adapters/jquery.js"" type=""text/javascript""></script>
 <script	type=""text/javascript""> function UpdateCKEditors() { $('." + CK_Ed_Class + "').ckeditorGet().updateElement(); } </script>");
@@ -406,8 +406,8 @@ namespace Microsoft.AspNetCore.Mvc
             scriptBuilder.InnerHtml.SetHtmlContent(string.Format(" $('#{0}').ckeditor({1}).addClass('{2}'); ", id, ckEditorConfigOptions, CK_Ed_Class));
 
             //<script type=""text/javascript""> function UpdateCKEditors() { $('." + CK_Ed_Class + @"').ckeditorGet().updateElement(); } </script>"
-            htmlHelper.ScriptFileSingle(@"<script src=""" + CK_Ed_Location + @"ckeditor.js""></script>");
-            htmlHelper.ScriptFileSingle(@"<script src=""" + CK_Ed_Location + @"adapters/jquery.js""></script>");
+            htmlHelper.ScriptOnce(@"<script src=""" + CK_Ed_Location + @"ckeditor.js""></script>");
+            htmlHelper.ScriptOnce(@"<script src=""" + CK_Ed_Location + @"adapters/jquery.js""></script>");
             htmlHelper.Script(scriptBuilder.ToHtmlString());
 
             return new HtmlString(@"

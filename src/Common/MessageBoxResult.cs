@@ -8,7 +8,6 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class MessageBoxResult : JavaScriptResult, IHtmlContent, IOptionBuilder
     {
-        protected string Guid;
         protected IHtmlHelper HtmlHelper;
         public Dictionary<string, object> Attributes { get; set; }
         public IHtmlContent Js => new HtmlString(Script);
@@ -16,7 +15,6 @@ namespace Microsoft.AspNetCore.Mvc
         public MessageBoxResult(IHtmlHelper helper)
         {
             Attributes = new Dictionary<string, object>();
-            Guid = System.Guid.NewGuid().ToString();
             HtmlHelper = helper;
         }
 
@@ -27,7 +25,7 @@ namespace Microsoft.AspNetCore.Mvc
                             " + Script + @"
                         });
                     </script>";
-            RenderScriptAndStyle.ScriptSingle(Guid, script, true);
+            RenderScriptAndStyle.ScriptOnce(script, true);
         }
 
         public virtual string ToHtmlString()

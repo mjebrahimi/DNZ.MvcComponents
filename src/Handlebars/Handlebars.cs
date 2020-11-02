@@ -42,11 +42,10 @@ namespace Microsoft.AspNetCore.Mvc
             var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(html);
-            helper.ScriptSingle(id, @"
+            helper.ScriptOnce(@"
 <script id=""" + id + @""" type=""text/x-handlebars-template"">
     " + html + @"
-</script>
-");
+</script>");
             return handlebar;
         }
 
@@ -56,11 +55,10 @@ namespace Microsoft.AspNetCore.Mvc
             var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(html);
-            helper.ScriptSingle(id, @"
+            helper.ScriptOnce(@"
 <script id=""" + id + @""" type=""text/x-handlebars-template"">
     " + html + @"
-</script>
-");
+</script>");
             return handlebar;
         }
 
@@ -69,7 +67,7 @@ namespace Microsoft.AspNetCore.Mvc
             var handlebar = helper.AddHandlebarsPlugin();
             handlebar.Id = id;
             handlebar.Html = new HtmlString(template);
-            helper.ScriptSingle(id, @"
+            helper.ScriptOnce(@"
 <script id=""" + id + @""" type=""text/x-handlebars-template"">
     " + template.Replace("\t", "") + @"
 </script>");

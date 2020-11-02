@@ -13,7 +13,7 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <Authors>Mohammad Javad Ebrahimi</Authors>
     <Company>Mohammad Javad Ebrahimi</Company>
-    <Copyright>Copyright © Mohammad Javad Ebrahimi 2019</Copyright>
+    <Copyright>Copyright © Mohammad Javad Ebrahimi 2020</Copyright>
     <Description>A set of useful UI-Components (HtmlHelper) for ASP.NET Core MVC based-on Popular JavaScript Plugins</Description>
     <PackageTags></PackageTags>
     <PackageProjectUrl>https://github.com/mjebrahimi/DNZ.MvcComponents</PackageProjectUrl>

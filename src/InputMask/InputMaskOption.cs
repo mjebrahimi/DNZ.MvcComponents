@@ -222,7 +222,7 @@ namespace Microsoft.AspNetCore.Mvc
                 id = _htmlHelper.FieldIdFor(_expression);
                 editor = _htmlHelper.TextBoxFor(_expression, _htmlAttributes);
             }
-            _htmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(inputmask_js, inputmask_js_cdn));
+            _htmlHelper.ScriptOnce(ComponentUtility.GetJsTag(inputmask_js, inputmask_js_cdn));
             _htmlHelper.Script(@"
             <script>
                 $(function(){

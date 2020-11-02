@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BootBox(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(bootbox_js, bootbox_js_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(bootbox_js, bootbox_js_cdn));
             ButtonAttributes = new Dictionary<string, object>();
         }
 

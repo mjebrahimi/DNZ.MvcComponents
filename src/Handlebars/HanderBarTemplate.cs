@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public HanderBarTemplate(IHtmlHelper helper)
         {
-            helper.ScriptFileSingle(ComponentUtility.GetJsTag(handlebars_js, handlebars_js_cdn));
+            helper.ScriptOnce(ComponentUtility.GetJsTag(handlebars_js, handlebars_js_cdn));
         }
 
         public IHtmlContent Html { get; set; }

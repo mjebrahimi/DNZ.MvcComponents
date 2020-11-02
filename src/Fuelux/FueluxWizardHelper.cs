@@ -15,9 +15,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static FueluxWizardOption FueluxWizard(this IHtmlHelper helper)
         {
-            helper.StyleFileSingle(ComponentUtility.GetCssTag(fuelux_css, fuelux_css_cdn));
-            helper.StyleFileSingle(ComponentUtility.GetCssTag(wizard_rtl_css, null));
-            helper.ScriptFileSingle(ComponentUtility.GetJsTag(fuelux_js, fuelux_js_cdn));
+            helper.StyleOnce(ComponentUtility.GetCssTag(fuelux_css, fuelux_css_cdn));
+            helper.StyleOnce(ComponentUtility.GetCssTag(wizard_rtl_css, null));
+            helper.ScriptOnce(ComponentUtility.GetJsTag(fuelux_js, fuelux_js_cdn));
             return new FueluxWizardOption(helper);
         }
     }

@@ -68,8 +68,8 @@ namespace Microsoft.AspNetCore.Mvc
             var displayName = metadata.Metadata.DisplayName ?? metadata.Metadata.PropertyName ?? htmlFieldName.Split('.').Last();
             var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { @class = "form-control", placeholder = displayName, autocomplete = "off" });
             var editor = html.TextBoxFor(expression, mergAttr);
-            html.StyleFileSingle(ComponentUtility.GetCssTag(typeahead_css, null));
-            html.ScriptFileSingle(ComponentUtility.GetCssTag(typeahead_bundle_js, typeahead_bundle_js_cdn));
+            html.StyleOnce(ComponentUtility.GetCssTag(typeahead_css, null));
+            html.ScriptOnce(ComponentUtility.GetCssTag(typeahead_bundle_js, typeahead_bundle_js_cdn));
             html.Script(@"
             <script>
                 $(function(){

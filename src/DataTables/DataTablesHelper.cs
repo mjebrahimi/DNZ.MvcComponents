@@ -26,9 +26,9 @@ namespace Microsoft.AspNetCore.Mvc
         //}
         public static DataTablesOption DataTables(this IHtmlHelper helper, Func<object, HelperResult> thead, Func<object, HelperResult> tbody, object htmlAttributes = null)
         {
-            helper.StyleFileSingle(ComponentUtility.GetCssTag(dataTables_bootstrap_css, dataTables_bootstrap_css_cdn));
-            helper.ScriptFileSingle(ComponentUtility.GetJsTag(jquery_dataTables_min_js, jquery_dataTables_js_cdn));
-            helper.ScriptFileSingle(ComponentUtility.GetJsTag(dataTables_bootstrap_min_js, dataTables_bootstrap_js_cdn));
+            helper.StyleOnce(ComponentUtility.GetCssTag(dataTables_bootstrap_css, dataTables_bootstrap_css_cdn));
+            helper.ScriptOnce(ComponentUtility.GetJsTag(jquery_dataTables_min_js, jquery_dataTables_js_cdn));
+            helper.ScriptOnce(ComponentUtility.GetJsTag(dataTables_bootstrap_min_js, dataTables_bootstrap_js_cdn));
             return new DataTablesOption(helper, thead, tbody, new RouteValueDictionary(htmlAttributes));
         }
     }

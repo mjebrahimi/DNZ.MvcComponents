@@ -7,110 +7,126 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.IO;
-using System.Text.Encodings.Web;
 
 namespace Microsoft.AspNetCore.Mvc
 {
-    public class LazyHtmlContent : IHtmlContent
+    public static class RenderScriptAndStyle
     {
-        private readonly Func<string> _func;
-        public LazyHtmlContent(Func<string> func)
+        #region Script
+        public static IHtmlContent Script(this IHtmlHelper htmlHelper, Func<object, HelperResult> scriptTag)
         {
-            _func = func;
-        }
-        public void WriteTo(TextWriter writer, HtmlEncoder encoder)
-        {
-            string result = _func();
-            writer.WriteLine(result);
-        }
-    }
-
-    public static partial class RenderScriptAndStyle
-    {
-        public static IHtmlContent Script(this IHtmlHelper htmlHelper, IHtmlContent template)
-        {
-            return Script(htmlHelper, template.ToHtmlString());
+            return Script(htmlHelper, scriptTag(null).ToHtmlString());
         }
 
-        public static IHtmlContent Script(this IHtmlHelper htmlHelper, Func<object, HelperResult> template)
+        public static IHtmlContent Script(this IHtmlHelper htmlHelper, string scriptTag)
         {
-            return Script(htmlHelper, template(null).ToHtmlString());
+            var keyName = Guid.NewGuid().ToString();
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, scriptTag), true, false);
+            return HtmlString.Empty;
         }
 
-        public static IHtmlContent Script(this IHtmlHelper htmlHelper, string template)
+        public static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, Func<object, HelperResult> scriptTag, bool overWrite = false)
         {
-            return ScriptSingle(htmlHelper, ComponentUtility.UtcNowTicks.ToString(), template);
+            return ScriptOnce(htmlHelper, scriptTag(null).ToHtmlString(), overWrite);
         }
 
-        public static IHtmlContent ScriptFileSingle(this IHtmlHelper htmlHelper, Func<object, HelperResult> template, bool overWrite = false)
+        public static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, string scriptTag, bool overWrite = false)
         {
-            return ScriptFileSingle(htmlHelper, template(null).ToHtmlString(), overWrite);
+            var keyName = scriptTag.GetHashCode().ToString();
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, scriptTag), true, overWrite);
+            return HtmlString.Empty;
         }
 
-        public static IHtmlContent ScriptFileSingle(this IHtmlHelper htmlHelper, string template, bool overWrite = false)
+        #region Without HtmlHelper
+        public static IHtmlContent Script(Func<object, HelperResult> scriptTag)
         {
-            var fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
-            return ScriptSingle(htmlHelper, fileName, template, overWrite);
+            return Script(scriptTag(null).ToHtmlString());
         }
 
-        public static IHtmlContent ScriptSingle(this IHtmlHelper htmlHelper, string keyName, Func<object, HelperResult> template, bool overWrite = false)
+        public static IHtmlContent Script(string scriptTag)
         {
-            return ScriptSingle(htmlHelper, keyName, template(null).ToHtmlString(), overWrite);
+            var keyName = Guid.NewGuid().ToString();
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, scriptTag), true, false);
+            return HtmlString.Empty;
         }
 
-        public static IHtmlContent ScriptSingle(this IHtmlHelper htmlHelper, string keyName, string template, bool overWrite = false)
+        public static IHtmlContent ScriptOnce(Func<object, HelperResult> scriptTag, bool overWrite = false)
         {
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, template), true, overWrite);
-            return HtmlString.NewLine;
+            return ScriptOnce(scriptTag(null).ToHtmlString(), overWrite);
         }
 
-        public static IHtmlContent Style(this IHtmlHelper htmlHelper, Func<object, HelperResult> template)
+        public static IHtmlContent ScriptOnce(string scriptTag, bool overWrite = false)
         {
-            return Style(htmlHelper, template(null).ToHtmlString());
+            var keyName = scriptTag.GetHashCode().ToString();
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, scriptTag), true, overWrite);
+            return HtmlString.Empty;
+        }
+        #endregion
+        #endregion
+
+        #region Style
+        public static IHtmlContent Style(this IHtmlHelper htmlHelper, Func<object, HelperResult> styleOrLinkTag)
+        {
+            return Style(htmlHelper, styleOrLinkTag(null).ToHtmlString());
         }
 
-        public static IHtmlContent Style(this IHtmlHelper htmlHelper, string template)
+        public static IHtmlContent Style(this IHtmlHelper htmlHelper, string styleOrLinkTag)
         {
-            return StyleSingle(htmlHelper, ComponentUtility.UtcNowTicks.ToString(), template);
+            var keyName = Guid.NewGuid().ToString();
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, styleOrLinkTag), false, false);
+            return HtmlString.Empty;
         }
 
-        public static IHtmlContent StyleFileSingle(this IHtmlHelper htmlHelper, Func<object, HelperResult> template, bool overWrite = false)
+        public static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
         {
-            return StyleFileSingle(htmlHelper, template(null).ToHtmlString(), overWrite);
+            return StyleOnce(htmlHelper, styleOrLinkTag(null).ToHtmlString(), overWrite);
         }
 
-        public static IHtmlContent StyleFileSingle(this IHtmlHelper htmlHelper, string template, bool overWrite = false)
+        public static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, string styleOrLinkTag, bool overWrite = false)
         {
-            var fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
-            return StyleSingle(htmlHelper, fileName, template, overWrite);
+            var keyName = styleOrLinkTag.GetHashCode().ToString();
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, styleOrLinkTag), false, overWrite);
+            return HtmlString.Empty;
         }
 
-        public static IHtmlContent StyleSingle(this IHtmlHelper htmlHelper, string keyName, Func<object, HelperResult> template, bool overWrite = false)
+        #region Without HtmlHelper
+        public static IHtmlContent Style(Func<object, HelperResult> styleOrLinkTag)
         {
-            return StyleSingle(htmlHelper, keyName, template(null).ToHtmlString(), overWrite);
+            return Style(styleOrLinkTag(null).ToHtmlString());
         }
 
-        public static IHtmlContent StyleSingle(this IHtmlHelper htmlHelper, string keyName, string template, bool overWrite = false)
+        public static IHtmlContent Style(string styleOrLinkTag)
         {
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, template), false, overWrite);
-            return HtmlString.NewLine;
+            var keyName = Guid.NewGuid().ToString();
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, styleOrLinkTag), false, false);
+            return HtmlString.Empty;
         }
 
-        // ===============================================================================
+        public static IHtmlContent StyleOnce(Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
+        {
+            return StyleOnce(styleOrLinkTag(null).ToHtmlString(), overWrite);
+        }
+
+        public static IHtmlContent StyleOnce(string styleOrLinkTag, bool overWrite = false)
+        {
+            var keyName = styleOrLinkTag.GetHashCode().ToString();
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, styleOrLinkTag), false, overWrite);
+            return HtmlString.Empty;
+        }
+        #endregion
+        #endregion
+
+        #region Renders
         public static IHtmlContent RenderScripts(this IHtmlHelper htmlHelper)
         {
             return new LazyHtmlContent(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_script_")).OrderBy(p => p))
                 {
-                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];
                     if (template.Value != null)
-                    {
                         stringBuilder.AppendLine(template.Value);
-                    }
                 }
                 return stringBuilder.ToString();
             });
@@ -120,19 +136,19 @@ namespace Microsoft.AspNetCore.Mvc
         {
             return new LazyHtmlContent(() =>
             {
-                StringBuilder stringBuilder = new StringBuilder();
+                var stringBuilder = new StringBuilder();
                 foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys.Select(p => p.ToString()).Where(p => p.StartsWith("_style_")).OrderBy(p => p))
                 {
-                    KeyValuePair<string, string> template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];// as Func<object, HelperResult>;
+                    var template = (KeyValuePair<string, string>)htmlHelper.ViewContext.HttpContext.Items[key];
                     if (template.Value != null)
-                    {
                         stringBuilder.AppendLine(template.Value);
-                    }
                 }
                 return stringBuilder.ToString();
             });
         }
+        #endregion
 
+        #region Helpers
         private static KeyValuePair<string, string> GetKeyValue(string key, string value)
         {
             return new KeyValuePair<string, string>(key, value);
@@ -167,72 +183,6 @@ namespace Microsoft.AspNetCore.Mvc
                 }
             }
         }
-    }
-
-    public static partial class RenderScriptAndStyle
-    {
-        public static IHtmlContent Script(Func<object, HelperResult> template)
-        {
-            return Script(template(null).ToHtmlString());
-        }
-
-        public static IHtmlContent Script(string template)
-        {
-            return ScriptSingle(ComponentUtility.UtcNowTicks.ToString(), template);
-        }
-
-        public static IHtmlContent ScriptFileSingle(Func<object, HelperResult> template, bool overWrite = false)
-        {
-            return ScriptFileSingle(template(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent ScriptFileSingle(string template, bool overWrite = false)
-        {
-            var fileName = Regex.Match(template, "<script.+?src=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
-            return ScriptSingle(fileName, template, overWrite);
-        }
-
-        public static IHtmlContent ScriptSingle(string keyName, Func<object, HelperResult> template, bool overWrite = false)
-        {
-            return ScriptSingle(keyName, template(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent ScriptSingle(string keyName, string template, bool overWrite = false)
-        {
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, template), true, overWrite);
-            return HtmlString.NewLine;
-        }
-
-        public static IHtmlContent Style(Func<object, HelperResult> template)
-        {
-            return Style(template(null).ToHtmlString());
-        }
-
-        public static IHtmlContent Style(string template)
-        {
-            return StyleSingle(ComponentUtility.UtcNowTicks.ToString(), template);
-        }
-
-        public static IHtmlContent StyleFileSingle(Func<object, HelperResult> template, bool overWrite = false)
-        {
-            return StyleFileSingle(template(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent StyleFileSingle(string template, bool overWrite = false)
-        {
-            var fileName = Regex.Match(template, "<link.+?href=[\"'](.+?)[\"'].*?>", RegexOptions.IgnoreCase).Groups[1].Value;
-            return StyleSingle(fileName, template, overWrite);
-        }
-
-        public static IHtmlContent StyleSingle(string keyName, Func<object, HelperResult> template, bool overWrite = false)
-        {
-            return StyleSingle(keyName, template(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent StyleSingle(string keyName, string template, bool overWrite = false)
-        {
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, template), false, overWrite);
-            return HtmlString.NewLine;
-        }
+        #endregion
     }
 }

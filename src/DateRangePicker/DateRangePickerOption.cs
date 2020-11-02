@@ -88,33 +88,33 @@ namespace Microsoft.AspNetCore.Mvc
         public override string ToHtmlString()
         {
             if (JalaaliRTL)
-                HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(rtl_daterangepicker_css, null));
+                HtmlHelper.StyleOnce(ComponentUtility.GetCssTag(rtl_daterangepicker_css, null));
             else
-                HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(ltr_daterangepicker_css, ltr_daterangepicker_css_cdn));
+                HtmlHelper.StyleOnce(ComponentUtility.GetCssTag(ltr_daterangepicker_css, ltr_daterangepicker_css_cdn));
 
             switch (Theme)
             {
                 case DateRangePickerTheme.RTL_Red:
-                    HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(rtl_datepicker_theme_css, null));
+                    HtmlHelper.StyleOnce(ComponentUtility.GetCssTag(rtl_datepicker_theme_css, null));
                     break;
                 case DateRangePickerTheme.RTL_Blue:
-                    HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(rtl2_datepicker_theme_css, null));
+                    HtmlHelper.StyleOnce(ComponentUtility.GetCssTag(rtl2_datepicker_theme_css, null));
                     break;
             }
 
             //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(rtl_moment_js, null));                          //momentjs rtl
             //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(ltr_moment2_js, ltr_moment2_js_cdn));                   //momentjs daterangepicker
-            HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(ltr_moment_js, ltr_moment_js_cdn));                       //momentjs orginal
+            HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_moment_js, ltr_moment_js_cdn));                       //momentjs orginal
 
             if (JalaaliRTL)
             {
                 //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(rtl_moment_jalaali_js, null));              //moment-jalaali rtl
-                HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(ltr_moment_jalaali_js, ltr_moment_jalaali_js_cdn));   //moment-jalaali orginal
-                HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(rtl_daterangepicker_js, null));
+                HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_moment_jalaali_js, ltr_moment_jalaali_js_cdn));   //moment-jalaali orginal
+                HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(rtl_daterangepicker_js, null));
             }
             else
             {
-                HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(ltr_daterangepicker_js, ltr_daterangepicker_js_cdn));
+                HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_daterangepicker_js, ltr_daterangepicker_js_cdn));
             }
 
             var (id, editor) = GetIdAndHtmlContent();

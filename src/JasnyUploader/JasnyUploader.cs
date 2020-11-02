@@ -230,8 +230,8 @@ namespace Microsoft.AspNetCore.Mvc
             }
             else
             {
-                HtmlHelper.StyleFileSingle(ComponentUtility.GetCssTag(jasny_bootstrap_css, jasny_bootstrap_css_cdn));
-                HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(jasny_bootstrap_js, jasny_bootstrap_js_cdn));
+                HtmlHelper.StyleOnce(ComponentUtility.GetCssTag(jasny_bootstrap_css, jasny_bootstrap_css_cdn));
+                HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(jasny_bootstrap_js, jasny_bootstrap_js_cdn));
             }
             var url = Attributes["uploadUrl"].ToString();
             var selectIcon = Attributes["selectIcon"].ToString() == "" ? "" : string.Format(@"<i class=""{0}""></i> ", Attributes["selectIcon"]);

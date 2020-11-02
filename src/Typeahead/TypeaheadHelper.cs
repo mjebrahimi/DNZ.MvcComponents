@@ -73,7 +73,7 @@ namespace Microsoft.AspNetCore.Mvc
             var mergAttr = ComponentUtility.MergeAttributes(htmlAttributes, new { id = id + "_typeahead", @class = "form-control", placeholder = displayName, autocomplete = "off" });
             var textbox = html.TextBox(name + "_typeahead", txtValue, mergAttr);
             var hidden = html.HiddenFor(expression);
-            html.ScriptFileSingle(ComponentUtility.GetJsTag(typeahead_js, null));
+            html.ScriptOnce(ComponentUtility.GetJsTag(typeahead_js, null));
             option.OnSelect(@"function(item) {
                             if ( item.value != ""-21"") {
                                 $(""#" + id + @""").val(item.value).trigger('change').valid();

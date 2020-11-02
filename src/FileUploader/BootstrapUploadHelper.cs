@@ -72,12 +72,12 @@ namespace Microsoft.AspNetCore.Mvc
     <div id=""" + id + @"_hidden""></div>
 </div>
 
-" + html.StyleFileSingle(ComponentUtility.GetCssTag(fileinput_css, fileinput_css_cdn)).ToHtmlString() + @"
-" + html.StyleFileSingle(ComponentUtility.GetCssTag(null, fileinput_rtl_css_cdn)).ToHtmlString() + @"
-" + html.StyleFileSingle(ComponentUtility.GetCssTag(custom_fileinput_css, null)).ToHtmlString() + @"
+" + html.StyleOnce(ComponentUtility.GetCssTag(fileinput_css, fileinput_css_cdn)).ToHtmlString() + @"
+" + html.StyleOnce(ComponentUtility.GetCssTag(null, fileinput_rtl_css_cdn)).ToHtmlString() + @"
+" + html.StyleOnce(ComponentUtility.GetCssTag(custom_fileinput_css, null)).ToHtmlString() + @"
 
-" + html.ScriptFileSingle(ComponentUtility.GetJsTag(fileinput_js, fileinput_js_cdn)).ToHtmlString() + @"
-" + html.ScriptFileSingle(ComponentUtility.GetJsTag(fileinput_locale_fa_js, fileinput_locale_fa_js_cdn)).ToHtmlString() + @"
+" + html.ScriptOnce(ComponentUtility.GetJsTag(fileinput_js, fileinput_js_cdn)).ToHtmlString() + @"
+" + html.ScriptOnce(ComponentUtility.GetJsTag(fileinput_locale_fa_js, fileinput_locale_fa_js_cdn)).ToHtmlString() + @"
 
 " + html.Script(@"
 <script>

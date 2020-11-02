@@ -17,8 +17,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public SweetAlertBs(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(sweetalert_bs_css, sweetalert_bs_css_cdn));
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(sweetalert_bs_min_js, sweetalert_bs_js_cdn));
+            RenderScriptAndStyle.StyleOnce(ComponentUtility.GetCssTag(sweetalert_bs_css, sweetalert_bs_css_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(sweetalert_bs_min_js, sweetalert_bs_js_cdn));
 
             ConfirmButtonClass("btn btn-primary");
         }

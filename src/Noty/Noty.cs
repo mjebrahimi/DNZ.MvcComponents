@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Noty(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(noty_packaged_min_js, noty_packaged_js_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(noty_packaged_min_js, noty_packaged_js_cdn));
             ButtonAttributes = new Dictionary<string, object>();
         }
 

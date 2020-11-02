@@ -21,7 +21,7 @@ namespace Microsoft.AspNetCore.Mvc
         public SweetAlert(IHtmlHelper helper = null) : base(helper)
         {
             //RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(sweetalert_css, null));
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(sweetalert_js, sweetalert_js_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(sweetalert_js, sweetalert_js_cdn));
         }
 
         public SweetAlert Function(string value)

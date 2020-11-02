@@ -20,8 +20,8 @@ namespace Microsoft.AspNetCore.Mvc
 
         public Toastr(IHtmlHelper helper = null) : base(helper)
         {
-            RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(toastr_css, toastr_css_cdn));
-            RenderScriptAndStyle.ScriptFileSingle(ComponentUtility.GetJsTag(toastr_js, toastr_js_cdn));
+            RenderScriptAndStyle.StyleOnce(ComponentUtility.GetCssTag(toastr_css, toastr_css_cdn));
+            RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(toastr_js, toastr_js_cdn));
         }
 
         public Toastr Title(string value)

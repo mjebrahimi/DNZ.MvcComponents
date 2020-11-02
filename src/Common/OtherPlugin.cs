@@ -13,8 +13,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent AddMaxLenghtPlugin(this IHtmlHelper helper)
         {
-            var result = helper.ScriptFileSingle(ComponentUtility.GetJsTag(bootstrap_maxlength_js, bootstrap_maxlength_js_cdn)).ToHtmlString() +
-    helper.ScriptSingle("MaxLenghtPlugin", @"
+            helper.ScriptOnce(ComponentUtility.GetJsTag(bootstrap_maxlength_js, bootstrap_maxlength_js_cdn)).ToHtmlString();
+
+            helper.ScriptOnce(@"
 <script>
     $(function(){
         $(""[data-val-length-max]"").each(function () {
@@ -27,14 +28,14 @@ namespace Microsoft.AspNetCore.Mvc
         });
         $(""[maxlength]"").maxlength();
     });
-</script>
-");
-            return new HtmlString(result);
+</script>");
+
+            return HtmlString.Empty;
         }
 
         public static IHtmlContent AddValidationPlugin(this IHtmlHelper helper)
         {
-            helper.StyleSingle("ValidationPlugin", @"
+            helper.StyleOnce(@"
 <style>
 .with-feedback.component-rtl .form-control-feedback {
     left: 39px;
@@ -49,7 +50,8 @@ namespace Microsoft.AspNetCore.Mvc
     right: 0;
 }
 </style>");
-            helper.ScriptSingle("ValidationPlugin", @"
+
+            helper.ScriptOnce(@"
 <script>
     $.validator.setDefaults({
         ignore: """",
@@ -97,9 +99,9 @@ namespace Microsoft.AspNetCore.Mvc
             });
         });
     });
-</script>
-");
-            return HtmlString.NewLine;
+</script>");
+
+            return HtmlString.Empty;
         }
     }
 }
