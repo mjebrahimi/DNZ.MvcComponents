@@ -36,11 +36,11 @@ namespace DNZ.MvcComponents.Demo.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return MessageBox.SweetAlert("A message from Server with Ajax request", type: SweetAlertType.Error);
+                return MessageBox.SweetAlert("A message from Server with Ajax request", type: SweetAlertIcon.Error);
             }
             else
             {
-                MessageBox.SweetAlert("A message from Server", type: SweetAlertType.Success);
+                MessageBox.SweetAlert("A message from Server", type: SweetAlertIcon.Success);
                 return View();
             }
         }
@@ -56,11 +56,11 @@ namespace DNZ.MvcComponents.Demo.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return MessageBox.SweetAlertBs("A message from Server with Ajax request", type: SweetAlertType.Error);
+                return MessageBox.SweetAlertBs("A message from Server with Ajax request", type: SweetAlertIcon.Error);
             }
             else
             {
-                MessageBox.SweetAlertBs("A message from Server", type: SweetAlertType.Success);
+                MessageBox.SweetAlertBs("A message from Server", type: SweetAlertIcon.Success);
                 return View();
             }
         }
@@ -121,7 +121,6 @@ namespace DNZ.MvcComponents.Demo.Controllers
             }
             else
             {
-
                 MessageBox.Toastr("A message from Server", type: ToastrType.Success);
                 return View();
             }

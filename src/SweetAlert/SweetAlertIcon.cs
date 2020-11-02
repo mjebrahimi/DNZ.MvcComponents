@@ -1,12 +1,11 @@
 ﻿namespace Microsoft.AspNetCore.Mvc
 {
-    public enum SweetAlertType
+    public enum SweetAlertIcon
     {
-        Default,
+        None,
         Info,
         Success,
         Warning,
-        Error,
-        Input
+        Error
     }
 }

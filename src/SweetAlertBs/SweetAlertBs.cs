@@ -72,12 +72,10 @@ namespace Microsoft.AspNetCore.Mvc
             return this;
         }
 
-        public SweetAlertBs Type(SweetAlertType type)
+        public SweetAlertBs Type(SweetAlertIcon type)
         {
-            if (type != SweetAlertType.Default)
-            {
+            if (type != SweetAlertIcon.None)
                 Attributes["type"] = string.Format("'{0}'", type.ToString().ToLower());
-            }
 
             SetScript();
             return this;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
@@ -11,11 +12,13 @@ namespace Microsoft.AspNetCore.Mvc
         protected IHtmlHelper HtmlHelper;
         public Dictionary<string, object> Attributes { get; set; }
         public IHtmlContent Js => new HtmlString(Script);
+        private readonly string guid;
 
         public MessageBoxResult(IHtmlHelper helper)
         {
-            Attributes = new Dictionary<string, object>();
+            guid = Guid.NewGuid().ToString();
             HtmlHelper = helper;
+            Attributes = new Dictionary<string, object>();
         }
 
         protected void SetScriptTag()
@@ -25,7 +28,7 @@ namespace Microsoft.AspNetCore.Mvc
                             " + Script + @"
                         });
                     </script>";
-            RenderScriptAndStyle.ScriptOnce(script, true);
+            RenderScriptAndStyle.ScriptOnce(guid, script, true);
         }
 
         public virtual string ToHtmlString()

@@ -19,9 +19,9 @@ namespace Microsoft.AspNetCore.Mvc
 
         //public static DataTablesOption DataTables(this IHtmlHelper helper, Func<object, HelperResult> thead, Func<object, HelperResult> tbody, Dictionary<string, object> htmlAttributes = null)
         //{
-        //    helper.StyleFileSingle(@"<link href=""" + ComponentUtility.GetWebResourceUrl(dataTables_bootstrap_css) + @""" rel=""stylesheet"" />");
-        //    helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(jquery_dataTables_min_js) + @"""></script>");
-        //    helper.ScriptFileSingle(@"<script src=""" + ComponentUtility.GetWebResourceUrl(dataTables_bootstrap_min_js) + @"""></script>");
+        //    helper.StyleOnce(@"<link href=""" + ComponentUtility.GetWebResourceUrl(dataTables_bootstrap_css) + @""" rel=""stylesheet"" />");
+        //    helper.ScriptOnce(@"<script src=""" + ComponentUtility.GetWebResourceUrl(jquery_dataTables_min_js) + @"""></script>");
+        //    helper.ScriptOnce(@"<script src=""" + ComponentUtility.GetWebResourceUrl(dataTables_bootstrap_min_js) + @"""></script>");
         //    return new DataTablesOption(helper, thead, tbody, new RouteValueDictionary(htmlAttributes));
         //}
         public static DataTablesOption DataTables(this IHtmlHelper helper, Func<object, HelperResult> thead, Func<object, HelperResult> tbody, object htmlAttributes = null)

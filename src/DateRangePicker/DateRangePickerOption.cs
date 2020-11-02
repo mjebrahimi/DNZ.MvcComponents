@@ -102,13 +102,13 @@ namespace Microsoft.AspNetCore.Mvc
                     break;
             }
 
-            //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(rtl_moment_js, null));                          //momentjs rtl
-            //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(ltr_moment2_js, ltr_moment2_js_cdn));                   //momentjs daterangepicker
+            //HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(rtl_moment_js, null));                          //momentjs rtl
+            //HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_moment2_js, ltr_moment2_js_cdn));                   //momentjs daterangepicker
             HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_moment_js, ltr_moment_js_cdn));                       //momentjs orginal
 
             if (JalaaliRTL)
             {
-                //HtmlHelper.ScriptFileSingle(ComponentUtility.GetJsTag(rtl_moment_jalaali_js, null));              //moment-jalaali rtl
+                //HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(rtl_moment_jalaali_js, null));              //moment-jalaali rtl
                 HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(ltr_moment_jalaali_js, ltr_moment_jalaali_js_cdn));   //moment-jalaali orginal
                 HtmlHelper.ScriptOnce(ComponentUtility.GetJsTag(rtl_daterangepicker_js, null));
             }

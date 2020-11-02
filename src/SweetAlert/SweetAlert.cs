@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public SweetAlert(IHtmlHelper helper = null) : base(helper)
         {
-            //RenderScriptAndStyle.StyleFileSingle(ComponentUtility.GetCssTag(sweetalert_css, null));
+            //RenderScriptAndStyle.StyleOnce(ComponentUtility.GetCssTag(sweetalert_css, null));
             RenderScriptAndStyle.ScriptOnce(ComponentUtility.GetJsTag(sweetalert_js, sweetalert_js_cdn));
         }
 
@@ -66,20 +66,17 @@ namespace Microsoft.AspNetCore.Mvc
             return Html(true);
         }
 
-        public SweetAlert Type(string value)
+        public SweetAlert Icon(string value)
         {
-            Attributes["type"] = string.Format("'{0}'", value);
+            Attributes["icon"] = string.Format("'{0}'", value);
             SetScript();
             return this;
         }
 
-        public SweetAlert Type(SweetAlertType type)
+        public SweetAlert Icon(SweetAlertIcon icon)
         {
-            if (type != SweetAlertType.Default)
-            {
-                Attributes["type"] = string.Format("'{0}'", type.ToString().ToLower());
-            }
-
+            if (icon != SweetAlertIcon.None)
+                Attributes["icon"] = string.Format("'{0}'", icon.ToString().ToLower());
             SetScript();
             return this;
         }

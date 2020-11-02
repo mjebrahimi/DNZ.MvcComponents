@@ -28,7 +28,6 @@
     <![endif]-->
 
     @RenderSection("styles", required: false)
-    @Html.RenderStyles()
 
     <style>
         td {
@@ -198,7 +197,6 @@
         </div><!-- /.content-wrapper -->
 
     </div><!-- ./wrapper -->
-
     <!-- jQuery 2.1.4 -->
     <script src="~/content/AdminLTE/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.4 -->
@@ -218,6 +216,9 @@
     *@
 
     @RenderSection("scripts", required: false)
+
+    @Html.RenderUnobtrusiveAjaxScript()
+    @Html.RenderStyles()
     @Html.RenderScripts()
 </body>
 </html>

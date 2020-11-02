@@ -20,9 +20,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Script(this IHtmlHelper htmlHelper, string scriptTag)
         {
-            var keyName = Guid.NewGuid().ToString();
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, scriptTag), true, false);
-            return HtmlString.Empty;
+            return ScriptOnce(htmlHelper, Guid.NewGuid().ToString(), scriptTag, false);
         }
 
         public static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, Func<object, HelperResult> scriptTag, bool overWrite = false)
@@ -32,8 +30,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, string scriptTag, bool overWrite = false)
         {
-            var keyName = scriptTag.GetHashCode().ToString();
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, scriptTag), true, overWrite);
+            return ScriptOnce(htmlHelper, scriptTag.GetHashCode().ToString(), scriptTag, overWrite);
+        }
+
+        internal static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, string key, string scriptTag, bool overWrite = false)
+        {
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(key, scriptTag), true, overWrite);
             return HtmlString.Empty;
         }
 
@@ -45,9 +47,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Script(string scriptTag)
         {
-            var keyName = Guid.NewGuid().ToString();
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, scriptTag), true, false);
-            return HtmlString.Empty;
+            return ScriptOnce(Guid.NewGuid().ToString(), scriptTag, false);
         }
 
         public static IHtmlContent ScriptOnce(Func<object, HelperResult> scriptTag, bool overWrite = false)
@@ -57,8 +57,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent ScriptOnce(string scriptTag, bool overWrite = false)
         {
-            var keyName = scriptTag.GetHashCode().ToString();
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, scriptTag), true, overWrite);
+            return ScriptOnce(scriptTag.GetHashCode().ToString(), scriptTag, overWrite);
+        }
+
+        internal static IHtmlContent ScriptOnce(string key, string scriptTag, bool overWrite = false)
+        {
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, scriptTag), true, overWrite);
             return HtmlString.Empty;
         }
         #endregion
@@ -72,9 +76,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Style(this IHtmlHelper htmlHelper, string styleOrLinkTag)
         {
-            var keyName = Guid.NewGuid().ToString();
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, styleOrLinkTag), false, false);
-            return HtmlString.Empty;
+            return StyleOnce(htmlHelper, Guid.NewGuid().ToString(), styleOrLinkTag, false);
         }
 
         public static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
@@ -84,8 +86,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, string styleOrLinkTag, bool overWrite = false)
         {
-            var keyName = styleOrLinkTag.GetHashCode().ToString();
-            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(keyName, styleOrLinkTag), false, overWrite);
+            return StyleOnce(htmlHelper, styleOrLinkTag.GetHashCode().ToString(), styleOrLinkTag, overWrite);
+        }
+
+        internal static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, string key, string styleOrLinkTag, bool overWrite = false)
+        {
+            htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(key, styleOrLinkTag), false, overWrite);
             return HtmlString.Empty;
         }
 
@@ -97,9 +103,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent Style(string styleOrLinkTag)
         {
-            var keyName = Guid.NewGuid().ToString();
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, styleOrLinkTag), false, false);
-            return HtmlString.Empty;
+            return StyleOnce(Guid.NewGuid().ToString(), styleOrLinkTag, false);
         }
 
         public static IHtmlContent StyleOnce(Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
@@ -109,8 +113,12 @@ namespace Microsoft.AspNetCore.Mvc
 
         public static IHtmlContent StyleOnce(string styleOrLinkTag, bool overWrite = false)
         {
-            var keyName = styleOrLinkTag.GetHashCode().ToString();
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(keyName, styleOrLinkTag), false, overWrite);
+            return StyleOnce(styleOrLinkTag.GetHashCode().ToString(), styleOrLinkTag, overWrite);
+        }
+
+        internal static IHtmlContent StyleOnce(string key, string styleOrLinkTag, bool overWrite = false)
+        {
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, styleOrLinkTag), false, overWrite);
             return HtmlString.Empty;
         }
         #endregion

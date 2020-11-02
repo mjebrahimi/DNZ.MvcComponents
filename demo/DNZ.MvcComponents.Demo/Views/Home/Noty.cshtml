@@ -7,7 +7,7 @@
 <table>
     <tr>
         <td>
-            <input type="button" value="Click Me" onclick="@Html.Noty("A message from Client (on click)", MessageType.Warning, layout: MessageAlignment.BottomRight).Script" />
+            <input type="button" value="Click Me" onclick="@Html.Noty("A message from Client (on click)", MessageType.Warning, layout: MessageAlignment.BottomRight).Script" class="btn btn-primary" />
         </td>
         <td>
             @using (Html.BeginForm())
@@ -16,14 +16,14 @@
                 {
                     @Html.Noty("A message from Client (on pageload)").Modal(true).Type(MessageType.Information)
                 }
-                <input type="submit" value="Submit Form" />
+                <input type="submit" value="Submit Form" class="btn btn-primary" />
             }
         </td>
-        @*<td>
+        <td>
             @using (Html.AjaxBeginForm(new AjaxOptions()))
             {
-                <input type="submit" value="Submit Ajax" />
+                <input type="submit" value="Submit Ajax" class="btn btn-primary" />
             }
-        </td>*@
+        </td>
     </tr>
 </table>

@@ -63,10 +63,10 @@
 //            tag.InnerHtml.SetContent(value.ToString());
 //            var editor = html.HiddenFor(expression);
 
-//            html.ScriptFileSingle(ComponentUtility.GetJsTag(Bootstrap_Typeahead_js, null));
-//            html.ScriptFileSingle(ComponentUtility.GetJsTag(Rangy_Core_js, null));
-//            html.ScriptFileSingle(ComponentUtility.GetJsTag(Caret_Position_js, null));
-//            html.ScriptFileSingle(ComponentUtility.GetJsTag(Bootstrap_Tagautocomplete_js, null));
+//            html.ScriptOnce(ComponentUtility.GetJsTag(Bootstrap_Typeahead_js, null));
+//            html.ScriptOnce(ComponentUtility.GetJsTag(Rangy_Core_js, null));
+//            html.ScriptOnce(ComponentUtility.GetJsTag(Caret_Position_js, null));
+//            html.ScriptOnce(ComponentUtility.GetJsTag(Bootstrap_Tagautocomplete_js, null));
 //            html.Script(@"
 //            <script>
 //                $(function(){
