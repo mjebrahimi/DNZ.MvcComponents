@@ -14,7 +14,6 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent AddMaxLenghtPlugin(this IHtmlHelper helper)
         {
             helper.ScriptOnce(ComponentUtility.GetJsTag(bootstrap_maxlength_js, bootstrap_maxlength_js_cdn)).ToHtmlString();
-
             helper.ScriptOnce(@"
 <script>
     $(function(){

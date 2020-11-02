@@ -19,11 +19,11 @@
                 <input type="submit" value="Submit Form" />
             }
         </td>
-        @*<td>
-            @using (Ajax.BeginForm(new AjaxOptions()))
+        <td>
+            @using (Html.AjaxBeginForm(new AjaxOptions()))
             {
                 <input type="submit" value="Submit Ajax" />
             }
-        </td>*@
+        </td>
     </tr>
 </table>

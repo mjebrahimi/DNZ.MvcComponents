@@ -16,7 +16,7 @@ namespace Microsoft.AspNetCore.Mvc
         private const string BsDialog_min_css = "DNZ.MvcComponents.BsDialog.css.bootstrap-dialog.min.css";
         private const string BsDialog_min_js = "DNZ.MvcComponents.BsDialog.js.bootstrap-dialog.min.js";
         private string method = "";
-        //private string callback = "";
+
         public Dictionary<string, object> ButtonAttributes { get; set; }
 
         public BsDialog(IHtmlHelper helper = null) : base(helper)
@@ -57,8 +57,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public BsDialog Message(Func<object, HelperResult> template)
         {
-            var html = template(null).ToHtmlString().ToJavaScriptString();
-            Attributes["message"] = html;
+            Attributes["message"] = template(null).ToHtmlString().ToJavaScriptString();
             SetScript();
             return this;
         }
@@ -178,7 +177,6 @@ namespace Microsoft.AspNetCore.Mvc
         public BsDialog CallBack(string value)
         {
             Attributes["callback"] = value;
-            //callback = value;
             SetScript();
             return this;
         }
@@ -222,16 +220,11 @@ namespace Microsoft.AspNetCore.Mvc
         protected void SetScript()
         {
             if (ButtonAttributes.Count > 0)
-            {
                 Attributes["buttons"] = "[\n" + string.Join(", \n", ButtonAttributes.Select(p => p.Value)) + "\n]";
-            }
 
-            const string x = ""; //(string.IsNullOrEmpty(callback) ? "" : ", " + callback);
-            Script = $"BootstrapDialog.{method}({this.RenderOptions() + x})";
+            Script = $"BootstrapDialog.{method}({this.RenderOptions()})";
             if (!ComponentUtility.GetHttpContext().Request.IsAjaxRequest() && HtmlHelper == null)
-            {
                 SetScriptTag();
-            }
         }
     }
 }

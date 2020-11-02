@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Unobtrusive.Ajax" Version="1.0.0" />
+  </ItemGroup>
+
 </Project>

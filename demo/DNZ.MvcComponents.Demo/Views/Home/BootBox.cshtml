@@ -14,16 +14,16 @@
             {
                 if (Context.Request.Method.ToLower() == "get")
                 {
-                    @Html.BootBox("Your Title").Message("A message from Client (on pageload)").Type(BootBoxType.Confirm)
+                    @Html.BootBox("A message from Client (on pageload)").Title("Your Title").Type(BootBoxType.Confirm)
                 }
                 <input type="submit" value="Submit Form" />
             }
         </td>
-        @*<td>
-            @using (Ajax.BeginForm(new AjaxOptions()))
+        <td>
+            @using (Html.AjaxBeginForm(new AjaxOptions()))
             {
                 <input type="submit" value="Submit Ajax" />
             }
-        </td>*@
+        </td>
     </tr>
 </table>

@@ -99,9 +99,7 @@ namespace Microsoft.AspNetCore.Mvc
         {
             var metadata = htmlHelper.GetModelExplorerForString(name);
             if (value != null)
-            {
                 metadata.GetExplorerForModel(value);
-            }
 
             return CKEditorHelper(htmlHelper, metadata, name, uploadUrl, implicitRowsAndColumns, htmlAttributesDict, ckEditorConfig);
         }
@@ -167,9 +165,7 @@ namespace Microsoft.AspNetCore.Mvc
         {
             var metadata = htmlHelper.GetModelExplorerForString(name);
             if (value != null)
-            {
                 metadata.GetExplorerForModel(value);
-            }
 
             return CKEditorHelper(htmlHelper, metadata, name, uploadUrl, GetRowsAndColumnsDictionary(rows, columns), htmlAttributesDict, ckEditorConfig);
         }
@@ -311,14 +307,14 @@ namespace Microsoft.AspNetCore.Mvc
         public static IHtmlContent CKEditorFor<TModel, TProperty>(this IHtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string uploadUrl, int rows, int columns, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
             expression.NotNull(nameof(expression));
+
             return CKEditorHelper(htmlHelper,
                 htmlHelper.GetModelExplorer(expression),
                 htmlHelper.FieldNameFor(expression),
                 uploadUrl,
                 GetRowsAndColumnsDictionary(rows, columns),
                 htmlAttributesDict,
-                ckEditorConfig
-                );
+                ckEditorConfig);
         }
 
         #endregion
@@ -336,7 +332,7 @@ namespace Microsoft.AspNetCore.Mvc
 
             return HtmlString.NewLine;
 
-            //            return new HtmlString(@"<script src=""" + CK_Ed_Location + @"ckeditor.js"" type=""text/javascript""></script>
+            //return new HtmlString(@"<script src=""" + CK_Ed_Location + @"ckeditor.js"" type=""text/javascript""></script>
             //<script src=""" + CK_Ed_Location + @"adapters/jquery.js"" type=""text/javascript""></script>
             //<script	type=""text/javascript""> function UpdateCKEditors() { $('." + CK_Ed_Class + @"').ckeditorGet().updateElement(); } </script>");
         }
@@ -353,6 +349,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         #endregion
 
+        #region Helpers
         private static IHtmlContent CKEditorHelper(IHtmlHelper htmlHelper, ModelExplorer modelMetadata, string name, string uploadUrl, IDictionary<string, object> rowsAndColumns, IDictionary<string, object> htmlAttributes, string ckEditorConfigOptions)
         {
             var fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
@@ -439,5 +436,6 @@ namespace Microsoft.AspNetCore.Mvc
 
             return result;
         }
+        #endregion
     }
 }

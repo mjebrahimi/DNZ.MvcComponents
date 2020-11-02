@@ -19,7 +19,7 @@
                                                        Tuple.Create("خانم", "2", "fa fa-female")
                                                    })
             @Html.BsPersianDatePickerFor(p => p.BirthDate, "fa fa-calendar")
-            @Html.BsPersianDatePicker3PartFor(p => p.StartDate)
+            @Html.BsPersianDateTimePickerFor(p => p.StartDate, "fa fa-calendar")
             @Html.BsSelect2DropDownFor(p => p.StateId, Service.GetState(), "انتخاب کنید")
             <br />
             <input type="submit" value="Submit" class="btn btn-lg btn-block btn-primary" />

@@ -81,15 +81,12 @@ namespace Microsoft.AspNetCore.Mvc
         protected void SetScript()
         {
             if (ButtonAttributes.Count > 0)
-            {
                 Attributes["buttons"] = ButtonAttributes.RenderOptions();
-            }
 
             Script = $"bootbox.{type.ToString().ToLower()}({this.RenderOptions()});";
+
             if (!ComponentUtility.GetHttpContext().Request.IsAjaxRequest() && HtmlHelper == null)
-            {
                 SetScriptTag();
-            }
         }
     }
 }

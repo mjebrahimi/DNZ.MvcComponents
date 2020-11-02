@@ -3,17 +3,34 @@
     ViewData["Title"] = "DatePicker";
 }
 
-<h2>DatePicker</h2>
+<h2>Persian DatePicker</h2>
 <div>
     @Html.LabelFor(p => p.BirthDate)
     <div>
-        @Html.TarikhFarsiFor(p => p.BirthDate)
+        @Html.PersianDatePicker("date1")
     </div>
 </div>
 
+<h2>Persian DateTimePicker</h2>
 <div>
-    @Html.LabelFor(p => p.FirstName)
-    <div style="width: 350px;">
-        @Html.DatePicker3Part(p => p.FirstName)
+    @Html.LabelFor(p => p.BirthDate)
+    <div>
+        @Html.PersianDateTimePicker("date2")
+    </div>
+</div>
+
+<h2>Persian DateRangePicker</h2>
+<div>
+    @Html.LabelFor(p => p.BirthDate)
+    <div>
+        @Html.PersianDateRangePicker("date3")
+    </div>
+</div>
+
+<h2>Persian DateTimeRangePicker</h2>
+<div>
+    @Html.LabelFor(p => p.BirthDate)
+    <div>
+        @Html.PersianDateTimeRangePicker("date2")
     </div>
 </div>
