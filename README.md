@@ -42,3 +42,19 @@ A set of useful UI-Components (HtmlHelper) for ASP.NET Core MVC based-on Popular
 Checkout [DNZ.MvcComponents.Demo](https://github.com/mjebrahimi/DNZ.MvcComponents/tree/master/demo/DNZ.MvcComponents.Demo)
 
 ![Demo](Demo2.jpg)
+
+<!--
+### Roadmap:
+
+I will add or supplement these plugins in the future if I have the time.
+
+You can suggest the plugins you need in [issues](https://github.com/mjebrahimi/DNZ.MvcComponents/issues/new)
+
+- [ ] AutoComplete
+- [ ] [TagsInput](https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/)
+- [ ] DateTimePicker
+- [ ] TinyMCE
+- [ ] CKEditor
+- [ ] DataTables
+- [ ] [JsTree](https://github.com/vakata/jstree) | [TreeView](http://jonmiles.github.io/bootstrap-treeview/)
+-->
