@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -29,7 +28,7 @@ namespace DNZ.MvcComponents
         private const string path = "/DNZ.MvcComponents";
         private static IServiceProvider ApplicationServiceProvider;
         private static bool UseCdn;
-        private static Assembly currentAssembly = typeof(ComponentUtility).Assembly;
+        private static readonly Assembly currentAssembly = typeof(ComponentUtility).Assembly;
 
         public static IServiceCollection AddMvcComponents(this IServiceCollection services, bool useCdn = true)
         {
@@ -45,6 +44,7 @@ namespace DNZ.MvcComponents
         public static IApplicationBuilder UseMvcComponents(this IApplicationBuilder appBuilder)
         {
             ApplicationServiceProvider = appBuilder.ApplicationServices;
+            //TODO: StaticMiddleware
             appBuilder.MapWhen(
                 httpContext => httpContext.Request.Path.StartsWithSegments(new PathString(path), StringComparison.OrdinalIgnoreCase), app =>
                 {
@@ -60,7 +60,7 @@ namespace DNZ.MvcComponents
                         {
                             context.Response.ContentLength = stream.Length;
                             context.Response.ContentType = GetMimeType(fileName);
-                            await stream.CopyToAsync(context.Response.Body, context.RequestAborted);
+                            await stream.CopyToAsync(context.Response.Body, context.RequestAborted).ConfigureAwait(false);
                         }
                     });
                 });
@@ -187,17 +187,17 @@ namespace DNZ.MvcComponents
             return ApplicationServiceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext;
         }
 
+        private static readonly Type stringType = typeof(string);
+        internal static ModelExplorer GetModelExplorer(this IHtmlHelper html, string expression)
+        {
+            //IHtmlGenerator
+            return html.MetadataProvider.GetModelExplorerForType(stringType, expression);
+        }
+
         internal static ModelExplorer GetModelExplorer<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             var expresionProvider = html.ViewContext.HttpContext.RequestServices.GetRequiredService<ModelExpressionProvider>();
             return expresionProvider.CreateModelExpression(html.ViewData, expression).ModelExplorer;
-        }
-
-        private static readonly Type stringType = typeof(string);
-        internal static ModelExplorer GetModelExplorerForString(this IHtmlHelper html, string expression)
-        {
-            //IHtmlGenerator
-            return html.MetadataProvider.GetModelExplorerForType(stringType, expression);
         }
 
         internal static void DefinGlobalJavascriptVariable(this IScript script, IHtmlHelper html, string name)

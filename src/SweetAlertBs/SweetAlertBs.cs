@@ -51,18 +51,18 @@ namespace Microsoft.AspNetCore.Mvc
             return this;
         }
 
-        public SweetAlertBs TextValue(string value)
-        {
-            Attributes["text"] = value;
-            SetScript();
-            return this;
-        }
-
         public SweetAlertBs Text(Func<object, HelperResult> template)
         {
             var html = template(null).ToHtmlString().ToJavaScriptString();
             Attributes["text"] = string.Format("{0}", html);
             return Html(true);
+        }
+
+        public SweetAlertBs TextValue(string value)
+        {
+            Attributes["text"] = value;
+            SetScript();
+            return this;
         }
 
         public SweetAlertBs Type(string value)
@@ -119,6 +119,13 @@ namespace Microsoft.AspNetCore.Mvc
         public SweetAlertBs Timer(int milisecond)
         {
             Attributes["timer"] = milisecond;
+            SetScript();
+            return this;
+        }
+
+        public SweetAlertBs Animation(bool value)
+        {
+            Attributes["animation"] = value.ToString().ToLower();
             SetScript();
             return this;
         }
@@ -207,13 +214,6 @@ namespace Microsoft.AspNetCore.Mvc
         public SweetAlertBs Html(bool value)
         {
             Attributes["html"] = value.ToString().ToLower();
-            SetScript();
-            return this;
-        }
-
-        public SweetAlertBs Animation(bool value)
-        {
-            Attributes["animation"] = value.ToString().ToLower();
             SetScript();
             return this;
         }

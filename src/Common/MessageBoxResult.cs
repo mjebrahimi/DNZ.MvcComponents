@@ -9,10 +9,10 @@ namespace Microsoft.AspNetCore.Mvc
 {
     public class MessageBoxResult : JavaScriptResult, IHtmlContent, IOptionBuilder
     {
+        private readonly string guid;
         protected IHtmlHelper HtmlHelper;
         public Dictionary<string, object> Attributes { get; set; }
-        public IHtmlContent Js => new HtmlString(Script);
-        private readonly string guid;
+        //public IHtmlContent Js => new HtmlString(Script); //prevent encoding script
 
         public MessageBoxResult(IHtmlHelper helper)
         {

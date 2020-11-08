@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using DNZ.MvcComponents.Demo.AppCode;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DNZ.MvcComponents.Demo.Controllers
@@ -152,6 +154,49 @@ namespace DNZ.MvcComponents.Demo.Controllers
 
         [HttpGet]
         public ActionResult Select2()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult TagsInput()
+        {
+            var viewModel = new TagsViewModel
+            {
+                CommaSeprated = "Los Angeles, New Delhi, Kinshasa",
+                Tags = new[] { "Los Angeles", "New Delhi", "Kinshasa" },
+                CommaSeprated2 = "Los Angeles, New Delhi, Kinshasa",
+                Tags2 = new[] { "Los Angeles", "New Delhi", "Kinshasa" }
+            };
+            return View(viewModel);
+        }
+
+        private static readonly string[] cities = {
+            "Amsterdam",
+            "London",
+            "Paris",
+            "Washington",
+            "New York",
+            "Los Angeles",
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Beijing",
+            "New Delhi",
+            "Kathmandu",
+            "Cairo",
+            "Cape Town",
+            "Kinshasa"
+        };
+        [HttpGet]
+        public ActionResult AutoComplete(string query)
+        {
+            var result = cities.Where(p => p.Contains(query ?? ""));
+            return Json(result);
+        }
+
+        [HttpPost]
+        public ActionResult TagsInput(TagsViewModel viewModel)
         {
             return View();
         }

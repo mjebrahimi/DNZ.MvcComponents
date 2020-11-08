@@ -97,7 +97,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            var metadata = htmlHelper.GetModelExplorerForString(name);
+            var metadata = htmlHelper.GetModelExplorer(name);
             if (value != null)
                 metadata.GetExplorerForModel(value);
 
@@ -163,7 +163,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// <returns>MvcHtmlString output of CKEditor instance</returns>
         public static IHtmlContent CKEditor(this IHtmlHelper htmlHelper, string name, string value, string uploadUrl, int rows, int columns, string ckEditorConfig, IDictionary<string, object> htmlAttributesDict)
         {
-            var metadata = htmlHelper.GetModelExplorerForString(name);
+            var metadata = htmlHelper.GetModelExplorer(name);
             if (value != null)
                 metadata.GetExplorerForModel(value);
 
@@ -342,7 +342,7 @@ namespace Microsoft.AspNetCore.Mvc
         /// </summary>
         /// <example>Razor View: &lt;input type="text" value="submit" onclick="@Html.CKEditorSubmitButtonUpdateFunction()"/&gt;</example>
         /// <returns>MvcHtmlString literal: javascript:UpdateCKEditors()</returns>
-        public static IHtmlContent CKEditorSubmitButtonUpdateFunction(this IHtmlHelper help)
+        public static IHtmlContent CKEditorSubmitButtonUpdateFunction(this IHtmlHelper htmlHelper)
         {
             return new HtmlString("javascript:UpdateCKEditors()");
         }

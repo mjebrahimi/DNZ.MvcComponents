@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Microsoft.AspNetCore.Mvc
 {
-    public static class RenderScriptAndStyle
+    public static partial class RenderScriptAndStyle
     {
         #region Script
         public static IHtmlContent Script(this IHtmlHelper htmlHelper, Func<object, HelperResult> scriptTag)
@@ -33,39 +33,11 @@ namespace Microsoft.AspNetCore.Mvc
             return ScriptOnce(htmlHelper, scriptTag.GetHashCode().ToString(), scriptTag, overWrite);
         }
 
-        internal static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, string key, string scriptTag, bool overWrite = false)
+        public static IHtmlContent ScriptOnce(this IHtmlHelper htmlHelper, string key, string scriptTag, bool overWrite = false)
         {
             htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(key, scriptTag), true, overWrite);
             return HtmlString.Empty;
         }
-
-        #region Without HtmlHelper
-        public static IHtmlContent Script(Func<object, HelperResult> scriptTag)
-        {
-            return Script(scriptTag(null).ToHtmlString());
-        }
-
-        public static IHtmlContent Script(string scriptTag)
-        {
-            return ScriptOnce(Guid.NewGuid().ToString(), scriptTag, false);
-        }
-
-        public static IHtmlContent ScriptOnce(Func<object, HelperResult> scriptTag, bool overWrite = false)
-        {
-            return ScriptOnce(scriptTag(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent ScriptOnce(string scriptTag, bool overWrite = false)
-        {
-            return ScriptOnce(scriptTag.GetHashCode().ToString(), scriptTag, overWrite);
-        }
-
-        internal static IHtmlContent ScriptOnce(string key, string scriptTag, bool overWrite = false)
-        {
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, scriptTag), true, overWrite);
-            return HtmlString.Empty;
-        }
-        #endregion
         #endregion
 
         #region Style
@@ -89,39 +61,11 @@ namespace Microsoft.AspNetCore.Mvc
             return StyleOnce(htmlHelper, styleOrLinkTag.GetHashCode().ToString(), styleOrLinkTag, overWrite);
         }
 
-        internal static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, string key, string styleOrLinkTag, bool overWrite = false)
+        public static IHtmlContent StyleOnce(this IHtmlHelper htmlHelper, string key, string styleOrLinkTag, bool overWrite = false)
         {
             htmlHelper.ViewContext.HttpContext.SetItem(GetKeyValue(key, styleOrLinkTag), false, overWrite);
             return HtmlString.Empty;
         }
-
-        #region Without HtmlHelper
-        public static IHtmlContent Style(Func<object, HelperResult> styleOrLinkTag)
-        {
-            return Style(styleOrLinkTag(null).ToHtmlString());
-        }
-
-        public static IHtmlContent Style(string styleOrLinkTag)
-        {
-            return StyleOnce(Guid.NewGuid().ToString(), styleOrLinkTag, false);
-        }
-
-        public static IHtmlContent StyleOnce(Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
-        {
-            return StyleOnce(styleOrLinkTag(null).ToHtmlString(), overWrite);
-        }
-
-        public static IHtmlContent StyleOnce(string styleOrLinkTag, bool overWrite = false)
-        {
-            return StyleOnce(styleOrLinkTag.GetHashCode().ToString(), styleOrLinkTag, overWrite);
-        }
-
-        internal static IHtmlContent StyleOnce(string key, string styleOrLinkTag, bool overWrite = false)
-        {
-            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, styleOrLinkTag), false, overWrite);
-            return HtmlString.Empty;
-        }
-        #endregion
         #endregion
 
         #region Renders
@@ -172,9 +116,7 @@ namespace Microsoft.AspNetCore.Mvc
                 {
                     isUnique = false;
                     if (overWrite)
-                    {
                         context.Items[key] = item;
-                    }
 
                     break;
                 }
@@ -182,15 +124,72 @@ namespace Microsoft.AspNetCore.Mvc
             if (isUnique)
             {
                 if (isScript)
-                {
                     context.Items["_script_" + ComponentUtility.UtcNowTicks] = item;
-                }
                 else
-                {
                     context.Items["_style_" + ComponentUtility.UtcNowTicks] = item;
-                }
             }
         }
         #endregion
     }
+
+    #region Without HtmlHelper
+    public static partial class RenderScriptAndStyle
+    {
+        #region Script
+        public static IHtmlContent Script(Func<object, HelperResult> scriptTag)
+        {
+            return Script(scriptTag(null).ToHtmlString());
+        }
+
+        public static IHtmlContent Script(string scriptTag)
+        {
+            return ScriptOnce(Guid.NewGuid().ToString(), scriptTag, false);
+        }
+
+        public static IHtmlContent ScriptOnce(Func<object, HelperResult> scriptTag, bool overWrite = false)
+        {
+            return ScriptOnce(scriptTag(null).ToHtmlString(), overWrite);
+        }
+
+        public static IHtmlContent ScriptOnce(string scriptTag, bool overWrite = false)
+        {
+            return ScriptOnce(scriptTag.GetHashCode().ToString(), scriptTag, overWrite);
+        }
+
+        public static IHtmlContent ScriptOnce(string key, string scriptTag, bool overWrite = false)
+        {
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, scriptTag), true, overWrite);
+            return HtmlString.Empty;
+        }
+        #endregion
+
+        #region Style
+        public static IHtmlContent Style(Func<object, HelperResult> styleOrLinkTag)
+        {
+            return Style(styleOrLinkTag(null).ToHtmlString());
+        }
+
+        public static IHtmlContent Style(string styleOrLinkTag)
+        {
+            return StyleOnce(Guid.NewGuid().ToString(), styleOrLinkTag, false);
+        }
+
+        public static IHtmlContent StyleOnce(Func<object, HelperResult> styleOrLinkTag, bool overWrite = false)
+        {
+            return StyleOnce(styleOrLinkTag(null).ToHtmlString(), overWrite);
+        }
+
+        public static IHtmlContent StyleOnce(string styleOrLinkTag, bool overWrite = false)
+        {
+            return StyleOnce(styleOrLinkTag.GetHashCode().ToString(), styleOrLinkTag, overWrite);
+        }
+
+        public static IHtmlContent StyleOnce(string key, string styleOrLinkTag, bool overWrite = false)
+        {
+            ComponentUtility.GetHttpContext().SetItem(GetKeyValue(key, styleOrLinkTag), false, overWrite);
+            return HtmlString.Empty;
+        }
+        #endregion
+    }
+    #endregion
 }

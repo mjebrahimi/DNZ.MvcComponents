@@ -64,6 +64,11 @@
     <None Remove="DateRangePicker\rtl\date_picker_rtl.css" />
     <None Remove="DateRangePicker\rtl\moment-jalaali.js" />
     <None Remove="DateRangePicker\rtl\moment.min.js" />
+    <None Remove="TagsInput\css\bootstrap-tagsinput-typeahead.min.css" />
+    <None Remove="TagsInput\css\bootstrap-tagsinput.min.css" />
+    <None Remove="TagsInput\js\bootstrap-tagsinput.min.js" />
+    <None Remove="TagsInput\js\bootstrap-tagsinput.min.js.map" />
+    <None Remove="TagsInput\js\typeahead.bundle.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -633,6 +638,11 @@
     <EmbeddedResource Include="TagAutocomplete\bootstrap-typeahead.js" />
     <EmbeddedResource Include="TagAutocomplete\caret-position.js" />
     <EmbeddedResource Include="TagAutocomplete\rangy-core.js" />
+    <EmbeddedResource Include="TagsInput\css\bootstrap-tagsinput-typeahead.min.css" />
+    <EmbeddedResource Include="TagsInput\css\bootstrap-tagsinput.min.css" />
+    <EmbeddedResource Include="TagsInput\js\bootstrap-tagsinput.min.js" />
+    <EmbeddedResource Include="TagsInput\js\bootstrap-tagsinput.min.js.map" />
+    <EmbeddedResource Include="TagsInput\js\typeahead.bundle.min.js" />
     <EmbeddedResource Include="Toastr\toastr.css" />
     <EmbeddedResource Include="Toastr\toastr.js.map" />
     <EmbeddedResource Include="Toastr\toastr.min.css" />

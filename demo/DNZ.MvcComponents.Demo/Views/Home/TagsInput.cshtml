@@ -1,0 +1,124 @@
+﻿@model DNZ.MvcComponents.Demo.AppCode.TagsViewModel
+@{
+    ViewData["Title"] = "TagsInput";
+}
+
+<h2>Select2</h2>
+<div style="width: 500px">
+    <div>
+        @Html.LabelFor(p => p.CommaSeprated)
+        <div>
+            @Html.TagsInputFor(p => p.CommaSeprated)
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.Tags)
+        <div>
+            @Html.TagsInputFor(p => p.Tags)
+        </div>
+    </div>
+
+    <div>
+        @Html.Label("تگ ها")
+        <div>
+            @Html.TagsInput("CommaSeprated12", Model.CommaSeprated)
+        </div>
+    </div>
+
+    <div>
+        @Html.Label("تگ ها")
+        <div>
+            @Html.TagsInput("Tags12", Model.Tags)
+        </div>
+    </div>
+
+    <hr />
+    <h2>AutoComplete</h2>
+
+    <div>
+        @Html.LabelFor(p => p.CommaSeprated2)
+        <div>
+            @Html.TagsInputTypeaheadFor(p => p.CommaSeprated2, Url.Action("AutoComplete"))
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(p => p.Tags2)
+        <div>
+            @Html.TagsInputTypeaheadFor(p => p.Tags2, Url.Action("AutoComplete"))
+        </div>
+    </div>
+
+    <div>
+        @Html.Label("تگ ها")
+        <div>
+            @Html.TagsInputTypeahead("CommaSeprated22", Model.CommaSeprated, Url.Action("AutoComplete"))
+        </div>
+    </div>
+
+    <div>
+        @Html.Label("تگ ها")
+        <div>
+            @Html.TagsInputTypeahead("Tags22", Model.Tags, Url.Action("AutoComplete"))
+        </div>
+    </div>
+</div>
+
+@section styles {
+    <style>
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
+
+
+        .twitter-typeahead .tt-query,
+        .twitter-typeahead .tt-hint {
+            margin-bottom: 0;
+        }
+
+        .twitter-typeahead .tt-hint {
+            display: none;
+        }
+
+        .tt-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 160px;
+            padding: 5px 0;
+            margin: 2px 0 0;
+            list-style: none;
+            font-size: 14px;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            background-clip: padding-box;
+            cursor: pointer;
+        }
+
+        .tt-suggestion {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.428571429;
+            color: #333333;
+            white-space: nowrap;
+        }
+
+            .tt-suggestion:hover,
+            .tt-suggestion:focus {
+                color: #ffffff;
+                text-decoration: none;
+                outline: 0;
+                background-color: #428bca;
+            }
+    </style>
+}

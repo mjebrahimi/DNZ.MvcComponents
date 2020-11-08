@@ -12,8 +12,8 @@
     <div class="row">
         <div class="col-md-12">
             @Html.BsTextBoxFor(p => p.FirstName, "fa fa-user")
-            @Html.BsPelakFor(p => p.LastName)
-            @Html.BsICheckRadioButtonsFor(p => p.Test, new List<Tuple<string, string, string>>()
+            @*@Html.BsPelakFor(p => p.LastName)*@
+            @Html.BsIRadioButtonsFor(p => p.Test, new List<Tuple<string, string, string>>()
                                                    {
                                                        Tuple.Create("آقا", "1" ,"fa fa-male"),
                                                        Tuple.Create("خانم", "2", "fa fa-female")

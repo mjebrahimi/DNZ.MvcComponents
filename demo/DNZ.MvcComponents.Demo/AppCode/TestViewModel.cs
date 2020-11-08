@@ -40,4 +40,19 @@ namespace DNZ.MvcComponents.Demo.AppCode
         public string ImagePath { get; set; }
         public int[] Images { get; set; }
     }
+
+    public class TagsViewModel
+    {
+        [Display(Name = "تگ ها")]
+        public string CommaSeprated { get; set; }
+
+        [Display(Name = "تگ ها")]
+        public string[] Tags { get; set; }
+
+        [Display(Name = "تگ ها")]
+        public string CommaSeprated2 { get; set; }
+
+        [Display(Name = "تگ ها")]
+        public string[] Tags2 { get; set; }
+    }
 }

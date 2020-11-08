@@ -21,14 +21,6 @@ namespace Microsoft.AspNetCore.Mvc
             return handlebar;
         }
 
-        public static HanderBarTemplate CreateHandlebarsTemplateInlineHelper(this IHtmlHelper helper, HelperResult template)
-        {
-            var html = template.ToHtmlString();
-            var handlebar = helper.AddHandlebarsPlugin();
-            handlebar.Html = new HtmlString(html);
-            return handlebar;
-        }
-
         public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string template)
         {
             var handlebar = helper.AddHandlebarsPlugin();
@@ -49,6 +41,26 @@ namespace Microsoft.AspNetCore.Mvc
             return handlebar;
         }
 
+        public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string id, string template)
+        {
+            var handlebar = helper.AddHandlebarsPlugin();
+            handlebar.Id = id;
+            handlebar.Html = new HtmlString(template);
+            helper.ScriptOnce(@"
+<script id=""" + id + @""" type=""text/x-handlebars-template"">
+    " + template.Replace("\t", "") + @"
+</script>");
+            return handlebar;
+        }
+
+        public static HanderBarTemplate CreateHandlebarsTemplateInlineHelper(this IHtmlHelper helper, HelperResult template)
+        {
+            var html = template.ToHtmlString();
+            var handlebar = helper.AddHandlebarsPlugin();
+            handlebar.Html = new HtmlString(html);
+            return handlebar;
+        }
+
         public static HanderBarTemplate CreateHandlebarsTemplateInlineHelper(this IHtmlHelper helper, string id, HelperResult template)
         {
             var html = template.ToHtmlString();
@@ -58,18 +70,6 @@ namespace Microsoft.AspNetCore.Mvc
             helper.ScriptOnce(@"
 <script id=""" + id + @""" type=""text/x-handlebars-template"">
     " + html + @"
-</script>");
-            return handlebar;
-        }
-
-        public static HanderBarTemplate CreateHandlebarsTemplate(this IHtmlHelper helper, string id, string template)
-        {
-            var handlebar = helper.AddHandlebarsPlugin();
-            handlebar.Id = id;
-            handlebar.Html = new HtmlString(template);
-            helper.ScriptOnce(@"
-<script id=""" + id + @""" type=""text/x-handlebars-template"">
-    " + template.Replace("\t", "") + @"
 </script>");
             return handlebar;
         }
