@@ -224,6 +224,16 @@ namespace Microsoft.AspNetCore.Mvc
             return new HtmlString(result);
         }
 
+        public static IHtmlContent BsTagsInputFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string icon = null, ComponentDirection? dir = null, int lable_col = 2, int editor_col = 4, object htmlAttribute = null)
+        {
+            string displayName = null;
+            SetVariables(html, expression, ref displayName, out var style, out var dirName, out var label, out var validator, out _, lable_col, dir);
+            var attributes = ComponentUtility.MergeAttributes(htmlAttribute, new { @class = "form-control", placeholder = displayName, dir = dirName, style });
+            var editor = html.TagsInputFor(expression, attributes);
+            var result = SetTemplate(label, icon, editor_col, validator, editor.ToHtmlString(), dirName);
+            return new HtmlString(result);
+        }
+
         public static IHtmlContent BsJasnyUploaderFor<TModel, TValue>(this IHtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, string action = null, string controller = null, object routeValues = null, string urlImage = "", int lable_col = 2, int editor_col = 4/*, string cssClass = "default"*/, bool justPartial = false)
         {
             var metadata = html.GetModelExplorer(expression);

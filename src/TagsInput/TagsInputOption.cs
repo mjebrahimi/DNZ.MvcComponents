@@ -18,13 +18,13 @@ namespace Microsoft.AspNetCore.Mvc
             id = htmlHelper.FieldIdFor(expression);
 
             var metadata = htmlHelper.GetModelExplorer(expression);
-            if (metadata.Model is string)
+            if (metadata.ModelType == typeof(string))
             {
                 element = htmlHelper.TextBoxFor(expression, htmlAttributes);
             }
-            else if (metadata.Model is IEnumerable enumerable)
+            else if (typeof(IEnumerable).IsAssignableFrom(metadata.ModelType))
             {
-                var items = enumerable.Cast<object>().Select(p =>
+                var items = ((IEnumerable)metadata.Model).Cast<object>().Select(p =>
                 {
                     var value = p.ToString();
                     return new SelectListItem(value, value, true);
@@ -91,7 +91,7 @@ namespace Microsoft.AspNetCore.Mvc
 
         public override string ToHtmlString()
         {
-            htmlHelper.StyleOnce(ComponentUtility.GetCssTag(bootstrap_tagsinput_css, bootstrap_tagsinput_css_cdn));
+            htmlHelper.StyleOnce(ComponentUtility.GetCssTag(bootstrap_tagsinput_css, null/*bootstrap_tagsinput_css_cdn*/));
 
             string bloodhound = null;
             if (AutoCompleteUrl != null)
