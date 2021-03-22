@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.Unobtrusive.Ajax" Version="1.1.2" />
+    <PackageReference Include="AspNetCore.Unobtrusive.Ajax" Version="1.1.3" />
   </ItemGroup>
 
 </Project>
